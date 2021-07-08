@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "208041372922",
+    "project_id": "tajzaj-3c510",
+    "storage_bucket": "tajzaj-3c510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208041372922:android:d6e1144efef95baed6ed43",
+        "android_client_info": {
+          "package_name": "com.alzai.ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208041372922-l495j8ifapeoric656bulcviri8omfq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBgEv_zRWYoMPkW7XfratL31qVJIoNkcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208041372922-l495j8ifapeoric656bulcviri8omfq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
