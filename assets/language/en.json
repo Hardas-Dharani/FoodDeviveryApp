@@ -176,6 +176,8 @@
   "update_address": "Update Address",
   "add_the_location_correctly": "Add the location correctly",
   "address_line_01": "Address Line",
+  "address_line_03": "Apartment and Building",
+  "address_line_04": "Street Name",
   "address_line_02": "23/A Block,Sector 4",
   "label_us": "Label As",
   "other": "Others",

@@ -99,13 +99,13 @@ class ProductProvider extends ChangeNotifier {
       product.addOns.forEach((addOn) {
         if (_addOnIdList.contains(addOn.id)) {
           _addOnActiveList.add(true);
-          // _addOnQtyList
-          //     .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
+          _addOnQtyList
+              .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
         } else {
           _addOnActiveList.add(false);
-          // _addOnQtyList.add(1);
+          _addOnQtyList.add(0);
         }
-        _addOnQtyList.add(0);
+        // _addOnQtyList.add(0);
       });
 
       if (product.addOns2 != null) {
@@ -113,14 +113,14 @@ class ProductProvider extends ChangeNotifier {
           if (_addOnIdList.contains(addOn.id)) {
             // _addOnActiveList.add(true);
             _addOnActiveList2.add(true);
-            // _addOnQtyList
-            //     .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
+            _addOnQtyList2
+                .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
           } else {
             // _addOnActiveList.add(false);
             _addOnActiveList2.add(false);
-            // _addOnQtyList.add(1);
+            _addOnQtyList2.add(0);
           }
-          _addOnQtyList2.add(0);
+          // _addOnQtyList2.add(0);
         });
       }
       if (product.addOns1 != null) {
@@ -128,14 +128,14 @@ class ProductProvider extends ChangeNotifier {
           if (_addOnIdList.contains(addOn.id)) {
             // _addOnActiveList.add(true);
             _addOnActiveList1.add(true);
-            // _addOnQtyList
-            //     .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
+            _addOn1QtyList1
+                .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
           } else {
             // _addOnActiveList.add(false);
             _addOnActiveList1.add(false);
-            // _addOnQtyList.add(1);
+            _addOn1QtyList1.add(0);
           }
-          _addOn1QtyList1.add(0);
+          // _addOn1QtyList1.add(0);
         });
       }
     } else {

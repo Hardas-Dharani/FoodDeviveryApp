@@ -51,8 +51,6 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
       UserInfoModel _userInfoModel = Provider.of<ProfileProvider>(context, listen: false).userInfoModel;
       _contactPersonNameController.text = _userInfoModel.fName ?? '';
       _contactPersonNumberController.text = _userInfoModel.phone ?? '';
-
-
     }
   }
 
@@ -361,6 +359,43 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                           controller: _contactPersonNumberController,
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                        //for Apartment and building
+                        Text(
+                          getTranslated('address_line_03', context),
+                          style: Theme.of(context).textTheme.headline2.copyWith(
+                              color: ColorResources.getHintColor(context)),
+                        ),
+                        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                        CustomTextField(
+                          hintText: getTranslated('address_line_02', context),
+                          isShowBorder: true,
+                          inputType: TextInputType.streetAddress,
+                          inputAction: TextInputAction.next,
+                          /*focusNode: _addressNode,
+                          nextFocus: _nameNode,
+                          controller: _locationController,*/
+                        ),
+                        SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                        //for street name
+                        Text(
+                          getTranslated('address_line_04', context),
+                          style: Theme.of(context).textTheme.headline2.copyWith(
+                              color: ColorResources.getHintColor(context)),
+                        ),
+                        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                        CustomTextField(
+                          hintText: getTranslated('address_line_02', context),
+                          isShowBorder: true,
+                          inputType: TextInputType.streetAddress,
+                          inputAction: TextInputAction.done,
+                          /*focusNode: _addressNode,
+                          nextFocus: _nameNode,
+                          controller: _locationController,*/
+                        ),
+                        SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
 
                         SizedBox(
                           height: Dimensions.PADDING_SIZE_DEFAULT,

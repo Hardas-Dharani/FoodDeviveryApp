@@ -7,6 +7,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
+import 'package:flutter_restaurant/view/screens/address/add_new_address_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:typed_data';
@@ -80,10 +81,26 @@ class _MapWidgetState extends State<MapWidget> {
                   ),
                 ]),
 
-                Text('- ${widget.address.contactPersonName}', style: rubikMedium.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('- ${widget.address.contactPersonName}', style: rubikMedium.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                    )),
+                    GestureDetector(
+                      onTap:(){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => AddNewAddressScreen(isEnableUpdate: true, address: widget.address),
+                        ));},
+                      child: Icon(
+
+                         Icons.edit,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    )
+                  ],
+                ),
 
                 Text('- ${widget.address.contactPersonNumber}', style: rubikRegular),
 

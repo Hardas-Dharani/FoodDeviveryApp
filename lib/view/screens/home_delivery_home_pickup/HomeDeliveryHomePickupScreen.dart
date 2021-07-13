@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
@@ -75,9 +76,9 @@ class _HomeDeliveyAndHomePickupScreenState
   void initState() {
     super.initState();
     homePickupBloc = HomePickupBloc();
-    homePickupBloc = HomePickupBloc();
     homePickupList = [];
     _getLocation();
+
   }
 
   _getLocation() async {
@@ -86,6 +87,7 @@ class _HomeDeliveyAndHomePickupScreenState
     Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((value) {
+
       debugPrint('_getLocation Latitude: ${value.latitude}');
       debugPrint('_getLocation Longitude: ${value.longitude}');
       currentLat = value.latitude;
@@ -121,7 +123,6 @@ class _HomeDeliveyAndHomePickupScreenState
     // markers = _markers;
     // setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -213,6 +214,7 @@ class _HomeDeliveyAndHomePickupScreenState
                               isSearchInitiated = true;
                               searchPickupList = [];
                               homePickupList.forEach((element) {
+                                print("lat is ="+element.latitude.toString()+"    "+"long is ="+element.longitude.toString()+"\n");
                                 if (element.name.toLowerCase().contains(text) ||
                                     element.address
                                         .toLowerCase()
@@ -291,6 +293,7 @@ class _HomeDeliveyAndHomePickupScreenState
                       homePickupList = [];
                       if (snapshot.hasData && snapshot.data != null) {
                         homePickupList.addAll(snapshot.data);
+
                         _markers =
                             Iterable.generate(homePickupList.length, (index) {
                           return Marker(
@@ -303,6 +306,7 @@ class _HomeDeliveyAndHomePickupScreenState
                           );
                         });
                         print("--------- markers  ${_markers.length}");
+
                         markers = _markers;
                         return Container(
                           child: Column(
@@ -359,7 +363,9 @@ class _HomeDeliveyAndHomePickupScreenState
       ),
     );
   }
-
+  TimeOfDay time;
+  List openClose = [];
+  DateFormat dateFormat = new DateFormat.Hm();
   Widget _listView(List<HomePickup> homePickupList) {
     return ListView.separated(
       itemCount: homePickupList != null && homePickupList.length > 0
@@ -369,6 +375,26 @@ class _HomeDeliveyAndHomePickupScreenState
       padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
+        // print("Data is ="+homePickupList[index].closeTime+"\n");
+        // final startTime = DateTime(2021, 7, 7, 10, 30);
+        // final endTime = DateTime(2021, 7, 7, 01, 00);
+        /*final startTime = dateFormat.parse(homePickupList[index].openTime);
+        final endTime = dateFormat.parse(homePickupList[index].closeTime);*/
+
+        // final currentTime = DateTime.now();
+        //
+        // if(currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+        //   // do something
+        //   print ("ys");
+        //   openClose.add("(Open)");
+        // }
+        // else{
+        //   openClose.add("(Close)");
+        //   print("no");
+        // }
+        /*DateTime before = DateTime.now();
+        DateTime after = DateTime.parse( homePickupList[index].closeTime.subString(0,4));
+        print((before.difference(after).inMilliseconds).toString());*/
         return ListTile(
           tileColor: selectedIndex == index
               ? Color(0xFF00A4A4).withOpacity(0.5)
@@ -391,15 +417,16 @@ class _HomeDeliveyAndHomePickupScreenState
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
               Text(
-                  "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].latitude.toString())) / 1000).round()}km",
+                  "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].longitude.toString())) / 1000).round()}km",
                   style: Theme.of(context).textTheme.headline2.copyWith(
                       color: Colors.black,
                       fontSize: 14,
                       fontWeight: FontWeight.w600)),
-              Text("(Closed)",
+              Text(homePickupList[index].openCloseStatus,
                   style: Theme.of(context).textTheme.headline2.copyWith(
-                      color: Colors.red,
+                      color: homePickupList[index].openCloseStatus=="Open"?Colors.green:Colors.red,
                       fontSize: 14,
                       fontWeight: FontWeight.w600)),
             ],

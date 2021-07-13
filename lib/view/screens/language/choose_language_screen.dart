@@ -43,7 +43,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
     super.initState();
     loading = false;
     bool _firstTime = true;
-    _loadDatatwo(context,false);
+    _loadDatatwo(context, false);
     _onConnectivityChanged = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -65,7 +65,6 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
         ));
       }
       _firstTime = false;
-
     });
 
     Provider.of<SplashProvider>(context, listen: false).initSharedData();
@@ -77,7 +76,6 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
     }
-
   }
 
   @override

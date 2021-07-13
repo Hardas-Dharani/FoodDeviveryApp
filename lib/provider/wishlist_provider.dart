@@ -52,6 +52,7 @@ class WishListProvider extends ChangeNotifier {
     _wishList = [];
     _wishIdList = [];
     ApiResponse apiResponse = await wishListRepo.getWishList();
+    print("aaaaa"+apiResponse.response.statusCode.toString());
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       notifyListeners();
       apiResponse.response.data.forEach((wishList) async {

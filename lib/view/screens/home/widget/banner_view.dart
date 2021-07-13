@@ -180,7 +180,7 @@ class BannerShimmer extends StatelessWidget {
           highlightColor: Colors.grey[100],
           enabled: Provider.of<BannerProvider>(context).bannerList == null,
           child: Container(
-            width: 250,
+            width: MediaQuery.of(context).size.width-30,
             height: 85,
             margin: EdgeInsets.only(right: Dimensions.PADDING_SIZE_SMALL),
             decoration: BoxDecoration(

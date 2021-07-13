@@ -176,6 +176,12 @@ class Product {
         _addOns2.add(new AddOns.fromJson(v));
       });
     }
+    if (json['add_ons3'] != null) {
+      _addOns1 = [];
+      json['add_ons3'].forEach((v) {
+        _addOns1.add(new AddOns.fromJson(v));
+      });
+    }
     _tax = json['tax'].toDouble();
     _availableTimeStarts = json['available_time_starts'];
     _availableTimeEnds = json['available_time_ends'];

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
 import 'package:flutter_restaurant/helper/email_checker.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/network/HomePickBloc.dart';
+import 'package:flutter_restaurant/network/HomePickup.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -407,21 +409,24 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
   }
 
   //spinner branch..............................................................
-  String dropdownValue = 'BRANCH One';
+  String dropdownValue = '';
 
   List<String> spinnerItems = [
-    'BRANCH One',
-    'BRANCH Two',
-    'BRANCH Three',
-    'BRANCH Four',
-    'BRANCH Five'
+    // 'BRANCH One',
+    // 'BRANCH Two',
+    // 'BRANCH Three',
+    // 'BRANCH Four',
+    // 'BRANCH Five'
   ];
 
   bool _isLoggedIn;
+  HomePickupBloc homePickupBloc;
 
   @override
   void initState() {
     super.initState();
+    homePickupBloc=HomePickupBloc();
+    homePickupBloc.getHomePickup(context, "", "");
     time = TimeOfDay.now();
     _isLoggedIn =
         Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
@@ -630,70 +635,109 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            child: DropdownButton<String>(
-                                              value: dropdownValue,
-                                              icon: Icon(Icons.arrow_drop_down),
-                                              iconSize: 24,
-                                              elevation: 16,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: _isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.black),
-                                              underline: SizedBox(),
-                                              dropdownColor: Colors.grey,
-                                              onChanged: (String data) {
-                                                setState(() {
-                                                  dropdownValue = data;
-                                                  print(dropdownValue);
-                                                });
-                                              },
-                                              items: spinnerItems.map<
-                                                      DropdownMenuItem<String>>(
-                                                  (String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
-                                            ), /*TextFormField(
-                                                  cursorColor: Color(0xff00A4A4),
-                                                  style: TextStyle(),
-                                                  decoration:
-                                                  new InputDecoration.collapsed(
-                                                    */ /*hintText: 'NAME',
-                                                    hintStyle: TextStyle(
-                                                      fontFamily: 'comfortaa_semibold',
-                                                      fontSize: 14.0,),*/ /*
+                                  StreamBuilder<List<HomePickup>>(
+                                      initialData: null,
+                                      stream: homePickupBloc.homePickupStream,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData &&
+                                            snapshot.data != null) {
+                                          spinnerItems = [];
+
+                                          snapshot.data.forEach((element) {
+                                            spinnerItems.add(element.name);
+                                          });
+                                          if(dropdownValue.isEmpty||dropdownValue==null)
+                                            {
+                                              dropdownValue=snapshot.data[0].name;
+                                            }
+
+                                          return Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: DropdownButton<
+                                                        String>(
+                                                      value: dropdownValue,
+                                                      icon: Icon(Icons
+                                                          .arrow_drop_down),
+                                                      iconSize: 24,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: _isDarkMode
+                                                              ? Colors.white
+                                                              : Colors.black),
+                                                      underline: SizedBox(),
+                                                      dropdownColor: Colors
+                                                          .grey,
+                                                      onChanged: (String data) {
+                                                        setState(() {
+                                                          dropdownValue = data;
+                                                          print(dropdownValue);
+                                                        });
+                                                      },
+                                                      items: spinnerItems.map<
+                                                          DropdownMenuItem<
+                                                              String>>(
+                                                              (String value) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: value,
+                                                              child: Text(
+                                                                  value),
+                                                            );
+                                                          }).toList(),
+                                                    ), /*TextFormField(
+                                                      cursorColor: Color(0xff00A4A4),
+                                                      style: TextStyle(),
+                                                      decoration:
+                                                      new InputDecoration.collapsed(
+                                                        */ /*hintText: 'NAME',
+                                                        hintStyle: TextStyle(
+                                                          fontFamily: 'comfortaa_semibold',
+                                                          fontSize: 14.0,),*/ /*
+                                                      ),
+                                                      controller: _branchController,
+                                                      focusNode: _branchnode,
+                                                      onFieldSubmitted: (term) {
+                                                        _branchnode.unfocus();
+                                                        FocusScope.of(context)
+                                                            .requestFocus(_username);
+                                                      },
+                                                      keyboardType: TextInputType.text,
+                                                      validator: validateBranch,
+                                                      textInputAction: TextInputAction.next,
+                                                    ),*/
                                                   ),
-                                                  controller: _branchController,
-                                                  focusNode: _branchnode,
-                                                  onFieldSubmitted: (term) {
-                                                    _branchnode.unfocus();
-                                                    FocusScope.of(context)
-                                                        .requestFocus(_username);
-                                                  },
-                                                  keyboardType: TextInputType.text,
-                                                  validator: validateBranch,
-                                                  textInputAction: TextInputAction.next,
-                                                ),*/
-                                          ),
-                                          /*Container(
-                                                height: 1,
-                                                color: Colors.grey,
-                                              ),*/
-                                        ],
-                                      ),
-                                    ),
-                                  )
+                                                  /*Container(
+                                                    height: 1,
+                                                    color: Colors.grey,
+                                                  ),*/
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        } else
+                                          return Container(
+                                            height: MediaQuery.of(context).size.height * 0.8,
+                                            margin: EdgeInsets.only(left: 80),
+                                            child: Center(
+                                              child: SizedBox(
+                                                height: 24,
+                                                width: 24,
+                                                child: CircularProgressIndicator(
+                                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                                      Color(0xFF00A4A4)),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                      })
                                 ],
                               )),
                             ),
@@ -977,7 +1021,6 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                         ],
                       ),
                     ),
-
 //QUALITY OF FOOD...............................................................
                     SizedBox(
                       height: 10,

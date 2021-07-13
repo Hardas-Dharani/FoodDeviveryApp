@@ -1,3 +1,4 @@
+/*
 
 class HomePickup {
   int id;
@@ -134,4 +135,78 @@ class HomePickup {
     data['vat_reg_number'] = this.vatRegNumber;
     return data;
   }
+}
+*/
+// To parse this JSON data, do
+//
+//     final homePickup = homePickupFromJson(jsonString);
+
+// To parse this JSON data, do
+//
+//     final homePickup = homePickupFromJson(jsonString);
+
+import 'dart:convert';
+
+List<HomePickup> homePickupFromJson(String str) => List<HomePickup>.from(json.decode(str).map((x) => HomePickup.fromJson(x)));
+
+String homePickupToJson(List<HomePickup> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class HomePickup {
+  HomePickup({
+    this.id,
+    this.restaurantId,
+    this.name,
+    this.arabicName,
+    this.latitude,
+    this.longitude,
+    this.address,
+    this.coverage,
+    this.city,
+    this.openTime,
+    this.closeTime,
+    this.openCloseStatus,
+  });
+
+  int id;
+  int restaurantId;
+  String name;
+  String arabicName;
+  String latitude;
+  String longitude;
+  String address;
+  int coverage;
+  String city;
+  String openTime;
+  String closeTime;
+  String openCloseStatus;
+
+  factory HomePickup.fromJson(Map<String, dynamic> json) => HomePickup(
+    id: json["id"],
+    restaurantId: json["restaurant_id"],
+    name: json["name"],
+    arabicName: json["arabic_name"],
+    latitude: json["latitude"],
+    longitude: json["longitude"],
+    address: json["address"],
+    coverage: json["coverage"],
+    city: json["city"],
+    openTime: json["open_time"],
+    closeTime: json["close_time"],
+    openCloseStatus: json["open_close_status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "restaurant_id": restaurantId,
+    "name": name,
+    "arabic_name": arabicName,
+    "latitude": latitude,
+    "longitude": longitude,
+    "address": address,
+    "coverage": coverage,
+    "city": city,
+    "open_time": openTime,
+    "close_time": closeTime,
+    "open_close_status": openCloseStatus,
+  };
 }

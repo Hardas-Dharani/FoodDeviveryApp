@@ -221,7 +221,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
                                 // bottomSheetData = widget.cart.product;
 
                                 setState(() {});*/
-
+                                print(widget.cart.addOnIds);
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,

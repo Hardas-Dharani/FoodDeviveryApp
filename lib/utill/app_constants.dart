@@ -2,7 +2,7 @@ import 'package:flutter_restaurant/data/model/response/language_model.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
-  static const String BASE_URL = 'http://venturus.in/dapp';
+  static const String BASE_URL = 'https://venturus.in/dapp';
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
   static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
@@ -38,7 +38,7 @@ class AppConstants {
       '/api/v1/customer/order/payment-method';
   static const String ORDER_DETAILS_URI =
       '/api/v1/customer/order/details?order_id=';
-  static const String WISH_LIST_GET_URI = '/api/v1/customer/wish-list';
+  static const String WISH_LIST_GET_URI = '/api/v1/customer/wish-list/';
   static const String ADD_WISH_LIST_URI =
       '/api/v1/customer/wish-list/add?product_id=';
   static const String REMOVE_WISH_LIST_URI =
@@ -82,4 +82,6 @@ class AppConstants {
         countryCode: 'SA',
         languageCode: 'ar'),
   ];
+
+  static List<String> spinnerItems = [];
 }

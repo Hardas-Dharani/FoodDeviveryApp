@@ -176,6 +176,8 @@
   "update_address": "تحديث العنوان",
   "add_the_location_correctly": "أضف الموقع بشكل صحيح",
   "address_line_01": "خط عنوان",
+  "address_line_03": "شقة ومبنى",
+  "address_line_04": "اسم الشارع",
   "address_line_02": "23 / أ بلوك قطاع 4",
   "label_us": "التسمية باسم",
   "other": "الآخرين",
