@@ -10,7 +10,7 @@ import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileRepo {
+class ProfileRepo{
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
   ProfileRepo({@required this.dioClient, @required this.sharedPreferences});
@@ -23,10 +23,7 @@ class ProfileRepo {
         'Office',
         'Other',
       ];
-      Response response = Response(
-          requestOptions: RequestOptions(path: ''),
-          data: addressTypeList,
-          statusCode: 200);
+      Response response = Response(requestOptions: RequestOptions(path: ''), data: addressTypeList, statusCode: 200);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -42,37 +39,26 @@ class ProfileRepo {
     }
   }
 
-  Future<http.StreamedResponse> updateProfile(UserInfoModel userInfoModel,
-      String password, File file, String token) async {
-    http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            '${AppConstants.BASE_URL}${AppConstants.UPDATE_PROFILE_URI}'));
-    request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
-    if (file != null) {
-      request.files.add(http.MultipartFile(
-          'image', file.readAsBytes().asStream(), file.lengthSync(),
-          filename: file.path.split('/').last));
+  Future<http.StreamedResponse> updateProfile(UserInfoModel userInfoModel, String password, File file, String token) async {
+    http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse('${AppConstants.BASE_URL}${AppConstants.UPDATE_PROFILE_URI}'));
+    request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
+    if(file != null) {
+      request.files.add(http.MultipartFile('image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split('/').last));
     }
     Map<String, String> _fields = Map();
-    if (password.isEmpty) {
+    if(password.isEmpty) {
       _fields.addAll(<String, String>{
-        '_method': 'put',
-        'f_name': userInfoModel.fName,
-        'l_name': userInfoModel.lName,
-        'phone': userInfoModel.phone
+        '_method': 'put', 'f_name': userInfoModel.fName, 'l_name': userInfoModel.lName, 'phone': userInfoModel.phone
       });
-    } else {
+    }else {
       _fields.addAll(<String, String>{
-        '_method': 'put',
-        'f_name': userInfoModel.fName,
-        'l_name': userInfoModel.lName,
-        'phone': userInfoModel.phone,
-        'password': password
+        '_method': 'put', 'f_name': userInfoModel.fName, 'l_name': userInfoModel.lName, 'phone': userInfoModel.phone, 'password': password
       });
     }
     request.fields.addAll(_fields);
     http.StreamedResponse response = await request.send();
     return response;
   }
+
+
 }
