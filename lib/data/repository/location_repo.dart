@@ -15,9 +15,11 @@ class LocationRepo {
   LocationRepo({this.dioClient, this.sharedPreferences});
 
   Future<ApiResponse> getAllAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     try {
       final response = await dioClient.get(AppConstants.ADDRESS_LIST_URI,
-          queryParameters: {"branch_id": "12", "lang": "en"});
+          queryParameters: {"branch_id": id, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -25,11 +27,13 @@ class LocationRepo {
   }
 
   Future<ApiResponse> removeAddressByID(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     try {
       final response = await dioClient.post(
           '${AppConstants.REMOVE_ADDRESS_URI}$id',
           data: {"_method": "delete"},
-          queryParameters: {"branch_id": "12", "lang": "en"});
+          queryParameters: {"branch_id": id, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -37,10 +41,12 @@ class LocationRepo {
   }
 
   Future<ApiResponse> addAddress(AddressModel addressModel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     try {
       Response response = await dioClient.post(AppConstants.ADD_ADDRESS_URI,
           data: addressModel.toJson(),
-          queryParameters: {"branch_id": "12", "lang": "en"});
+          queryParameters: {"branch_id": id, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -49,11 +55,13 @@ class LocationRepo {
 
   Future<ApiResponse> updateAddress(
       AddressModel addressModel, int addressId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     try {
       Response response = await dioClient.post(
           '${AppConstants.UPDATE_ADDRESS_URI}$addressId',
           data: addressModel.toJson(),
-          queryParameters: {"branch_id": "12", "lang": "en"});
+          queryParameters: {"branch_id": id, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -8,7 +8,6 @@ import 'package:flutter_restaurant/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
-import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -21,14 +20,14 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CartBottomSheet extends StatefulWidget {
+class CartBottomSheetC extends StatefulWidget {
   final Product product;
   final bool fromSetMenu;
   final Function callback;
   final CartModel cart;
   final int cartIndex;
 
-  CartBottomSheet(
+  CartBottomSheetC(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
@@ -39,7 +38,7 @@ class CartBottomSheet extends StatefulWidget {
   _CartBottomSheetState createState() => _CartBottomSheetState();
 }
 
-class _CartBottomSheetState extends State<CartBottomSheet>
+class _CartBottomSheetState extends State<CartBottomSheetC>
     with NavigationStates {
   final ScrollController _scrollController = ScrollController();
   var _isDarkMode;
@@ -62,8 +61,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
     //print(widget.product.addOns2.length.toString());
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     bool fromCart = widget.cart != null;
-    Provider.of<ProductProvider>(context, listen: false)
-        .initData(widget.product, widget.cart);
+
     Variation _variation = Variation();
 
     return Scaffold(
@@ -109,7 +107,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           alignment: Alignment.topRight,
@@ -126,35 +124,6 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             onPressed: widget.callback,
                           ),
                         ),
-                        Container(
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.only(
-                                right: 10,
-                                top: (MediaQuery.of(context).size.height *
-                                    0.02)),
-                            child: Consumer<WishListProvider>(
-                                builder: (context, wishList, child) {
-                              return InkWell(
-                                onTap: () {
-                                  wishList.wishIdList
-                                          .contains(widget.product.id)
-                                      ? wishList.removeFromWishList(
-                                          widget.product, (message) {})
-                                      : wishList.addToWishList(
-                                          widget.product, (message) {});
-                                },
-                                child: Icon(
-                                  wishList.wishIdList
-                                          .contains(widget.product.id)
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: wishList.wishIdList
-                                          .contains(widget.product.id)
-                                      ? Color(0xFFFC6A57)
-                                      : ColorResources.COLOR_GREY,
-                                ),
-                              );
-                            }))
                         /*Padding(
                           padding: const EdgeInsets.only(left: 74.0),
                           child: Container(

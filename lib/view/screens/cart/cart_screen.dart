@@ -26,6 +26,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter_restaurant/view/screens/cart/widget/payment_successful_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key key, this.isMenuTapped, this.setPageInTabs})
@@ -105,7 +106,9 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     print("Payment successfull ${response.paymentId}");
     Provider.of<OrderProvider>(context, listen: false).placeOrder(
         PlaceOrderBody(
@@ -125,7 +128,7 @@ class _CartScreenState extends State<CartScreen> {
                         .coupon
                         .code
                     : null,
-            branchId: 12),
+            branchId: id),
         null);
     Navigator.push(
       context,
@@ -1725,7 +1728,12 @@ class _CartScreenState extends State<CartScreen> {
                                                 height: 20,
                                               ),
                                               GestureDetector(
-                                                onTap: () {
+                                                onTap: () async {
+                                                  SharedPreferences prefs =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  var id = prefs
+                                                      .getInt("branchidshr");
                                                   if (_takeaway) {
                                                     print(_subTotal.toString());
                                                     /*Provider.of<CartProvider>(context, listen: false)
@@ -1797,7 +1805,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                     .coupon
                                                                     .code
                                                                 : null,
-                                                            branchId: 12),
+                                                            branchId: id),
                                                         null);
                                                     Navigator.push(
                                                       context,
@@ -1883,7 +1891,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                     .coupon
                                                                     .code
                                                                 : null,
-                                                            branchId: 12),
+                                                            branchId: id),
                                                         null);
                                                     Navigator.push(
                                                       context,

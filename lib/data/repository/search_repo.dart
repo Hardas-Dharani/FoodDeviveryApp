@@ -11,9 +11,11 @@ class SearchRepo {
   SearchRepo({@required this.dioClient, @required this.sharedPreferences});
 
   Future<ApiResponse> getSearchProductList(String query) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getInt("branchidshr");
     try {
       final response = await dioClient.get(AppConstants.SEARCH_URI + query,
-          queryParameters: {"branch_id": "12", "lang": "en"});
+          queryParameters: {"branch_id": id, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

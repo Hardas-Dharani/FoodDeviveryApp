@@ -17,6 +17,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class HomeDeliveyAndHomePickupScreen extends StatefulWidget {
   var label;
 
@@ -78,7 +80,6 @@ class _HomeDeliveyAndHomePickupScreenState
     homePickupBloc = HomePickupBloc();
     homePickupList = [];
     _getLocation();
-
   }
 
   _getLocation() async {
@@ -87,7 +88,6 @@ class _HomeDeliveyAndHomePickupScreenState
     Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((value) {
-
       debugPrint('_getLocation Latitude: ${value.latitude}');
       debugPrint('_getLocation Longitude: ${value.longitude}');
       currentLat = value.latitude;
@@ -123,6 +123,8 @@ class _HomeDeliveyAndHomePickupScreenState
     // markers = _markers;
     // setState(() {});
   }
+
+  int branchid = 0;
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -143,17 +145,16 @@ class _HomeDeliveyAndHomePickupScreenState
               borderRadius: BorderRadius.circular(10),
             ),
             padding: EdgeInsets.zero,
-            onPressed: () {
-              if(selectedIndex!=-1)
-                {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              DashBoardLayOut()),
-                          (route) => false);
-                }
-
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setInt("branchidshr", branchid);
+              print(branchid);
+              if (selectedIndex != -1) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => DashBoardLayOut()),
+                    (route) => false);
+              }
             },
             child: Center(
               child: _isLoading
@@ -214,7 +215,12 @@ class _HomeDeliveyAndHomePickupScreenState
                               isSearchInitiated = true;
                               searchPickupList = [];
                               homePickupList.forEach((element) {
-                                print("lat is ="+element.latitude.toString()+"    "+"long is ="+element.longitude.toString()+"\n");
+                                print("lat is =" +
+                                    element.latitude.toString() +
+                                    "    " +
+                                    "long is =" +
+                                    element.longitude.toString() +
+                                    "\n");
                                 if (element.name.toLowerCase().contains(text) ||
                                     element.address
                                         .toLowerCase()
@@ -363,6 +369,7 @@ class _HomeDeliveyAndHomePickupScreenState
       ),
     );
   }
+
   TimeOfDay time;
   List openClose = [];
   DateFormat dateFormat = new DateFormat.Hm();
@@ -400,6 +407,7 @@ class _HomeDeliveyAndHomePickupScreenState
               ? Color(0xFF00A4A4).withOpacity(0.5)
               : Colors.white,
           onTap: () {
+            branchid = homePickupList[index].id;
             selectedIndex = index;
             setState(() {});
           },
@@ -417,7 +425,6 @@ class _HomeDeliveyAndHomePickupScreenState
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               Text(
                   "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].longitude.toString())) / 1000).round()}km",
                   style: Theme.of(context).textTheme.headline2.copyWith(
@@ -426,7 +433,9 @@ class _HomeDeliveyAndHomePickupScreenState
                       fontWeight: FontWeight.w600)),
               Text(homePickupList[index].openCloseStatus,
                   style: Theme.of(context).textTheme.headline2.copyWith(
-                      color: homePickupList[index].openCloseStatus=="Open"?Colors.green:Colors.red,
+                      color: homePickupList[index].openCloseStatus == "Open"
+                          ? Colors.green
+                          : Colors.red,
                       fontSize: 14,
                       fontWeight: FontWeight.w600)),
             ],
