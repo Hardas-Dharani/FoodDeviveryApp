@@ -30,6 +30,8 @@ import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter_restaurant/view/screens/cart/widget/payment_successful_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/platform_interface.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
@@ -50,8 +52,10 @@ class _CartScreenState extends State<CartScreen> {
   bool _takeaway = false;
   bool _cash = false;
   bool _bankpay = false;
+  WebViewController _controllerss;
   WebViewPlusController _controller;
   String url;
+  String successIndicator;
   Product bottomSheetData;
   bool showbottomSheet = false;
 
@@ -122,6 +126,7 @@ class _CartScreenState extends State<CartScreen> {
     print(response);
     if (response.data != null) {
       String sessionID = response.data['session']['id'];
+      successIndicator = response.data['successIndicator'];
       url = Uri.dataFromString('''<html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -2122,21 +2127,110 @@ class _CartScreenState extends State<CartScreen> {
                                                           context: context,
                                                           builder: (BuildContext
                                                               context) {
-                                                            return WebViewPlus(
-                                                              onWebViewCreated:
-                                                                  (controller) {
-                                                                this._controller =
-                                                                    controller;
-                                                                controller
-                                                                    .loadUrl(
-                                                                        url);
-                                                              },
-                                                              onPageFinished:
-                                                                  (url) {},
-                                                              javascriptMode:
-                                                                  JavascriptMode
-                                                                      .unrestricted,
-                                                            );
+                                                            return WillPopScope(
+                                                                onWillPop: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: WebView(
+                                                                  onWebViewCreated:
+                                                                      (controller) {
+                                                                    _controllerss =
+                                                                        controller;
+                                                                    controller
+                                                                        .loadUrl(
+                                                                            url);
+                                                                  },
+                                                                  javascriptMode:
+                                                                      JavascriptMode
+                                                                          .unrestricted,
+                                                                  onPageFinished:
+                                                                      (urlss) {
+                                                                    print(
+                                                                        urlss);
+                                                                    if (urlss
+                                                                        .contains(
+                                                                            "185.206.133.154")) {
+                                                                      if (urlss
+                                                                          .contains(
+                                                                              successIndicator)) {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        Provider.of<OrderProvider>(context, listen: false).placeOrder(
+                                                                            PlaceOrderBody(
+                                                                                cart: carts,
+                                                                                couponDiscountAmount: Provider.of<CouponProvider>(context, listen: false).discount,
+                                                                                couponDiscountTitle: '',
+                                                                                deliveryAddressId: 0,
+                                                                                orderAmount: _total,
+                                                                                orderNote: '',
+                                                                                orderType: "Cash",
+                                                                                paymentMethod: 'Cash',
+                                                                                couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
+                                                                                branchId: id),
+                                                                            null);
+                                                                        Navigator
+                                                                            .push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (_) =>
+                                                                                PaymentSuccessfulScreen(
+                                                                              razorPaymentId: "Cash",
+                                                                            ),
+                                                                          ),
+                                                                        ).then(
+                                                                            (value) {
+                                                                          widget
+                                                                              .setPageInTabs(0);
+                                                                          BlocProvider.of<NavigationBloc>(context)
+                                                                              .add(NavigationEvents.HomePageClickedEvent);
+                                                                        });
+                                                                        print(
+                                                                            "object");
+                                                                      } else {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                            backgroundColor: Colors.red,
+                                                                            content: Text(
+                                                                              "Payment Failed",
+                                                                              style: TextStyle(color: Colors.white),
+                                                                            )));
+                                                                      }
+                                                                    }
+                                                                    // http://185.206.133.154/returnedURL.html?resultIndicator=cc651a38b4b24ccd&sessionVersion=0696edd508
+                                                                    print(_controllerss
+                                                                        .currentUrl());
+                                                                  },
+                                                                  userAgent:
+                                                                      'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36',
+                                                                )
+                                                                //   WebViewPlus(
+                                                                // onWebViewCreated:
+                                                                //     (controller) {
+                                                                //   this._controller =
+                                                                //       controller;
+                                                                //   controller
+                                                                //       .loadUrl(
+                                                                //           url);
+                                                                // },
+                                                                // onPageFinished:
+                                                                //     (urls) {
+                                                                //   print(urls);
+                                                                // },
+                                                                // javascriptMode:
+                                                                //     JavascriptMode
+                                                                //         .unrestricted,
+                                                                // onWebResourceError:
+                                                                //     (WebResourceError
+                                                                //         error) {
+                                                                //   print(error
+                                                                //       .failingUrl);
+                                                                //   Navigator.pop(
+                                                                //       context);
+                                                                // },
+                                                                // ),
+                                                                );
                                                           });
 
                                                       // await openCheckoutbank(
