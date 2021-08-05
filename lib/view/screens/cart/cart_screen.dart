@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_restaurant/data/model/body/place_order_body.dart';
@@ -28,6 +31,8 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter_restaurant/view/screens/cart/widget/payment_successful_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({Key key, this.isMenuTapped, this.setPageInTabs})
       : super(key: key);
@@ -44,6 +49,9 @@ class _CartScreenState extends State<CartScreen> {
   List<Cart> carts = [];
   bool _takeaway = false;
   bool _cash = false;
+  bool _bankpay = false;
+  WebViewPlusController _controller;
+  String url;
   Product bottomSheetData;
   bool showbottomSheet = false;
 
@@ -62,6 +70,12 @@ class _CartScreenState extends State<CartScreen> {
           _cash = true;
           _takeaway = false;
         });
+      } else if (selectedApperanceTile == 4) {
+        setState(() {
+          _takeaway = false;
+          _cash = false;
+          _bankpay = true;
+        });
       } else if (selectedApperanceTile == 3) {
         setState(() {
           _takeaway = true;
@@ -78,12 +92,100 @@ class _CartScreenState extends State<CartScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    fuction();
   }
 
   @override
   void dispose() {
     super.dispose();
     _razorpay.clear();
+  }
+
+  fuction() async {
+    String username = 'merchant.test602030001';
+    String password = '9a11dd03ea27134396fa3f1ec6409827';
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    var params = {
+      "apiOperation": "CREATE_CHECKOUT_SESSION",
+      "order": {"currency": "SAR", "id": "Food123457"},
+      "interaction": {
+        "returnUrl": "http://185.206.133.154/returnedURL.html",
+        "operation": "NONE"
+      }
+    };
+    var response = await Dio().post(
+        'https://alahligatway.gateway.mastercard.com/api/rest/version/52/merchant/test602030001/session',
+        data: jsonEncode(params),
+        options:
+            Options(headers: <String, String>{'authorization': basicAuth}));
+    print(response);
+    if (response.data != null) {
+      String sessionID = response.data['session']['id'];
+      url = Uri.dataFromString('''<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://alahligatway.gateway.mastercard.com/checkout/version/52/checkout.js"
+                data-error="errorCallback"
+                data-cancel="cancelCallback">
+        </script>
+        <script type="text/javascript">
+            function errorCallback(error) {
+                  console.log(JSON.stringify(error));
+            }
+            function cancelCallback() {
+                  console.log('Payment cancelled');
+            }
+            Checkout.configure({
+                merchant: 'test602030001',
+                order: {
+                    amount: function() {
+                        //Dynamic calculation of amount
+                        return 80 + 20;
+                                         },
+                    currency: 'SAR',
+                    description: 'Ordered goods',
+                   id: 'Food123457'
+                },
+             session: { 
+            id: '${sessionID}'
+       },
+                interaction: {
+                    merchant: {
+                        name: 'taza',
+                        address: {
+                            line1: '200 Sample St',
+                            line2: '1234 Example Town'            
+                        }    
+                    }
+                                                                }
+            });
+        </script>
+            <style>
+                html, body {
+                    height:100%;
+                }
+                body {
+                    display:flex;
+                    align-items:center;
+                }
+            </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-center">
+                <input class="btn btn-primary" type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
+                <input class="btn btn-primary ml-2" type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
+            </div>
+        </div>
+    </body>
+</html>
+''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
+      // flutterWebViewPlugin.launch(
+      //   url,
+      // );
+
+    }
   }
 
   void openCheckout(
@@ -1482,6 +1584,77 @@ class _CartScreenState extends State<CartScreen> {
                                                                 ),
                                                               ],
                                                             ),
+                                                            SizedBox(
+                                                              width: 7,
+                                                            ),
+                                                            Wrap(
+                                                              children: [
+                                                                Container(
+                                                                  //width: MediaQuery.of(context).size.width * .25,
+                                                                  decoration: BoxDecoration(
+                                                                      color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                                                                      border: Border.all(
+                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
+                                                                                radix: 16) +
+                                                                            0xFF000000),
+                                                                      ),
+                                                                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                            color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+                                                                                0xFF000000),
+                                                                            blurRadius:
+                                                                                1,
+                                                                            spreadRadius:
+                                                                                1)
+                                                                      ]),
+                                                                  height: 30,
+                                                                  child: Center(
+                                                                      child:
+                                                                          Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                          "test",
+                                                                          style:
+                                                                              rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            2,
+                                                                      ),
+                                                                      /*Icon(
+                                                            Icons
+                                                                .radio_button_unchecked_outlined,
+                                                            size: 20,
+                                                            color: Color(int.parse(
+                                                                "#00A4A4"
+                                                                    .substring(
+                                                                    1, 7),
+                                                                radix: 16) +
+                                                                0xFF000000),
+                                                          )*/
+                                                                      Radio(
+                                                                        value:
+                                                                            4,
+                                                                        groupValue:
+                                                                            selectedApperanceTile,
+                                                                        activeColor:
+                                                                            Color(0xff00A4A4),
+                                                                        onChanged:
+                                                                            (val) {
+                                                                          print(
+                                                                              "Radio $val");
+                                                                          setSelectedApperanceTile(
+                                                                              val);
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                                ),
+                                                              ],
+                                                            ),
                                                             //Spacer(),
                                                             //SizedBox(width: 7,),
                                                             /*Wrap(
@@ -1910,6 +2083,76 @@ class _CartScreenState extends State<CartScreen> {
                                                           .add(NavigationEvents
                                                               .HomePageClickedEvent);
                                                     });
+                                                  } else if (_bankpay) {
+                                                    List<CartModel>
+                                                        cartModelList =
+                                                        cart.cartList;
+                                                    for (int index = 0;
+                                                        index <
+                                                            cartModelList
+                                                                .length;
+                                                        index++) {
+                                                      CartModel cart =
+                                                          cartModelList[index];
+                                                      List<int> _addOnIdList =
+                                                          [];
+                                                      List<int> _addOnQtyList =
+                                                          [];
+                                                      cart.addOnIds
+                                                          .forEach((addOn) {
+                                                        _addOnIdList
+                                                            .add(addOn.id);
+                                                        _addOnQtyList.add(
+                                                            addOn.quantity);
+                                                      });
+                                                      carts.add(Cart(
+                                                        cart.product.id
+                                                            .toString(),
+                                                        cart.discountedPrice
+                                                            .toString(),
+                                                        '',
+                                                        cart.variation,
+                                                        cart.discountAmount,
+                                                        cart.quantity,
+                                                        cart.taxAmount,
+                                                        _addOnIdList,
+                                                        _addOnQtyList,
+                                                      ));
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return WebViewPlus(
+                                                              onWebViewCreated:
+                                                                  (controller) {
+                                                                this._controller =
+                                                                    controller;
+                                                                controller
+                                                                    .loadUrl(
+                                                                        url);
+                                                              },
+                                                              onPageFinished:
+                                                                  (url) {},
+                                                              javascriptMode:
+                                                                  JavascriptMode
+                                                                      .unrestricted,
+                                                            );
+                                                          });
+
+                                                      // await openCheckoutbank(
+                                                      //     totalPrice: _total,
+                                                      //     description:
+                                                      //         "Tazaz food delivery payment",
+                                                      //     userEmail:
+                                                      //         profileProvider
+                                                      //             .userInfoModel
+                                                      //             .email,
+                                                      //     userPhone:
+                                                      //         profileProvider
+                                                      //             .userInfoModel
+                                                      //             .phone);
+
+                                                    }
                                                   } else {
                                                     List<CartModel>
                                                         cartModelList =

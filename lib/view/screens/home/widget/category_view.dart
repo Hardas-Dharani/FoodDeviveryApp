@@ -14,8 +14,7 @@ import 'package:shimmer/shimmer.dart';
 class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return
-      Consumer<CategoryProvider>(
+    return Consumer<CategoryProvider>(
       builder: (context, category, child) {
         return Column(
           children: [

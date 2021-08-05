@@ -70,6 +70,8 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     _loadData(context, false);
+    Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0);
+    print('object');
 
     return WillPopScope(
       onWillPop: () {
@@ -77,8 +79,7 @@ class _CategoryPageState extends State<CategoryPage> {
             .add(NavigationEvents.HomePageClickedEvent);
       },
       child: Scaffold(
-        backgroundColor:_isDarkMode
-            ?Color(0xff000000):Color(0xffF5F5F5),
+        backgroundColor: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
         body: SafeArea(
           child: CustomScrollView(
             controller: _scrollController,
@@ -93,8 +94,8 @@ class _CategoryPageState extends State<CategoryPage> {
                 stretchTriggerOffset: 150.0,
                 titleSpacing: 0,
                 leading: Container(),
-                backgroundColor:_isDarkMode
-                    ?Color(0xff000000):Color(0xffF5F5F5),
+                backgroundColor:
+                    _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
                 flexibleSpace: FlexibleSpaceBar(
                   stretchModes: [
                     StretchMode.zoomBackground,
@@ -129,7 +130,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                     Text(
                                       "Delivering to",
                                       style: TextStyle(
-                                          color: Color(0xffffffff), fontSize: 16),
+                                          color: Color(0xffffffff),
+                                          fontSize: 16),
                                     ),
                                     SizedBox(height: 5),
                                     Consumer<LocationProvider>(
@@ -235,9 +237,11 @@ class _CategoryPageState extends State<CategoryPage> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: Dimensions
                                                     .PADDING_SIZE_SMALL),
-                                            child:
-                                                Icon(Icons.search, size: 25,
-                                                color: Colors.grey,)),
+                                            child: Icon(
+                                              Icons.search,
+                                              size: 25,
+                                              color: Colors.grey,
+                                            )),
                                       ]),
                                 ),
                               ),
@@ -762,7 +766,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                                             top: 4),
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: Colors.grey.shade400,
+                                                          color: Colors
+                                                              .grey.shade400,
                                                           border: Border.all(
                                                               color:
                                                                   Colors.white),

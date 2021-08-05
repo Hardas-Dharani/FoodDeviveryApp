@@ -10,6 +10,7 @@ import 'package:flutter_restaurant/view/base/product_shimmer.dart';
 import 'package:flutter_restaurant/view/base/product_widget.dart';
 import 'package:flutter_restaurant/view/screens/category/category_screen.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/cart_bottom_sheet.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,10 +125,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    GoogleMapController controller;
+    Provider.of<LocationProvider>(context, listen: false)
+        .getCurrentLocation(mapController: controller);
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     _loadData(context, false);
     //_loadDatatwo(context, false);
-
+    Provider.of<LocationProvider>(context, listen: false)
+        .initializeAllAddressType(context: context);
+    Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0);
     return Scaffold(
       backgroundColor: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
       /*Color(int.parse("#F5F5F5".substring(1, 7), radix: 16) + 0xFF000000),*/
@@ -343,8 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                           color:
-                                                              */
-                                            /*_isDarkMode
+                                                              _isDarkMode
                                                         ?Color(0xff000000):*/
                                             /*
                                                               Color(0xffffffff),

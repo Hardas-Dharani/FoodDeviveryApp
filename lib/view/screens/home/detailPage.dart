@@ -10,9 +10,13 @@ import 'package:flutter_restaurant/view/screens/home/widget/cart_bottom_sheet.da
 import 'package:flutter_restaurant/view/screens/search/search_screen.dart';
 import 'package:provider/provider.dart';
 
-class DetailPage extends StatefulWidget with NavigationStates{
+class DetailPage extends StatefulWidget with NavigationStates {
   final Product product;
-  const DetailPage({Key key, this.isMenuTapped,@required this.product,}) : super(key: key);
+  const DetailPage({
+    Key key,
+    this.isMenuTapped,
+    @required this.product,
+  }) : super(key: key);
   final Function isMenuTapped;
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -23,19 +27,17 @@ class _DetailPageState extends State<DetailPage> {
   final ScrollController _scrollController = ScrollController();
   var _isDarkMode;
 
-
-
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0);
+    print("dsd");
     return Scaffold(
-      backgroundColor:_isDarkMode
-          ?Color(0xff000000):Color(0xffF5F5F5),
+      backgroundColor: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
       body: SafeArea(
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-
             // App Bar
             SliverAppBar(
               expandedHeight: MediaQuery.of(context).size.height * 0.22,
@@ -46,8 +48,8 @@ class _DetailPageState extends State<DetailPage> {
               stretchTriggerOffset: 150.0,
               titleSpacing: 0,
               leading: Container(),
-              backgroundColor:_isDarkMode
-                  ?Color(0xff000000):Color(0xffF5F5F5),
+              backgroundColor:
+                  _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
               flexibleSpace: FlexibleSpaceBar(
                 stretchModes: [
                   StretchMode.zoomBackground,
@@ -58,9 +60,9 @@ class _DetailPageState extends State<DetailPage> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.16,
                         decoration: BoxDecoration(
-                          color: Color(int.parse("#00A4A4".substring(1, 7),
-                              radix: 16) +
-                              0xFF000000),
+                          color: Color(
+                              int.parse("#00A4A4".substring(1, 7), radix: 16) +
+                                  0xFF000000),
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(20.0),
                               bottomLeft: Radius.circular(20.0)),
@@ -87,38 +89,34 @@ class _DetailPageState extends State<DetailPage> {
                                   SizedBox(height: 5),
                                   Consumer<LocationProvider>(
                                     builder: (context, locationProvider,
-                                        child) =>
-                                    locationProvider.addressList !=
-                                        null &&
-                                        locationProvider
-                                            .addressList.isNotEmpty
-                                        ? Text(
-                                      '${locationProvider.addressList[0].streetAddress ?? ''} ',
-                                      softWrap: true,
-                                      overflow:
-                                      TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Color(0xffffffff),
-                                          fontWeight:
-                                          FontWeight.w800,
-                                          fontSize: 16),
-                                    )
-                                        : SizedBox(),
+                                            child) =>
+                                        locationProvider.addressList != null &&
+                                                locationProvider
+                                                    .addressList.isNotEmpty
+                                            ? Text(
+                                                '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                softWrap: true,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    color: Color(0xffffffff),
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 16),
+                                              )
+                                            : SizedBox(),
                                   ),
                                   SizedBox(height: 5),
                                   Consumer<ProfileProvider>(
                                     builder: (context, profileProvider,
-                                        child) =>
-                                    profileProvider.userInfoModel != null
-                                        ? Text(
-                                      '${profileProvider.userInfoModel.fName ?? ''} ',
-                                      style: TextStyle(
-                                          color: Color(0xffffffff),
-                                          fontWeight:
-                                          FontWeight.w800,
-                                          fontSize: 16),
-                                    )
-                                        : SizedBox(),
+                                            child) =>
+                                        profileProvider.userInfoModel != null
+                                            ? Text(
+                                                '${profileProvider.userInfoModel.fName ?? ''} ',
+                                                style: TextStyle(
+                                                    color: Color(0xffffffff),
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 16),
+                                              )
+                                            : SizedBox(),
                                   )
                                 ],
                               ),
@@ -153,7 +151,6 @@ class _DetailPageState extends State<DetailPage> {
                             top: (MediaQuery.of(context).size.height * 0.1)),
                         child: InkWell(
                           onTap: () {
-
                             /*Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => SearchScreen()));*/
                           },
@@ -162,17 +159,16 @@ class _DetailPageState extends State<DetailPage> {
                               padding: const EdgeInsets.all(20.0),
                               child: Container(
                                 height: 40,
-                                width:
-                                MediaQuery.of(context).size.width * .67,
+                                width: MediaQuery.of(context).size.width * .67,
                                 decoration: BoxDecoration(
                                   color: Color(int.parse(
-                                      "#FFFFFF".substring(1, 7),
-                                      radix: 16) +
+                                          "#FFFFFF".substring(1, 7),
+                                          radix: 16) +
                                       0xFF000000),
                                   border: Border.all(
                                     color: Color(int.parse(
-                                        "#FFFFFF".substring(1, 7),
-                                        radix: 16) +
+                                            "#FFFFFF".substring(1, 7),
+                                            radix: 16) +
                                         0xFF000000),
                                   ),
                                   borderRadius: BorderRadius.all(
@@ -189,9 +185,11 @@ class _DetailPageState extends State<DetailPage> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: Dimensions
                                                   .PADDING_SIZE_SMALL),
-                                          child:
-                                          Icon(Icons.search, size: 25,
-                                            color: Colors.grey,)),
+                                          child: Icon(
+                                            Icons.search,
+                                            size: 25,
+                                            color: Colors.grey,
+                                          )),
                                     ]),
                               ),
                             ),
@@ -203,8 +201,6 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),
@@ -251,7 +247,6 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
-
   }
 
   Widget tabItem(var pos, {var icon, var name, dynamic onTapEvent}) {
@@ -271,6 +266,7 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
+
   @override
   void initState() {
     super.initState();

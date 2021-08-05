@@ -28,12 +28,12 @@ class LocationRepo {
 
   Future<ApiResponse> removeAddressByID(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id = prefs.getInt("branchidshr");
+    var ids = prefs.getInt("branchidshr");
     try {
       final response = await dioClient.post(
           '${AppConstants.REMOVE_ADDRESS_URI}$id',
           data: {"_method": "delete"},
-          queryParameters: {"branch_id": id, "lang": "en"});
+          queryParameters: {"branch_id": ids, "lang": "en"});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
