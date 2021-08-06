@@ -55,6 +55,7 @@ class _CartScreenState extends State<CartScreen> {
   WebViewController _controllerss;
   WebViewPlusController _controller;
   String url;
+  String sessionID;
   String successIndicator;
   Product bottomSheetData;
   bool showbottomSheet = false;
@@ -125,67 +126,8 @@ class _CartScreenState extends State<CartScreen> {
             Options(headers: <String, String>{'authorization': basicAuth}));
     print(response);
     if (response.data != null) {
-      String sessionID = response.data['session']['id'];
+      sessionID = response.data['session']['id'];
       successIndicator = response.data['successIndicator'];
-      url = Uri.dataFromString('''<html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://alahligatway.gateway.mastercard.com/checkout/version/52/checkout.js"
-                data-error="errorCallback"
-                data-cancel="cancelCallback">
-        </script>
-        <script type="text/javascript">
-            function errorCallback(error) {
-                  console.log(JSON.stringify(error));
-            }
-            function cancelCallback() {
-                  console.log('Payment cancelled');
-            }
-            Checkout.configure({
-                merchant: 'test602030001',
-                order: {
-                    amount: function() {
-                        //Dynamic calculation of amount
-                        return 80 + 20;
-                                         },
-                    currency: 'SAR',
-                    description: 'Ordered goods',
-                   id: 'Food123457'
-                },
-             session: { 
-            id: '${sessionID}'
-       },
-                interaction: {
-                    merchant: {
-                        name: 'taza',
-                        address: {
-                            line1: '200 Sample St',
-                            line2: '1234 Example Town'            
-                        }    
-                    }
-                                                                }
-            });
-        </script>
-            <style>
-                html, body {
-                    height:100%;
-                }
-                body {
-                    display:flex;
-                    align-items:center;
-                }
-            </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row justify-content-center">
-                <input class="btn btn-primary" type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
-                <input class="btn btn-primary ml-2" type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
-            </div>
-        </div>
-    </body>
-</html>
-''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
       // flutterWebViewPlugin.launch(
       //   url,
       // );
@@ -2127,6 +2069,67 @@ class _CartScreenState extends State<CartScreen> {
                                                           context: context,
                                                           builder: (BuildContext
                                                               context) {
+                                                            url =
+                                                                Uri.dataFromString('''<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://alahligatway.gateway.mastercard.com/checkout/version/52/checkout.js"
+                data-error="errorCallback"
+                data-cancel="cancelCallback">
+        </script>
+        <script type="text/javascript">
+            function errorCallback(error) {
+                  console.log(JSON.stringify(error));
+            }
+            function cancelCallback() {
+                  console.log('Payment cancelled');
+            }
+            Checkout.configure({
+                merchant: 'test602030001',
+                order: {
+                    amount: function() {
+                        //Dynamic calculation of amount
+                        return $_total;
+                                         },
+                    currency: 'SAR',
+                    description: 'Ordered goods',
+                   id: 'Food123457'
+                },
+             session: { 
+            id: '$sessionID'
+       },
+                interaction: {
+                    merchant: {
+                        name: 'taza',
+                        address: {
+                            line1: '200 Sample St',
+                            line2: '1234 Example Town'            
+                        }    
+                    }
+                                                                }
+            });
+        </script>
+            <style>
+                html, body {
+                    height:100%;
+                }
+                body {
+                    display:flex;
+                    align-items:center;
+                }
+            </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-center">
+                <input class="btn btn-primary" type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
+                <input class="btn btn-primary ml-2" type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
+            </div>
+        </div>
+    </body>
+</html>
+''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
+
                                                             return WillPopScope(
                                                                 onWillPop: () {
                                                                   Navigator.pop(
@@ -2204,33 +2207,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                   },
                                                                   userAgent:
                                                                       'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36',
-                                                                )
-                                                                //   WebViewPlus(
-                                                                // onWebViewCreated:
-                                                                //     (controller) {
-                                                                //   this._controller =
-                                                                //       controller;
-                                                                //   controller
-                                                                //       .loadUrl(
-                                                                //           url);
-                                                                // },
-                                                                // onPageFinished:
-                                                                //     (urls) {
-                                                                //   print(urls);
-                                                                // },
-                                                                // javascriptMode:
-                                                                //     JavascriptMode
-                                                                //         .unrestricted,
-                                                                // onWebResourceError:
-                                                                //     (WebResourceError
-                                                                //         error) {
-                                                                //   print(error
-                                                                //       .failingUrl);
-                                                                //   Navigator.pop(
-                                                                //       context);
-                                                                // },
-                                                                // ),
-                                                                );
+                                                                ));
                                                           });
 
                                                       // await openCheckoutbank(
