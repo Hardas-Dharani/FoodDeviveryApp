@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
+import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -69,6 +70,38 @@ class _CartBottomSheetState extends State<CartBottomSheet>
       body: SafeArea(
         child: CustomScrollView(controller: _scrollController, slivers: [
           SliverAppBar(
+            // leading: IconButton(
+            //     onPressed: () {},
+            //     icon: Icon(
+            //       Icons.favorite,
+            //       color: Color(0xffffffff),
+            //     )),
+            actions: [
+              Container(
+                width: 50,
+                // color: Colors.black,
+                child: Consumer<WishListProvider>(
+                    builder: (context, wishList, child) {
+                  return InkWell(
+                    onTap: () {
+                      wishList.wishIdList.contains(widget.product.id)
+                          ? wishList.removeFromWishList(
+                              widget.product, (message) {})
+                          : wishList.addToWishList(
+                              widget.product, (message) {});
+                    },
+                    child: Icon(
+                      wishList.wishIdList.contains(widget.product.id)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: wishList.wishIdList.contains(widget.product.id)
+                          ? ColorResources.COLOR_PRIMARY
+                          : ColorResources.COLOR_GREY,
+                    ),
+                  );
+                }),
+              )
+            ],
             expandedHeight: MediaQuery.of(context).size.height * .45,
             floating: false,
             stretch: true,
@@ -86,7 +119,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
             automaticallyImplyLeading: true,
             backgroundColor:
                 _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-            actionsIconTheme: IconThemeData(opacity: 0.0),
+            // actionsIconTheme: IconThemeData(opacity: 0.0),
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: [
                 StretchMode.zoomBackground,
@@ -124,6 +157,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             onPressed: widget.callback,
                           ),
                         ),
+
                         /*Padding(
                           padding: const EdgeInsets.only(left: 74.0),
                           child: Container(
@@ -300,7 +334,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                         ],
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 2,
                       ),
                       widget.product.addOns != null &&
                               widget.product.addOns.length > 0
@@ -498,7 +532,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             )
                           : SizedBox(),
                       SizedBox(
-                        height: 10,
+                        height: 2,
                       ),
                       widget.product.addOns2 != null &&
                               widget.product.addOns2.length > 0
@@ -707,7 +741,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             )
                           : SizedBox(),
                       SizedBox(
-                        height: 10,
+                        height: 2,
                       ),
                       widget.product.addOns1 != null &&
                               widget.product.addOns1.length > 0

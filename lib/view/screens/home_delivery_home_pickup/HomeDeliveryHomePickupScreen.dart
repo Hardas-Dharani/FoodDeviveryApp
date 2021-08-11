@@ -125,6 +125,8 @@ class _HomeDeliveyAndHomePickupScreenState
   }
 
   int branchid = 0;
+  String status = "";
+
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -149,7 +151,8 @@ class _HomeDeliveyAndHomePickupScreenState
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setInt("branchidshr", branchid);
               print(branchid);
-              if (selectedIndex != -1) {
+
+              if (selectedIndex != -1 && status != "Closed") {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => DashBoardLayOut()),
@@ -408,6 +411,7 @@ class _HomeDeliveyAndHomePickupScreenState
               : Colors.white,
           onTap: () {
             branchid = homePickupList[index].id;
+            status = homePickupList[index].openCloseStatus;
             selectedIndex = index;
             setState(() {});
           },
