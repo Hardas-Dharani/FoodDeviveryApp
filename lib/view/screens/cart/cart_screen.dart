@@ -75,13 +75,15 @@ class _CartScreenState extends State<CartScreen> {
           _cash = true;
           _takeaway = false;
         });
-      } else if (selectedApperanceTile == 4) {
-        setState(() {
-          _takeaway = false;
-          _cash = false;
-          _bankpay = true;
-        });
-      } else if (selectedApperanceTile == 3) {
+      }
+      // else if (selectedApperanceTile == 4) {
+      //   setState(() {
+      //     _takeaway = false;
+      //     _cash = false;
+      //     _bankpay = true;
+      //   });
+      // }
+      else if (selectedApperanceTile == 3) {
         setState(() {
           _takeaway = true;
           _cash = false;
@@ -1531,77 +1533,80 @@ class _CartScreenState extends State<CartScreen> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(
-                                                              width: 7,
-                                                            ),
-                                                            Wrap(
-                                                              children: [
-                                                                Container(
-                                                                  //width: MediaQuery.of(context).size.width * .25,
-                                                                  decoration: BoxDecoration(
-                                                                      color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-                                                                      border: Border.all(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                      ),
-                                                                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                            color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
-                                                                                0xFF000000),
-                                                                            blurRadius:
-                                                                                1,
-                                                                            spreadRadius:
-                                                                                1)
-                                                                      ]),
-                                                                  height: 30,
-                                                                  child: Center(
-                                                                      child:
-                                                                          Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                          "test",
-                                                                          style:
-                                                                              rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            2,
-                                                                      ),
-                                                                      /*Icon(
-                                                            Icons
-                                                                .radio_button_unchecked_outlined,
-                                                            size: 20,
-                                                            color: Color(int.parse(
-                                                                "#00A4A4"
-                                                                    .substring(
-                                                                    1, 7),
-                                                                radix: 16) +
-                                                                0xFF000000),
-                                                          )*/
-                                                                      Radio(
-                                                                        value:
-                                                                            4,
-                                                                        groupValue:
-                                                                            selectedApperanceTile,
-                                                                        activeColor:
-                                                                            Color(0xff00A4A4),
-                                                                        onChanged:
-                                                                            (val) {
-                                                                          print(
-                                                                              "Radio $val");
-                                                                          setSelectedApperanceTile(
-                                                                              val);
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                                ),
-                                                              ],
-                                                            ),
+                                                            // SizedBox(
+                                                            //   width: 7,
+                                                            // ),
+                                                            // Wrap(
+                                                            //     children: [
+                                                            //       Container(
+                                                            //         //width: MediaQuery.of(context).size.width * .25,
+                                                            //         decoration: BoxDecoration(
+                                                            //             color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                                                            //             border: Border.all(
+                                                            //               color: Color(int.parse("#FFFFFF".substring(1, 7),
+                                                            //                       radix: 16) +
+                                                            //                   0xFF000000),
+                                                            //             ),
+                                                            //             borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                            //             boxShadow: [
+                                                            //               BoxShadow(
+                                                            //                   color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+                                                            //                       0xFF000000),
+                                                            //                   blurRadius:
+                                                            //                       1,
+                                                            //                   spreadRadius:
+                                                            //                       1)
+                                                            //             ]),
+                                                            //         height: 30,
+                                                            //         child: Center(
+                                                            //             child:
+                                                            //                 Row(
+                                                            //           mainAxisAlignment:
+                                                            //               MainAxisAlignment
+                                                            //                   .center,
+                                                            //           children: [
+                                                            //             Text(
+                                                            //                 "test",
+                                                            //                 style:
+                                                            //                     rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                                                            //             SizedBox(
+                                                            //               width:
+                                                            //                   2,
+                                                            //             ),
+                                                            //             /*Icon(
+                                                            //   Icons
+                                                            //       .radio_button_unchecked_outlined,
+                                                            //   size: 20,
+                                                            //   color: Color(int.parse(
+                                                            //       "#00A4A4"
+                                                            //           .substring(
+                                                            //           1, 7),
+                                                            //       radix: 16) +
+                                                            //       0xFF000000),
+                                                            // )*/
+                                                            //             Radio(
+                                                            //               value:
+                                                            //                   4,
+                                                            //               groupValue:
+                                                            //                   selectedApperanceTile,
+                                                            //               activeColor:
+                                                            //                   Color(0xff00A4A4),
+                                                            //               onChanged:
+                                                            //                   (val) {
+                                                            //                 print(
+                                                            //                     "Radio $val");
+                                                            //                 setSelectedApperanceTile(
+                                                            //                     val);
+                                                            //               },
+                                                            //             ),
+                                                            //           ],
+                                                            //         )),
+                                                            //       ),
+                                                            //     ],
+                                                            //   ),
+
+                                                            //unknownperson
+
                                                             //Spacer(),
                                                             //SizedBox(width: 7,),
                                                             /*Wrap(
@@ -2030,7 +2035,7 @@ class _CartScreenState extends State<CartScreen> {
                                                           .add(NavigationEvents
                                                               .HomePageClickedEvent);
                                                     });
-                                                  } else if (_bankpay) {
+                                                  } else {
                                                     List<CartModel>
                                                         cartModelList =
                                                         cart.cartList;
@@ -2131,9 +2136,19 @@ class _CartScreenState extends State<CartScreen> {
 ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
 
                                                             return WillPopScope(
+                                                                // ignore: missing_return
                                                                 onWillPop: () {
                                                                   Navigator.pop(
                                                                       context);
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(SnackBar(
+                                                                          backgroundColor: Colors.red,
+                                                                          content: Text(
+                                                                            "Payment Failed",
+                                                                            style:
+                                                                                TextStyle(color: Colors.white),
+                                                                          )));
                                                                 },
                                                                 child: WebView(
                                                                   onWebViewCreated:
@@ -2167,8 +2182,8 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 deliveryAddressId: 0,
                                                                                 orderAmount: _total,
                                                                                 orderNote: '',
-                                                                                orderType: "Cash",
-                                                                                paymentMethod: 'Cash',
+                                                                                orderType: "delivery",
+                                                                                paymentMethod: 'online',
                                                                                 couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
                                                                                 branchId: id),
                                                                             null);
@@ -2178,7 +2193,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                           MaterialPageRoute(
                                                                             builder: (_) =>
                                                                                 PaymentSuccessfulScreen(
-                                                                              razorPaymentId: "Cash",
+                                                                              razorPaymentId: "pay_online",
                                                                             ),
                                                                           ),
                                                                         ).then(
@@ -2224,55 +2239,56 @@ class _CartScreenState extends State<CartScreen> {
                                                       //             .phone);
 
                                                     }
-                                                  } else {
-                                                    List<CartModel>
-                                                        cartModelList =
-                                                        cart.cartList;
-                                                    for (int index = 0;
-                                                        index <
-                                                            cartModelList
-                                                                .length;
-                                                        index++) {
-                                                      CartModel cart =
-                                                          cartModelList[index];
-                                                      List<int> _addOnIdList =
-                                                          [];
-                                                      List<int> _addOnQtyList =
-                                                          [];
-                                                      cart.addOnIds
-                                                          .forEach((addOn) {
-                                                        _addOnIdList
-                                                            .add(addOn.id);
-                                                        _addOnQtyList.add(
-                                                            addOn.quantity);
-                                                      });
-                                                      carts.add(Cart(
-                                                        cart.product.id
-                                                            .toString(),
-                                                        cart.discountedPrice
-                                                            .toString(),
-                                                        '',
-                                                        cart.variation,
-                                                        cart.discountAmount,
-                                                        cart.quantity,
-                                                        cart.taxAmount,
-                                                        _addOnIdList,
-                                                        _addOnQtyList,
-                                                      ));
-                                                    }
-                                                    openCheckout(
-                                                        totalPrice: _total,
-                                                        description:
-                                                            "Tazaz food delivery payment",
-                                                        userEmail:
-                                                            profileProvider
-                                                                .userInfoModel
-                                                                .email,
-                                                        userPhone:
-                                                            profileProvider
-                                                                .userInfoModel
-                                                                .phone);
                                                   }
+                                                  // else {
+                                                  //   List<CartModel>
+                                                  //       cartModelList =
+                                                  //       cart.cartList;
+                                                  //   for (int index = 0;
+                                                  //       index <
+                                                  //           cartModelList
+                                                  //               .length;
+                                                  //       index++) {
+                                                  //     CartModel cart =
+                                                  //         cartModelList[index];
+                                                  //     List<int> _addOnIdList =
+                                                  //         [];
+                                                  //     List<int> _addOnQtyList =
+                                                  //         [];
+                                                  //     cart.addOnIds
+                                                  //         .forEach((addOn) {
+                                                  //       _addOnIdList
+                                                  //           .add(addOn.id);
+                                                  //       _addOnQtyList.add(
+                                                  //           addOn.quantity);
+                                                  //     });
+                                                  //     carts.add(Cart(
+                                                  //       cart.product.id
+                                                  //           .toString(),
+                                                  //       cart.discountedPrice
+                                                  //           .toString(),
+                                                  //       '',
+                                                  //       cart.variation,
+                                                  //       cart.discountAmount,
+                                                  //       cart.quantity,
+                                                  //       cart.taxAmount,
+                                                  //       _addOnIdList,
+                                                  //       _addOnQtyList,
+                                                  //     ));
+                                                  //   }
+                                                  //   openCheckout(
+                                                  //       totalPrice: _total,
+                                                  //       description:
+                                                  //           "Tazaz food delivery payment",
+                                                  //       userEmail:
+                                                  //           profileProvider
+                                                  //               .userInfoModel
+                                                  //               .email,
+                                                  //       userPhone:
+                                                  //           profileProvider
+                                                  //               .userInfoModel
+                                                  //               .phone);
+                                                  // }
                                                 },
                                                 child: Container(
                                                   height: 45,

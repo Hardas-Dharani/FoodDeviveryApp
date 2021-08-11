@@ -55,6 +55,7 @@ class OrderDetailsScreen extends StatelessWidget {
         builder: (context, order, child) {
           double deliveryCharge = 0;
           double _itemsPrice = 0;
+          String paymentstatus = "";
           double _discount = 0;
           double _tax = 0;
           double _addOns = 0;
@@ -66,6 +67,11 @@ class OrderDetailsScreen extends StatelessWidget {
             } else if (order.trackModel.deliveryCharge != null ||
                 order.trackModel.deliveryCharge != 0) {
               deliveryCharge = order.trackModel.deliveryCharge;
+            }
+            if (order.trackModel.paymentMethod == "online") {
+              paymentstatus = "paid";
+            } else {
+              paymentstatus = order.trackModel.paymentStatus;
             }
             for (OrderDetailsModel orderDetails in order.orderDetails) {
               int _index = 0;
@@ -221,7 +227,8 @@ class OrderDetailsScreen extends StatelessWidget {
                             Expanded(
                                 flex: 8,
                                 child: Text(
-                                  '${order.trackModel.paymentStatus[0].toUpperCase()}${order.trackModel.paymentStatus.substring(1).replaceAll('_', ' ')}',
+                                  '${paymentstatus.toUpperCase()}',
+                                  // ${paymentstatus.substring(1).replaceAll('_', ' ')}',
                                   style: rubikMedium.copyWith(
                                       color: Theme.of(context).primaryColor),
                                 )),
@@ -245,7 +252,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                     style: rubikMedium.copyWith(
                                         color: Theme.of(context).primaryColor),
                                   ),
-                                  (order.trackModel.paymentStatus != 'paid' &&
+                                  (paymentstatus != 'paid' &&
                                           order.trackModel.paymentMethod !=
                                               'cash_on_delivery' &&
                                           order.trackModel.orderStatus !=
@@ -845,7 +852,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                     ),
                                   ))
                                 : SizedBox(),
-                            (order.trackModel.paymentStatus == 'unpaid' &&
+                            (paymentstatus == 'unpaid' &&
                                     order.trackModel.paymentMethod !=
                                         'cash_on_delivery' &&
                                     order.trackModel.orderStatus != 'delivered')

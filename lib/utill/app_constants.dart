@@ -68,7 +68,7 @@ class AppConstants {
   static const String SEARCH_ADDRESS = 'search_address';
   static const String TOPIC = 'notify';
 
-  static var  selectedLanguage = 'English';
+  static var selectedLanguage = 'English';
 
   static List<LanguageModel> languages = [
     LanguageModel(
