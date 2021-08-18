@@ -21,6 +21,7 @@ import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/Menu_dash_board_layout.dart';
 import 'package:flutter_restaurant/view/screens/feedback/feedback.dart';
 import 'package:flutter_restaurant/view/screens/home_delivery_home_pickup/HomeDeliveryHomePickupScreen.dart';
+import 'package:flutter_restaurant/view/screens/home_delivery_home_pickup/brANCHPICKUPPickupScreen%20copy.dart';
 import 'package:provider/provider.dart';
 
 class ChooseLanguageScreen extends StatefulWidget {
@@ -179,7 +180,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => HomeDeliveyAndHomePickupScreen(
+                            builder: (_) => BranchpickupScreen(
                                   label: "Branch Pickup",
                                 )));
                   },

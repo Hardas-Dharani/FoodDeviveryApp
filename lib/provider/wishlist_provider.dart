@@ -11,7 +11,7 @@ class WishListProvider extends ChangeNotifier {
   final ProductRepo productRepo;
   WishListProvider({@required this.wishListRepo, @required this.productRepo});
 
-  List<Product> _wishList;
+  List<Product> _wishList = [];
   List<int> _wishIdList = [];
 
   List<Product> get wishList => _wishList;
@@ -19,10 +19,19 @@ class WishListProvider extends ChangeNotifier {
 
   void addToWishList(Product product, Function feedbackMessage) async {
     ApiResponse apiResponse = await wishListRepo.addWishList(product.id);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String message = map['message'];
       feedbackMessage(message);
+      try {
+        _wishList.add(product);
+        _wishIdList.add(product.id);
+      } catch (e) {
+        print(e);
+      }
+    } else if (apiResponse.error == "Failed to load data - status code: 409") {
+      feedbackMessage("Already in your wishlist");
       _wishList.add(product);
       _wishIdList.add(product.id);
     } else {
@@ -34,7 +43,8 @@ class WishListProvider extends ChangeNotifier {
 
   void removeFromWishList(Product product, Function feedbackMessage) async {
     ApiResponse apiResponse = await wishListRepo.removeWishList(product.id);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String message = map['message'];
       feedbackMessage(message);
@@ -52,12 +62,15 @@ class WishListProvider extends ChangeNotifier {
     _wishList = [];
     _wishIdList = [];
     ApiResponse apiResponse = await wishListRepo.getWishList();
-    print("aaaaa"+apiResponse.response.statusCode.toString());
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      notifyListeners();
+    print("aaaaa" + apiResponse.response.statusCode.toString());
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      // notifyListeners();
       apiResponse.response.data.forEach((wishList) async {
-        ApiResponse productResponse = await productRepo.searchProduct(WishListModel.fromJson(wishList).productId.toString());
-        if (productResponse.response != null && productResponse.response.statusCode == 200) {
+        ApiResponse productResponse = await productRepo.searchProduct(
+            WishListModel.fromJson(wishList).productId.toString());
+        if (productResponse.response != null &&
+            productResponse.response.statusCode == 200) {
           Product _product = Product.fromJson(productResponse.response.data);
           _wishList.add(_product);
           _wishIdList.add(_product.id);
@@ -66,6 +79,7 @@ class WishListProvider extends ChangeNotifier {
           ApiChecker.checkApi(context, apiResponse);
         }
       });
+      notifyListeners();
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

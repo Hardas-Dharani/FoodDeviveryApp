@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'package:flutter_restaurant/network/BranchPickBloc.dart';
+import 'package:flutter_restaurant/network/BranchPickup.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,18 +21,16 @@ import 'dart:convert' as JSON;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeDeliveyAndHomePickupScreen extends StatefulWidget {
+class BranchpickupScreen extends StatefulWidget {
   var label;
 
-  HomeDeliveyAndHomePickupScreen({this.label});
+  BranchpickupScreen({this.label});
 
   @override
-  _HomeDeliveyAndHomePickupScreenState createState() =>
-      _HomeDeliveyAndHomePickupScreenState();
+  _branchpickupScreenState createState() => _branchpickupScreenState();
 }
 
-class _HomeDeliveyAndHomePickupScreenState
-    extends State<HomeDeliveyAndHomePickupScreen> {
+class _branchpickupScreenState extends State<BranchpickupScreen> {
   var _isDarkMode;
   bool _isLoading = false;
 
@@ -51,9 +51,9 @@ class _HomeDeliveyAndHomePickupScreenState
 
   TextEditingController _searchController = TextEditingController();
 
-  List<HomePickup> homePickupList;
-  List<HomePickup> searchPickupList = [];
-  HomePickupBloc homePickupBloc;
+  List<BranchPickup> homePickupList;
+  List<BranchPickup> searchPickupList = [];
+  BranchPickupBloc branchPickupBloc;
   List<Map<String, dynamic>> list = [
     {"title": "one", "id": "1", "lat": "23.8859", "lon": "45.0792"},
     {
@@ -77,7 +77,7 @@ class _HomeDeliveyAndHomePickupScreenState
   @override
   void initState() {
     super.initState();
-    homePickupBloc = HomePickupBloc();
+    branchPickupBloc = BranchPickupBloc();
     homePickupList = [];
     _getLocation();
   }
@@ -93,7 +93,7 @@ class _HomeDeliveyAndHomePickupScreenState
       currentLat = value.latitude;
       currentLng = value.longitude;
       LatLng pinPosition = LatLng(value.latitude, value.longitude);
-      homePickupBloc.getHomePickup(context, "", "");
+      branchPickupBloc.getbranchPickup(context, "", "");
       return null;
     });
 
@@ -295,9 +295,9 @@ class _HomeDeliveyAndHomePickupScreenState
               ),
             ),
             SliverToBoxAdapter(
-                child: StreamBuilder<List<HomePickup>>(
+                child: StreamBuilder<List<BranchPickup>>(
                     initialData: null,
-                    stream: homePickupBloc.homePickupStream,
+                    stream: branchPickupBloc.branchPickupStream,
                     builder: (context, snapshot) {
                       homePickupList = [];
                       if (snapshot.hasData && snapshot.data != null) {
@@ -376,7 +376,7 @@ class _HomeDeliveyAndHomePickupScreenState
   TimeOfDay time;
   List openClose = [];
   DateFormat dateFormat = new DateFormat.Hm();
-  Widget _listView(List<HomePickup> homePickupList) {
+  Widget _listView(List<BranchPickup> homePickupList) {
     return ListView.separated(
       itemCount: homePickupList != null && homePickupList.length > 0
           ? homePickupList.length
@@ -385,26 +385,6 @@ class _HomeDeliveyAndHomePickupScreenState
       padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        // print("Data is ="+homePickupList[index].closeTime+"\n");
-        // final startTime = DateTime(2021, 7, 7, 10, 30);
-        // final endTime = DateTime(2021, 7, 7, 01, 00);
-        /*final startTime = dateFormat.parse(homePickupList[index].openTime);
-        final endTime = dateFormat.parse(homePickupList[index].closeTime);*/
-
-        // final currentTime = DateTime.now();
-        //
-        // if(currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
-        //   // do something
-        //   print ("ys");
-        //   openClose.add("(Open)");
-        // }
-        // else{
-        //   openClose.add("(Close)");
-        //   print("no");
-        // }
-        /*DateTime before = DateTime.now();
-        DateTime after = DateTime.parse( homePickupList[index].closeTime.subString(0,4));
-        print((before.difference(after).inMilliseconds).toString());*/
         int distance = (Geolocator.distanceBetween(
                     currentLat,
                     currentLng,
@@ -456,6 +436,26 @@ class _HomeDeliveyAndHomePickupScreenState
         } else {
           return Container();
         }
+        // print("Data is ="+homePickupList[index].closeTime+"\n");
+        // final startTime = DateTime(2021, 7, 7, 10, 30);
+        // final endTime = DateTime(2021, 7, 7, 01, 00);
+        /*final startTime = dateFormat.parse(homePickupList[index].openTime);
+        final endTime = dateFormat.parse(homePickupList[index].closeTime);*/
+
+        // final currentTime = DateTime.now();
+        //
+        // if(currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+        //   // do something
+        //   print ("ys");
+        //   openClose.add("(Open)");
+        // }
+        // else{
+        //   openClose.add("(Close)");
+        //   print("no");
+        // }
+        /*DateTime before = DateTime.now();
+        DateTime after = DateTime.parse( homePickupList[index].closeTime.subString(0,4));
+        print((before.difference(after).inMilliseconds).toString());*/
       },
       separatorBuilder: (context, index) {
         return Container(

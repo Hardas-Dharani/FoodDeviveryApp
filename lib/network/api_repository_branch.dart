@@ -7,15 +7,15 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
-import 'HomePickup.dart';
+import 'BranchPickup.dart';
 import 'api_helper.dart';
 
-class ApiRepository {
-  Future<List<HomePickup>> getHomePickup(String lat, String lng) async {
+class ApiRepositoryBranch {
+  Future<List<BranchPickup>> getbranchPickup(String lat, String lng) async {
     Dio _dio = Dio();
     var response = await _dio.get(
         "https://venturus.in/dapp/api/v1/branch/branch_list",
-        queryParameters: {"home_delivery": 1}
+        queryParameters: {"branch_pickup": 1}
 
         // data: {"type": lat,
         //   "type": lng},
@@ -23,9 +23,9 @@ class ApiRepository {
     print("getConfig Response" + response.toString());
     // Map<String, dynamic> data = jsonDecode(response.toString());
     // print(data.toString());
-    List<HomePickup> _categoryList = [];
+    List<BranchPickup> _categoryList = [];
     response.data.forEach(
-        (category) => _categoryList.add(HomePickup.fromJson(category)));
+        (category) => _categoryList.add(BranchPickup.fromJson(category)));
     return _categoryList;
   }
 }
