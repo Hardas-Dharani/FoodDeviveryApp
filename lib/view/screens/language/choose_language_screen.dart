@@ -17,6 +17,7 @@ import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
+import 'package:flutter_restaurant/view/screens/address/select_location_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/Menu_dash_board_layout.dart';
 import 'package:flutter_restaurant/view/screens/feedback/feedback.dart';
@@ -191,12 +192,16 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                 commonButton(
                   "Home Delivery",
                   () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => HomeDeliveyAndHomePickupScreen(
-                                  label: "Home Delivery",
-                                )));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => SelectLocationScreen(
+                              screenname: "Home",
+                            )));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (_) => HomeDeliveyAndHomePickupScreen(
+                    //               label: "Home Delivery",
+                    //             )));
                   },
                 ),
                 SizedBox(

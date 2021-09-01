@@ -21,8 +21,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDeliveyAndHomePickupScreen extends StatefulWidget {
   var label;
+  double latfrommap;
+  double lngfrommap;
 
-  HomeDeliveyAndHomePickupScreen({this.label});
+  HomeDeliveyAndHomePickupScreen(
+      {this.label, this.latfrommap, this.lngfrommap});
 
   @override
   _HomeDeliveyAndHomePickupScreenState createState() =>
@@ -405,13 +408,23 @@ class _HomeDeliveyAndHomePickupScreenState
         /*DateTime before = DateTime.now();
         DateTime after = DateTime.parse( homePickupList[index].closeTime.subString(0,4));
         print((before.difference(after).inMilliseconds).toString());*/
-        int distance = (Geolocator.distanceBetween(
-                    currentLat,
-                    currentLng,
-                    double.parse(homePickupList[index].latitude.toString()),
-                    double.parse(homePickupList[index].longitude.toString())) /
-                1000)
-            .round();
+        int distance = widget.latfrommap.toString() != null
+            ? (Geolocator.distanceBetween(
+                        widget.latfrommap,
+                        widget.lngfrommap,
+                        double.parse(homePickupList[index].latitude.toString()),
+                        double.parse(
+                            homePickupList[index].longitude.toString())) /
+                    1000)
+                .round()
+            : (Geolocator.distanceBetween(
+                        currentLat,
+                        currentLng,
+                        double.parse(homePickupList[index].latitude.toString()),
+                        double.parse(
+                            homePickupList[index].longitude.toString())) /
+                    1000)
+                .round();
         if (distance <= 50) {
           return ListTile(
             tileColor: selectedIndex == index

@@ -392,50 +392,50 @@ class _branchpickupScreenState extends State<BranchpickupScreen> {
                     double.parse(homePickupList[index].longitude.toString())) /
                 1000)
             .round();
-        if (distance <= 50) {
-          return ListTile(
-            tileColor: selectedIndex == index
-                ? Color(0xFF00A4A4).withOpacity(0.5)
-                : Colors.white,
-            onTap: () {
-              branchid = homePickupList[index].id;
-              status = homePickupList[index].openCloseStatus;
-              selectedIndex = index;
-              setState(() {});
-            },
-            title: Text("${homePickupList[index].name}",
-                style: Theme.of(context).textTheme.headline2.copyWith(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600)),
-            subtitle: Text("${homePickupList[index].address}",
-                style: Theme.of(context).textTheme.headline2.copyWith(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400)),
-            trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                    "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].longitude.toString())) / 1000).round()}km",
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600)),
-                Text(homePickupList[index].openCloseStatus,
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                        color: homePickupList[index].openCloseStatus == "Open"
-                            ? Colors.green
-                            : Colors.red,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600)),
-              ],
-            ),
-          );
-        } else {
-          return Container();
-        }
+        // if (distance <= 50000) {
+        return ListTile(
+          tileColor: selectedIndex == index
+              ? Color(0xFF00A4A4).withOpacity(0.5)
+              : Colors.white,
+          onTap: () {
+            branchid = homePickupList[index].id;
+            status = homePickupList[index].openCloseStatus;
+            selectedIndex = index;
+            setState(() {});
+          },
+          title: Text("${homePickupList[index].name}",
+              style: Theme.of(context).textTheme.headline2.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600)),
+          subtitle: Text("${homePickupList[index].address}",
+              style: Theme.of(context).textTheme.headline2.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400)),
+          trailing: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                  "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].longitude.toString())) / 1000).round()}km",
+                  style: Theme.of(context).textTheme.headline2.copyWith(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600)),
+              Text(homePickupList[index].openCloseStatus,
+                  style: Theme.of(context).textTheme.headline2.copyWith(
+                      color: homePickupList[index].openCloseStatus == "Open"
+                          ? Colors.green
+                          : Colors.red,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600)),
+            ],
+          ),
+        );
+        // } else {
+        //   return Container();
+        // }
         // print("Data is ="+homePickupList[index].closeTime+"\n");
         // final startTime = DateTime(2021, 7, 7, 10, 30);
         // final endTime = DateTime(2021, 7, 7, 01, 00);
