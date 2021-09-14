@@ -25,16 +25,16 @@ import 'package:flutter_restaurant/view/screens/home_delivery_home_pickup/HomeDe
 import 'package:flutter_restaurant/view/screens/home_delivery_home_pickup/brANCHPICKUPPickupScreen%20copy.dart';
 import 'package:provider/provider.dart';
 
-class ChooseLanguageScreen extends StatefulWidget {
-  final bool fromMenu;
+class ChooseOptionScreen extends StatefulWidget {
+  // final bool fromMenu;
 
-  ChooseLanguageScreen({this.fromMenu = false});
+  // ChooseLanguageScreen({this.fromMenu = false});
 
   @override
   _ChooseLanguageScreenState createState() => _ChooseLanguageScreenState();
 }
 
-class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
+class _ChooseLanguageScreenState extends State<ChooseOptionScreen> {
   GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
   StreamSubscription<ConnectivityResult> _onConnectivityChanged;
   bool loading;
@@ -159,24 +159,12 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                     ),
                   ),
                 ]),
-                // Consumer<LanguageProvider>(
-                //     builder: (context, languageProvider, child) =>
-                //         ListView.builder(
-                //             itemCount: languageProvider.languages.length,
-                //             physics: BouncingScrollPhysics(),
-                //             shrinkWrap: true,
-                //             itemBuilder: (context, index) => _languageWidget(
-                //                 context: context,
-                //                 languageModel:
-                //                     languageProvider.languages[index],
-                //                 languageProvider: languageProvider,
-                //                 index: index))),
 
                 SizedBox(
-                  height: 200,
+                  height: 150,
                 ),
                 commonButton(
-                  "Pickup",
+                  "PICK UP",
                   () {
                     Navigator.push(
                         context,
@@ -204,7 +192,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                 SizedBox(
                   height: 12,
                 ),
-                commonButton("You are Heard", () {
+                commonButton("YOU ARE HEARD", () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => FeedBackScreen()));
                 }, color: Colors.red),

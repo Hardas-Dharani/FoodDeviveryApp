@@ -256,10 +256,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.16,
                                   decoration: BoxDecoration(
-                                    color: Color(int.parse(
-                                            "#00A4A4".substring(1, 7),
-                                            radix: 16) +
-                                        0xFF000000),
+                                    // color: Color(int.parse(
+                                    //         "#00A4A4".substring(1, 7),
+                                    //         radix: 16) +
+                                    //     0xFF000000),
                                     borderRadius: BorderRadius.only(
                                         bottomRight: Radius.circular(20.0),
                                         bottomLeft: Radius.circular(20.0)),
@@ -269,124 +269,144 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 16.0, right: 16),
-                                      child: Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: EdgeInsets.only(
-                                            top: (MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  getTranslated(
-                                                      "deliveringto", context),
-                                                  style: TextStyle(
-                                                      color:
-                                                          /*_isDarkMode
-                                                ?Color(0xff000000):*/
-                                                          Color(0xffffffff),
-                                                      fontSize: 16),
-                                                ),
-                                                SizedBox(width: 3),
-                                                Consumer<LocationProvider>(
-                                                  builder: (context,
-                                                          locationProvider,
-                                                          child) =>
-                                                      locationProvider.addressList !=
-                                                                  null &&
-                                                              locationProvider
-                                                                  .addressList
-                                                                  .isNotEmpty
-                                                          ? Text(
-                                                              '${locationProvider.addressList[0].streetAddress ?? ''} ',
-                                                              softWrap: true,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      /*_isDarkMode
-                                                        ?Color(0xff000000):*/
-                                                                      Color(
-                                                                          0xffffffff),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                  fontSize: 16),
-                                                            )
-                                                          : SizedBox(),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 3),
-                                            // Text(
-                                            //   "Abdulaziz Street",
-                                            //   style: TextStyle(
-                                            //       color: Colors.white,
-                                            //       fontWeight: FontWeight.w800,
-                                            //       fontSize: 16),
-                                            // ),
-                                            /*Consumer<LocationProvider>(
-                                          builder: (context, locationProvider,
-                                                  child) =>
-                                              locationProvider.addressList !=
-                                                          null &&
-                                                      locationProvider
-                                                          .addressList
-                                                          .isNotEmpty
-                                                  ? Text(
-                                                      '${locationProvider.addressList[0].streetAddress ?? ''} ',
-                                                      softWrap: true,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          color:
-                                                              _isDarkMode
-                                                        ?Color(0xff000000):*/
-                                            /*
-                                                              Color(0xffffffff),
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                          fontSize: 16),
-                                                    )
-                                                  : SizedBox(),
-                                        ),*/
-                                            SizedBox(height: 5),
-                                            Consumer<ProfileProvider>(
-                                              builder: (context,
-                                                      profileProvider, child) =>
-                                                  profileProvider
-                                                              .userInfoModel !=
-                                                          null
-                                                      ? Text(
-                                                          '${profileProvider.userInfoModel.fName ?? ''}',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  /*_isDarkMode
-                                                        ?Color(0xff000000):*/
-                                                                  Color(
-                                                                      0xffffffff),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              fontSize: 16),
-                                                        )
-                                                      : SizedBox(),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(
+                                    //       left: 16.0, right: 16),
+                                    //   child: Container(
+                                    //     alignment: Alignment.topLeft,
+                                    //     margin: EdgeInsets.only(
+                                    //         top: (MediaQuery.of(context)
+                                    //                 .size
+                                    //                 .height *
+                                    //             0.03)),
+                                    //     child: Column(
+                                    //       crossAxisAlignment:
+                                    //           CrossAxisAlignment.start,
+                                    //       children: [
+                                    //         Row(
+                                    //           children: [
+                                    //             Text(
+                                    //               getTranslated(
+                                    //                   "deliveringto", context),
+                                    //               style: TextStyle(
+                                    //                   color:
+                                    //                       /*_isDarkMode
+                                    //             ?
+                                    //             Color(0xff000000)
+                                    //             :*/
+                                    //                       Color(0xff000000),
+
+                                    //                   // Color(0xffffffff),
+                                    //                   fontSize: 16),
+                                    //             ),
+                                    //             SizedBox(width: 3),
+                                    //             Consumer<LocationProvider>(
+                                    //               builder: (context,
+                                    //                       locationProvider,
+                                    //                       child) =>
+                                    //                   locationProvider.addressList !=
+                                    //                               null &&
+                                    //                           locationProvider
+                                    //                               .addressList
+                                    //                               .isNotEmpty
+                                    //                       ? Text(
+                                    //                           '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                    //                           softWrap: true,
+                                    //                           overflow:
+                                    //                               TextOverflow
+                                    //                                   .ellipsis,
+                                    //                           style: TextStyle(
+                                    //                               color: Color(
+                                    //                                   0xff000000),
+                                    //                               /*_isDarkMode
+                                    //                     ?Color(0xff000000):*/
+                                    //                               // Color(
+                                    //                               //     0xffffffff),
+                                    //                               fontWeight:
+                                    //                                   FontWeight
+                                    //                                       .w800,
+                                    //                               fontSize: 16),
+                                    //                         )
+                                    //                       : SizedBox(),
+                                    //             ),
+                                    //             SizedBox(width: 3),
+                                    //             // Container(
+                                    //             //   child: Image.asset(
+                                    //             //     Images.tazaj_english,
+                                    //             //     height:
+                                    //             //         MediaQuery.of(context)
+                                    //             //                 .size
+                                    //             //                 .height /
+                                    //             //             12.5,
+                                    //             //     fit: BoxFit.scaleDown,
+                                    //             //     matchTextDirection: true,
+                                    //             //   ),
+                                    //             // ),
+                                    //           ],
+                                    //         ),
+                                    //         SizedBox(height: 3),
+                                    //         // Text(
+                                    //         //   "Abdulaziz Street",
+                                    //         //   style: TextStyle(
+                                    //         //       color: Colors.white,
+                                    //         //       fontWeight: FontWeight.w800,
+                                    //         //       fontSize: 16),
+                                    //         // ),
+                                    //         /*Consumer<LocationProvider>(
+                                    //       builder: (context, locationProvider,
+                                    //               child) =>
+                                    //           locationProvider.addressList !=
+                                    //                       null &&
+                                    //                   locationProvider
+                                    //                       .addressList
+                                    //                       .isNotEmpty
+                                    //               ? Text(
+                                    //                   '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                    //                   softWrap: true,
+                                    //                   overflow:
+                                    //                       TextOverflow.ellipsis,
+                                    //                   style: TextStyle(
+                                    //                       color:
+                                    //                           _isDarkMode
+                                    //                     ?Color(0xff000000):*/
+                                    //         /*
+                                    //                           Color(0xffffffff),
+                                    //                       fontWeight:
+                                    //                           FontWeight.w800,
+                                    //                       fontSize: 16),
+                                    //                 )
+                                    //               : SizedBox(),
+                                    //     ),*/
+                                    //         SizedBox(height: 2),
+                                    //         Consumer<ProfileProvider>(
+                                    //           builder: (context,
+                                    //                   profileProvider, child) =>
+                                    //               profileProvider
+                                    //                           .userInfoModel !=
+                                    //                       null
+                                    //                   ? Text(
+                                    //                       '${profileProvider.userInfoModel.fName ?? ''}',
+                                    //                       style: TextStyle(
+                                    //                           color:
+                                    //                               /*_isDarkMode
+                                    //                     ?Color(0xff000000):*/
+                                    //                               Color(
+                                    //                                   0xff000000),
+                                    //                           // Color(
+                                    //                           //     0xffffffff),
+                                    //                           fontWeight:
+                                    //                               FontWeight
+                                    //                                   .w800,
+                                    //                           fontSize: 16),
+                                    //                     )
+                                    //                   : SizedBox(),
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Container(
-                                      alignment: Alignment.topRight,
+                                      alignment: Alignment.topLeft,
                                       margin: EdgeInsets.only(
                                           top: (MediaQuery.of(context)
                                                   .size
@@ -395,10 +415,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: IconButton(
                                         icon: Icon(
                                           Icons.menu,
-                                          color:
-                                              /*_isDarkMode
+                                          color: Color(0xff000000),
+                                          /*_isDarkMode
                                     ?Color(0xff000000):*/
-                                              Color(0xffffffff),
+                                          // Color(0xffffffff),
                                         ),
                                         onPressed: () {
                                           setState(() {
@@ -411,13 +431,168 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                       ),
                                     ),
+
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 120),
+                                      child: Container(
+                                        // height: 20,
+                                        alignment: Alignment.topCenter,
+                                        child: Image.asset(
+                                          Images.tazaj_english,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              8.5,
+                                          fit: BoxFit.scaleDown,
+                                          matchTextDirection: true,
+                                        ),
+                                      ),
+                                    ),
                                   ],
+                                ),
+                                Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.topCenter,
+                                  margin: EdgeInsets.only(
+                                      top: (MediaQuery.of(context).size.height *
+                                          0.120)),
+                                  width: double.infinity,
+                                  height: 40,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16.0, right: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              getTranslated(
+                                                  "deliveringto", context),
+                                              style: TextStyle(
+                                                  color:
+                                                      /*_isDarkMode
+                                                  ?
+                                                  Color(0xff000000)
+                                                  :*/
+                                                      Colors.white,
+                                                  // Color(0xff000000),
+
+                                                  // Color(0xffffffff),
+                                                  fontSize: 16),
+                                            ),
+                                            SizedBox(width: 3),
+                                            Consumer<LocationProvider>(
+                                              builder: (context,
+                                                      locationProvider,
+                                                      child) =>
+                                                  locationProvider.addressList !=
+                                                              null &&
+                                                          locationProvider
+                                                              .addressList
+                                                              .isNotEmpty
+                                                      ? Text(
+                                                          '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                          softWrap: true,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              // Color(
+                                                              //     0xff000000),
+                                                              /*_isDarkMode
+                                                          ?Color(0xff000000):*/
+                                                              // Color(
+                                                              //     0xffffffff),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                              fontSize: 16),
+                                                        )
+                                                      : SizedBox(),
+                                            ),
+                                            SizedBox(width: 3),
+                                            // Container(
+                                            //   child: Image.asset(
+                                            //     Images.tazaj_english,
+                                            //     height:
+                                            //         MediaQuery.of(context)
+                                            //                 .size
+                                            //                 .height /
+                                            //             12.5,
+                                            //     fit: BoxFit.scaleDown,
+                                            //     matchTextDirection: true,
+                                            //   ),
+                                            // ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 3),
+                                        // Text(
+                                        //   "Abdulaziz Street",
+                                        //   style: TextStyle(
+                                        //       color: Colors.white,
+                                        //       fontWeight: FontWeight.w800,
+                                        //       fontSize: 16),
+                                        // ),
+                                        /*Consumer<LocationProvider>(
+                                            builder: (context, locationProvider,
+                                                    child) =>
+                                                locationProvider.addressList !=
+                                                            null &&
+                                                        locationProvider
+                                                            .addressList
+                                                            .isNotEmpty
+                                                    ? Text(
+                                                        '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                        softWrap: true,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            color:
+                                                                _isDarkMode
+                                                          ?Color(0xff000000):*/
+                                        /*
+                                                                Color(0xffffffff),
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            fontSize: 16),
+                                                      )
+                                                    : SizedBox(),
+                                          ),*/
+                                        SizedBox(height: 2),
+                                        Consumer<ProfileProvider>(
+                                          builder: (context, profileProvider,
+                                                  child) =>
+                                              profileProvider.userInfoModel !=
+                                                      null
+                                                  ? Text(
+                                                      '${profileProvider.userInfoModel.fName ?? ''}',
+                                                      style: TextStyle(
+                                                          color:
+                                                              /*_isDarkMode
+                                                          ?Color(0xff000000):*/
+                                                              // Color(0xff000000),
+                                                              Colors.white,
+                                                          // Color(
+                                                          //     0xffffffff),
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                          fontSize: 16),
+                                                    )
+                                                  : SizedBox(),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
                                 Container(
                                   alignment: Alignment.topCenter,
                                   margin: EdgeInsets.only(
                                       top: (MediaQuery.of(context).size.height *
-                                          0.120)),
+                                          0.180)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
                                     child: Consumer<BannerProvider>(
@@ -574,21 +749,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         .PADDING_SIZE_SMALL),
                                                                 child: Column(
                                                                     children: [
-                                                                      ClipOval(
-                                                                        child: FadeInImage
-                                                                            .assetNetwork(
-                                                                          placeholder:
-                                                                              Images.placeholder_image,
-                                                                          image:
-                                                                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/${category.categoryList[index].image}',
-                                                                          width:
-                                                                              65,
-                                                                          height:
-                                                                              65,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
+                                                                      // ClipOval(
+                                                                      //   child: FadeInImage
+                                                                      //       .assetNetwork(
+                                                                      //     placeholder:
+                                                                      //         Images.placeholder_image,
+                                                                      //     image:
+                                                                      //         '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/${category.categoryList[index].image}',
+                                                                      //     width:
+                                                                      //         65,
+                                                                      //     height:
+                                                                      //         65,
+                                                                      //     fit: BoxFit
+                                                                      //         .cover,
+                                                                      //   ),
+                                                                      // ),
                                                                       Text(
                                                                         category
                                                                             .categoryList[index]
@@ -630,7 +805,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               return Column(
                                                 children: [
                                                   Container(
-                                                    height: 88,
+                                                    height: 30,
+                                                    // width: 100,
                                                     child: category
                                                                 .categoryList !=
                                                             null
@@ -670,24 +846,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       padding: EdgeInsets.only(
                                                                           right:
                                                                               Dimensions.PADDING_SIZE_SMALL),
-                                                                      child: Column(
-                                                                          children: [
-                                                                            ClipOval(
-                                                                              child: FadeInImage.assetNetwork(
-                                                                                placeholder: Images.placeholder_image,
-                                                                                image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/${category.categoryList[index].image}',
-                                                                                width: 65,
-                                                                                height: 65,
-                                                                                fit: BoxFit.cover,
-                                                                              ),
-                                                                            ),
+                                                                      child:
+                                                                          Container(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        height:
+                                                                            20,
+                                                                        width:
+                                                                            80,
+                                                                        color: ind ==
+                                                                                index
+                                                                            ? Color(0xFFEF8D30)
+                                                                            : Color(0xFF00B9B2),
+                                                                        child:
                                                                             Text(
-                                                                              category.categoryList[index].name,
-                                                                              style: rubikMedium.copyWith(color: ind == index ? Colors.grey : Color(int.parse("#00A4A4".substring(1, 7), radix: 16) + 0xFF000000), fontSize: Dimensions.FONT_SIZE_SMALL),
-                                                                              maxLines: 1,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                            ),
-                                                                          ]),
+                                                                          category
+                                                                              .categoryList[index]
+                                                                              .name,
+                                                                          style: rubikMedium.copyWith(
+                                                                              color: Colors.white,
+                                                                              fontSize: Dimensions.FONT_SIZE_SMALL),
+                                                                          maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
                                                                     ),
                                                                   );
                                                                 },
@@ -1335,75 +1519,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                             child: Row(
                                                                 children: [
-                                                                  Stack(
-                                                                      children: [
-                                                                        ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10),
-                                                                          child:
-                                                                              FadeInImage.assetNetwork(
-                                                                            placeholder:
-                                                                                Images.placeholder_image,
-                                                                            image:
-                                                                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${category.categoryProductList[index].image}',
-                                                                            width:
-                                                                                94,
-                                                                            height:
-                                                                                100,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
-                                                                        ),
-                                                                        _isAvailable
-                                                                            ? SizedBox()
-                                                                            : Positioned(
-                                                                                top: 0,
-                                                                                left: 0,
-                                                                                bottom: 0,
-                                                                                right: 0,
-                                                                                child: Container(
-                                                                                  alignment: Alignment.center,
-                                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
-                                                                                  child: Text(getTranslated('not_available_now_break', context),
-                                                                                      textAlign: TextAlign.center,
-                                                                                      style: rubikRegular.copyWith(
-                                                                                        color: Colors.white,
-                                                                                        fontSize: 8,
-                                                                                      )),
-                                                                                ),
-                                                                              ),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(left: 50),
-                                                                          child:
-                                                                              Container(
-                                                                            height:
-                                                                                30,
-                                                                            width:
-                                                                                25,
-                                                                            decoration: BoxDecoration(
-                                                                                color: Colors.white,
-                                                                                border: Border.all(
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4), bottomRight: Radius.circular(4))),
-                                                                            child:
-                                                                                Center(
-                                                                              child: Consumer<WishListProvider>(builder: (context, wishList, child) {
-                                                                                return InkWell(
-                                                                                  onTap: () {
-                                                                                    wishList.wishIdList.contains(category.categoryProductList[index].id) ? wishList.removeFromWishList(category.categoryProductList[index], (message) {}) : wishList.addToWishList(category.categoryProductList[index], (message) {});
-                                                                                  },
-                                                                                  child: Icon(
-                                                                                    wishList.wishIdList.contains(category.categoryProductList[index].id) ? Icons.favorite : Icons.favorite_border,
-                                                                                    color: wishList.wishIdList.contains(category.categoryProductList[index].id) ? Color(0xFFFC6A57) : ColorResources.COLOR_GREY,
-                                                                                  ),
-                                                                                );
-                                                                              }),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ]),
                                                                   SizedBox(
                                                                       width: Dimensions
                                                                           .PADDING_SIZE_SMALL),
@@ -1508,6 +1623,77 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           ]),
                                                                     ),
                                                                   ),
+
+                                                                  Stack(
+                                                                      children: [
+                                                                        ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                          child:
+                                                                              FadeInImage.assetNetwork(
+                                                                            placeholder:
+                                                                                Images.placeholder_image,
+                                                                            image:
+                                                                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${category.categoryProductList[index].image}',
+                                                                            width:
+                                                                                94,
+                                                                            height:
+                                                                                100,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
+                                                                        _isAvailable
+                                                                            ? SizedBox()
+                                                                            : Positioned(
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                bottom: 0,
+                                                                                right: 0,
+                                                                                child: Container(
+                                                                                  alignment: Alignment.center,
+                                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
+                                                                                  child: Text(getTranslated('not_available_now_break', context),
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: rubikRegular.copyWith(
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 8,
+                                                                                      )),
+                                                                                ),
+                                                                              ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(left: 50),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                30,
+                                                                            width:
+                                                                                25,
+                                                                            decoration: BoxDecoration(
+                                                                                color: Colors.white,
+                                                                                border: Border.all(
+                                                                                  color: Colors.white,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(4), bottomRight: Radius.circular(4))),
+                                                                            child:
+                                                                                Center(
+                                                                              child: Consumer<WishListProvider>(builder: (context, wishList, child) {
+                                                                                return InkWell(
+                                                                                  onTap: () {
+                                                                                    wishList.wishIdList.contains(category.categoryProductList[index].id) ? wishList.removeFromWishList(category.categoryProductList[index], (message) {}) : wishList.addToWishList(category.categoryProductList[index], (message) {});
+                                                                                  },
+                                                                                  child: Icon(
+                                                                                    wishList.wishIdList.contains(category.categoryProductList[index].id) ? Icons.favorite : Icons.favorite_border,
+                                                                                    color: wishList.wishIdList.contains(category.categoryProductList[index].id) ? Color(0xFFFC6A57) : ColorResources.COLOR_GREY,
+                                                                                  ),
+                                                                                );
+                                                                              }),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ]),
+
                                                                   // Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                                                                   //   Icon(Icons.add),
                                                                   //   Expanded(child: SizedBox()),

@@ -425,7 +425,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
   @override
   void initState() {
     super.initState();
-    homePickupBloc=HomePickupBloc();
+    homePickupBloc = HomePickupBloc();
     homePickupBloc.getHomePickup(context, "", "");
     time = TimeOfDay.now();
     _isLoggedIn =
@@ -457,12 +457,25 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
               stretch: true,
               elevation: 0,
               pinned: false,
-              title: Text(getTranslated("feedback", context)),
+              title: Padding(
+                padding: const EdgeInsets.only(right: 80),
+                child: Container(
+                  // height: 20,
+                  alignment: Alignment.topCenter,
+                  child: Image.asset(
+                    Images.tazaj_english,
+                    height: MediaQuery.of(context).size.height / 8.5,
+                    fit: BoxFit.scaleDown,
+                    matchTextDirection: true,
+                  ),
+                ),
+              ),
               stretchTriggerOffset: 150.0,
               titleSpacing: 0,
-              backgroundColor: Color(
-                  int.parse("#00A4A4".substring(1, 7), radix: 16) + 0xFF000000),
-              actionsIconTheme: IconThemeData(opacity: 0.0),
+              backgroundColor: Colors.white,
+              actionsIconTheme: IconThemeData(
+                opacity: 0.0,
+              ),
               flexibleSpace: FlexibleSpaceBar(
                 stretchModes: [
                   StretchMode.zoomBackground,
@@ -474,12 +487,10 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.09,
                         decoration: BoxDecoration(
-                          color: Color(
-                              int.parse("#00A4A4".substring(1, 7), radix: 16) +
-                                  0xFF000000),
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20.0),
-                              bottomLeft: Radius.circular(20.0)),
+                          color: Colors.white,
+                          // borderRadius: BorderRadius.only(
+                          //     bottomRight: Radius.circular(20.0),
+                          //     bottomLeft: Radius.circular(20.0)),
                         ),
                       ),
                     ],
@@ -494,18 +505,22 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //SizedBox(height: 30),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Image.asset(
-                          Images.tazaj_english,
-                          height: MediaQuery.of(context).size.height / 4.5,
-                          fit: BoxFit.scaleDown,
-                          matchTextDirection: true,
-                        ),
-                      ),
-                    ]),
-                    SizedBox(height: 10),
+                    // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(15.0),
+                    //     child: Image.asset(
+                    //       Images.tazaj_english,
+                    //       height: MediaQuery.of(context).size.height / 4.5,
+                    //       fit: BoxFit.scaleDown,
+                    //       matchTextDirection: true,
+                    //     ),
+                    //   ),
+                    // ]),
+                    // SizedBox(height: 10),
+                    Divider(
+                      height: 20,
+                      color: Color(0xFF00A4A4),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
@@ -646,10 +661,11 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                           snapshot.data.forEach((element) {
                                             spinnerItems.add(element.name);
                                           });
-                                          if(dropdownValue.isEmpty||dropdownValue==null)
-                                            {
-                                              dropdownValue=snapshot.data[0].name;
-                                            }
+                                          if (dropdownValue.isEmpty ||
+                                              dropdownValue == null) {
+                                            dropdownValue =
+                                                snapshot.data[0].name;
+                                          }
 
                                           return Expanded(
                                             child: Padding(
@@ -657,11 +673,11 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                                   left: 8.0),
                                               child: Column(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    child: DropdownButton<
-                                                        String>(
+                                                    child:
+                                                        DropdownButton<String>(
                                                       value: dropdownValue,
                                                       icon: Icon(Icons
                                                           .arrow_drop_down),
@@ -673,8 +689,8 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                                               ? Colors.white
                                                               : Colors.black),
                                                       underline: SizedBox(),
-                                                      dropdownColor: Colors
-                                                          .grey,
+                                                      dropdownColor:
+                                                          Colors.grey,
                                                       onChanged: (String data) {
                                                         setState(() {
                                                           dropdownValue = data;
@@ -682,16 +698,15 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                                         });
                                                       },
                                                       items: spinnerItems.map<
-                                                          DropdownMenuItem<
-                                                              String>>(
-                                                              (String value) {
-                                                            return DropdownMenuItem<
-                                                                String>(
-                                                              value: value,
-                                                              child: Text(
-                                                                  value),
-                                                            );
-                                                          }).toList(),
+                                                              DropdownMenuItem<
+                                                                  String>>(
+                                                          (String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(value),
+                                                        );
+                                                      }).toList(),
                                                     ), /*TextFormField(
                                                       cursorColor: Color(0xff00A4A4),
                                                       style: TextStyle(),
@@ -724,15 +739,21 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                           );
                                         } else
                                           return Container(
-                                            height: MediaQuery.of(context).size.height * 0.8,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.8,
                                             margin: EdgeInsets.only(left: 80),
                                             child: Center(
                                               child: SizedBox(
                                                 height: 24,
                                                 width: 24,
-                                                child: CircularProgressIndicator(
-                                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                                      Color(0xFF00A4A4)),
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      new AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          Color(0xFF00A4A4)),
                                                 ),
                                               ),
                                             ),

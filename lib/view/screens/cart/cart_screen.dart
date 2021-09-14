@@ -239,7 +239,7 @@ class _CartScreenState extends State<CartScreen> {
                   slivers: [
                     // App Bar
                     SliverAppBar(
-                      expandedHeight: MediaQuery.of(context).size.height * 0.22,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.14,
                       floating: false,
                       stretch: true,
                       elevation: 0,
@@ -259,12 +259,12 @@ class _CartScreenState extends State<CartScreen> {
                             children: <Widget>[
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.16,
+                                    MediaQuery.of(context).size.height * 0.1,
                                 decoration: BoxDecoration(
-                                  color: Color(int.parse(
-                                          "#00A4A4".substring(1, 7),
-                                          radix: 16) +
-                                      0xFF000000),
+                                  // color: Color(int.parse(
+                                  //         "#00A4A4".substring(1, 7),
+                                  //         radix: 16) +
+                                  //     0xFF000000),
                                   borderRadius: BorderRadius.only(
                                       bottomRight: Radius.circular(20.0),
                                       bottomLeft: Radius.circular(20.0)),
@@ -274,109 +274,6 @@ class _CartScreenState extends State<CartScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 16.0, right: 16),
-                                    child: Container(
-                                      alignment: Alignment.topLeft,
-                                      margin: EdgeInsets.only(
-                                          top: (MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.03)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                getTranslated(
-                                                    "deliveringto", context),
-                                                style: TextStyle(
-                                                    color:
-                                                        /*_isDarkMode
-                                                  ?Color(0xff000000):*/
-                                                        Color(0xffffffff),
-                                                    fontSize: 16),
-                                              ),
-                                              SizedBox(width: 3),
-                                              Consumer<LocationProvider>(
-                                                builder: (context,
-                                                        locationProvider,
-                                                        child) =>
-                                                    locationProvider.addressList !=
-                                                                null &&
-                                                            locationProvider
-                                                                .addressList
-                                                                .isNotEmpty
-                                                        ? Text(
-                                                            '${locationProvider.addressList[0].streetAddress ?? ''} ',
-                                                            softWrap: true,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: TextStyle(
-                                                                color:
-                                                                    /*_isDarkMode
-                                                          ?Color(0xff000000):*/
-                                                                    Color(
-                                                                        0xffffffff),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                fontSize: 16),
-                                                          )
-                                                        : SizedBox(),
-                                              ),
-                                            ],
-                                          ),
-                                          /*SizedBox(height: 5),
-                                    Consumer<LocationProvider>(
-                                      builder: (context, locationProvider,
-                                              child) =>
-                                          locationProvider.addressList !=
-                                                      null &&
-                                                  locationProvider
-                                                      .addressList.isNotEmpty
-                                              ? Text(
-                                                  '${locationProvider.addressList[0].streetAddress ?? ''} ',
-                                                  softWrap: true,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      color: */ /*_isDarkMode
-                                                          ?Color(0xff000000):*/ /*Color(0xffffffff),
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                      fontSize: 16),
-                                                )
-                                              : SizedBox(),
-                                    ),*/
-                                          SizedBox(height: 5),
-                                          Consumer<ProfileProvider>(
-                                            builder: (context, profileProvider,
-                                                    child) =>
-                                                profileProvider.userInfoModel !=
-                                                        null
-                                                    ? Text(
-                                                        '${profileProvider.userInfoModel.fName ?? ''}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                /*_isDarkMode
-                                                          ?Color(0xff000000):*/
-                                                                Color(
-                                                                    0xffffffff),
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                            fontSize: 16),
-                                                      )
-                                                    : SizedBox(),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                   Container(
                                     alignment: Alignment.topRight,
                                     margin: EdgeInsets.only(
@@ -385,13 +282,11 @@ class _CartScreenState extends State<CartScreen> {
                                                 .height *
                                             0.03)),
                                     child: IconButton(
-                                      icon: Icon(
-                                        Icons.menu,
-                                        color:
-                                            /*_isDarkMode
+                                      icon: Icon(Icons.menu, color: Colors.black
+                                          /*_isDarkMode
                                       ?Color(0xff000000):*/
-                                            Color(0xffffffff),
-                                      ),
+                                          // Color(0xffffffff),
+                                          ),
                                       onPressed: () {
                                         setState(() {
                                           // xOffset = 230;
@@ -404,64 +299,126 @@ class _CartScreenState extends State<CartScreen> {
                                       },
                                     ),
                                   ),
-                                ],
-                              ),
-                              Container(
-                                alignment: Alignment.topRight,
-                                margin: EdgeInsets.only(
-                                    top: (MediaQuery.of(context).size.height *
-                                        0.1)),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchScreen()));
-                                  },
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .67,
-                                        decoration: BoxDecoration(
-                                          color: Color(int.parse(
-                                                  "#FFFFFF".substring(1, 7),
-                                                  radix: 16) +
-                                              0xFF000000),
-                                          border: Border.all(
-                                            color: Color(int.parse(
-                                                    "#FFFFFF".substring(1, 7),
-                                                    radix: 16) +
-                                                0xFF000000),
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(20),
-                                          ),
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                Dimensions.PADDING_SIZE_SMALL,
-                                            vertical: 2),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                getTranslated(
-                                                    "deliverytime", context),
-                                                style: rubikRegular.copyWith(
-                                                    fontSize: Dimensions
-                                                        .FONT_SIZE_EXTRA_SMALL,
-                                                    color: Colors.black),
-                                              ),
-                                            ]),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(
+                                  //       left: 16.0, right: 16),
+                                  //   child: Container(
+                                  //     alignment: Alignment.topLeft,
+                                  //     margin: EdgeInsets.only(
+                                  //         top: (MediaQuery.of(context)
+                                  //                 .size
+                                  //                 .height *
+                                  //             0.03)),
+                                  //     child: Column(
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         Row(
+                                  //           children: [
+                                  //             Text(
+                                  //               getTranslated(
+                                  //                   "deliveringto", context),
+                                  //               style: TextStyle(
+                                  //                   color:
+                                  //                       /*_isDarkMode
+                                  //                 ?Color(0xff000000):*/
+                                  //                       Color(0xffffffff),
+                                  //                   fontSize: 16),
+                                  //             ),
+                                  //             SizedBox(width: 3),
+                                  //             Consumer<LocationProvider>(
+                                  //               builder: (context,
+                                  //                       locationProvider,
+                                  //                       child) =>
+                                  //                   locationProvider.addressList !=
+                                  //                               null &&
+                                  //                           locationProvider
+                                  //                               .addressList
+                                  //                               .isNotEmpty
+                                  //                       ? Text(
+                                  //                           '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                  //                           softWrap: true,
+                                  //                           overflow:
+                                  //                               TextOverflow
+                                  //                                   .ellipsis,
+                                  //                           style: TextStyle(
+                                  //                               color:
+                                  //                                   /*_isDarkMode
+                                  //                         ?Color(0xff000000):*/
+                                  //                                   Color(
+                                  //                                       0xffffffff),
+                                  //                               fontWeight:
+                                  //                                   FontWeight
+                                  //                                       .w800,
+                                  //                               fontSize: 16),
+                                  //                         )
+                                  //                       : SizedBox(),
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //         /*SizedBox(height: 5),
+                                  //   Consumer<LocationProvider>(
+                                  //     builder: (context, locationProvider,
+                                  //             child) =>
+                                  //         locationProvider.addressList !=
+                                  //                     null &&
+                                  //                 locationProvider
+                                  //                     .addressList.isNotEmpty
+                                  //             ? Text(
+                                  //                 '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                  //                 softWrap: true,
+                                  //                 overflow:
+                                  //                     TextOverflow.ellipsis,
+                                  //                 style: TextStyle(
+                                  //                     color: */ /*_isDarkMode
+                                  //                         ?Color(0xff000000):*/ /*Color(0xffffffff),
+                                  //                     fontWeight:
+                                  //                         FontWeight.w800,
+                                  //                     fontSize: 16),
+                                  //               )
+                                  //             : SizedBox(),
+                                  //   ),*/
+                                  //         SizedBox(height: 5),
+                                  //         Consumer<ProfileProvider>(
+                                  //           builder: (context, profileProvider,
+                                  //                   child) =>
+                                  //               profileProvider.userInfoModel !=
+                                  //                       null
+                                  //                   ? Text(
+                                  //                       '${profileProvider.userInfoModel.fName ?? ''}',
+                                  //                       style: TextStyle(
+                                  //                           color:
+                                  //                               /*_isDarkMode
+                                  //                         ?Color(0xff000000):*/
+                                  //                               Color(
+                                  //                                   0xffffffff),
+                                  //                           fontWeight:
+                                  //                               FontWeight.w800,
+                                  //                           fontSize: 16),
+                                  //                     )
+                                  //                   : SizedBox(),
+                                  //         )
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 120),
+                                    child: Container(
+                                      // height: 20,
+                                      alignment: Alignment.topCenter,
+                                      child: Image.asset(
+                                        Images.tazaj_english,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                8.5,
+                                        fit: BoxFit.scaleDown,
+                                        matchTextDirection: true,
                                       ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),
@@ -562,6 +519,7 @@ class _CartScreenState extends State<CartScreen> {
 
                           // double _orderAmount = _itemPrice + _addOns;
 
+                          bool checkedValue = false;
                           return cart.cartList.length > 0
                               ? Column(children: [
                                   // Product
@@ -914,8 +872,8 @@ class _CartScreenState extends State<CartScreen> {
                                     },
                                   ),
 
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
+                                  // SizedBox(
+                                  //     height: Dimensions.PADDING_SIZE_LARGE),
 
                                   // Order type
                                   // Text(getTranslated('delivery_option', context),
@@ -948,13 +906,909 @@ class _CartScreenState extends State<CartScreen> {
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
                                         children: [
+                                          Container(
+                                            alignment: Alignment.topLeft,
+                                            // margin: EdgeInsets.only(
+                                            //     top: (MediaQuery.of(context)
+                                            //             .size
+                                            //             .height *
+                                            //         0.03)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      getTranslated(
+                                                          "deliveringto",
+                                                          context),
+                                                      softWrap: true,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color:
+                                                              /*_isDarkMode
+                                                                  ?Color(0xff000000):*/
+                                                              Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                          fontSize: 16),
+                                                    ),
+                                                    SizedBox(width: 3),
+                                                  ],
+                                                ),
+                                                /*SizedBox(height: 5),
+                                          Consumer<LocationProvider>(
+                                            builder: (context, locationProvider,
+                                                    child) =>
+                                                locationProvider.addressList !=
+                                                            null &&
+                                                        locationProvider
+                                                            .addressList.isNotEmpty
+                                                    ? Text(
+                                                        '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                        softWrap: true,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            color: */ /*_isDarkMode
+                                                                ?Color(0xff000000):*/ /*Color(0xffffffff),
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            fontSize: 16),
+                                                      )
+                                                    : SizedBox(),
+                                          ),*/
+                                                SizedBox(height: 5),
+                                                Container(
+                                                  height: 30,
+                                                  child: Consumer<
+                                                      LocationProvider>(
+                                                    builder: (context,
+                                                            locationProvider,
+                                                            child) =>
+                                                        locationProvider.addressList !=
+                                                                    null &&
+                                                                locationProvider
+                                                                    .addressList
+                                                                    .isNotEmpty
+                                                            ? Text(
+                                                                '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        /*_isDarkMode
+                                                        ?Color(0xff000000):*/
+                                                                        Color(0xff000000),
+                                                                    fontSize: 16),
+                                                              )
+                                                            : SizedBox(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.topLeft,
+                                            // margin: EdgeInsets.only(
+                                            //     top: (MediaQuery.of(context)
+                                            //             .size
+                                            //             .height *
+                                            //         0.03)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Delivery Instructions",
+                                                      softWrap: true,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color:
+                                                              /*_isDarkMode
+                                                                  ?Color(0xff000000):*/
+                                                              Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                          fontSize: 16),
+                                                    ),
+                                                    SizedBox(width: 3),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 5),
+                                                CheckboxListTile(
+                                                  title: Text(
+                                                    "Leave order at the door",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline3
+                                                        .copyWith(
+                                                          fontSize: Dimensions
+                                                              .FONT_SIZE_SMALL,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: Colors.black,
+                                                        ),
+                                                  ),
+                                                  checkColor: Color(0xFF00A4A4),
+                                                  value: checkedValue,
+                                                  onChanged: (newValue) {
+                                                    setState(() {
+                                                      checkedValue = newValue;
+                                                    });
+                                                  },
+                                                  controlAffinity:
+                                                      ListTileControlAffinity
+                                                          .leading, //  <-- leading Checkbox
+                                                ),
+                                                TextField(
+                                                  controller: _couponController,
+                                                  style: rubikRegular,
+                                                  textAlign: TextAlign.center,
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        "Add deopoff Instructions as building #45,apt #3",
+                                                    hintStyle:
+                                                        rubikRegular.copyWith(
+                                                            color: ColorResources
+                                                                .getHintColor(
+                                                                    context)),
+                                                    isDense: true,
+                                                    filled: true,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(
+                                                          Radius.circular(10)
+                                                          // left: Radius.circular(
+                                                          //     Provider.of<LocalizationProvider>(
+                                                          //                 context,
+                                                          //                 listen: false)
+                                                          //             .isLtr
+                                                          //         ? 10
+                                                          //         : 0),
+                                                          // right: Radius.circular(
+                                                          //     Provider.of<LocalizationProvider>(
+                                                          //                 context,
+                                                          //                 listen: false)
+                                                          //             .isLtr
+                                                          //         ? 0
+                                                          //         : 10),
+                                                          ),
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                    ),
+                                                  ),
+                                                  onSubmitted: (string) {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Consumer<ProfileProvider>(
+                                            builder: (context, profileProvider,
+                                                child) {
+                                              return GestureDetector(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.white),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(20),
+                                                          ),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  getTranslated(
+                                                                      "pay_method",
+                                                                      context),
+                                                                  style: rubikBold
+                                                                      .copyWith(
+                                                                    fontSize:
+                                                                        Dimensions
+                                                                            .FONT_SIZE_EXTRA_LARGE,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        0.0),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Wrap(
+                                                                      children: [
+                                                                        Container(
+                                                                          //
+                                                                          // width: MediaQuery.of(context).size.width * .25,
+                                                                          decoration: BoxDecoration(
+                                                                              color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                                                                              border: Border.all(
+                                                                                color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                                              ),
+                                                                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                                              boxShadow: [
+                                                                                BoxShadow(color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000), blurRadius: 1, spreadRadius: 1)
+                                                                              ]),
+                                                                          height:
+                                                                              30,
+                                                                          child: Center(
+                                                                              child: Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Text(getTranslated("pay", context), style: rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                                                                              SizedBox(
+                                                                                width: 2,
+                                                                              ),
+                                                                              Radio(
+                                                                                value: 1,
+                                                                                groupValue: selectedApperanceTile,
+                                                                                activeColor: Color(0xff00A4A4),
+                                                                                onChanged: (val) {
+                                                                                  print("Radio $val");
+                                                                                  setSelectedApperanceTile(val);
+                                                                                },
+                                                                              ),
+                                                                              /*Icon(
+                                                        Icons
+                                                            .radio_button_unchecked_outlined,
+                                                        size: 20,
+                                                        color: Color(int.parse(
+                                                                "#00A4A4"
+                                                                    .substring(
+                                                                        1, 7),
+                                                                radix: 16) +
+                                                            0xFF000000),
+                                                      )*/
+                                                                            ],
+                                                                          )),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    //Spacer(),
+                                                                    SizedBox(
+                                                                      width: 7,
+                                                                    ),
+                                                                    Wrap(
+                                                                      children: [
+                                                                        Container(
+                                                                          //width: MediaQuery.of(context).size.width * .25,
+                                                                          decoration: BoxDecoration(
+                                                                              color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                                                                              border: Border.all(
+                                                                                color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                                              ),
+                                                                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                                              boxShadow: [
+                                                                                BoxShadow(color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000), blurRadius: 1, spreadRadius: 1)
+                                                                              ]),
+                                                                          height:
+                                                                              30,
+                                                                          child: Center(
+                                                                              child: Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Text(getTranslated("cash", context), style: rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                                                                              SizedBox(
+                                                                                width: 2,
+                                                                              ),
+                                                                              /*Icon(
+                                                            Icons
+                                                                .radio_button_unchecked_outlined,
+                                                            size: 20,
+                                                            color: Color(int.parse(
+                                                                "#00A4A4"
+                                                                    .substring(
+                                                                    1, 7),
+                                                                radix: 16) +
+                                                                0xFF000000),
+                                                          )*/
+                                                                              Radio(
+                                                                                value: 2,
+                                                                                groupValue: selectedApperanceTile,
+                                                                                activeColor: Color(0xff00A4A4),
+                                                                                onChanged: (val) {
+                                                                                  print("Radio $val");
+                                                                                  setSelectedApperanceTile(val);
+                                                                                },
+                                                                              ),
+                                                                            ],
+                                                                          )),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    // SizedBox(
+                                                                    //   width: 7,
+                                                                    // ),
+                                                                    // Wrap(
+                                                                    //     children: [
+                                                                    //       Container(
+                                                                    //         //width: MediaQuery.of(context).size.width * .25,
+                                                                    //         decoration: BoxDecoration(
+                                                                    //             color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                                                                    //             border: Border.all(
+                                                                    //               color: Color(int.parse("#FFFFFF".substring(1, 7),
+                                                                    //                       radix: 16) +
+                                                                    //                   0xFF000000),
+                                                                    //             ),
+                                                                    //             borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                                    //             boxShadow: [
+                                                                    //               BoxShadow(
+                                                                    //                   color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+                                                                    //                       0xFF000000),
+                                                                    //                   blurRadius:
+                                                                    //                       1,
+                                                                    //                   spreadRadius:
+                                                                    //                       1)
+                                                                    //             ]),
+                                                                    //         height: 30,
+                                                                    //         child: Center(
+                                                                    //             child:
+                                                                    //                 Row(
+                                                                    //           mainAxisAlignment:
+                                                                    //               MainAxisAlignment
+                                                                    //                   .center,
+                                                                    //           children: [
+                                                                    //             Text(
+                                                                    //                 "test",
+                                                                    //                 style:
+                                                                    //                     rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                                                                    //             SizedBox(
+                                                                    //               width:
+                                                                    //                   2,
+                                                                    //             ),
+                                                                    //             /*Icon(
+                                                                    //   Icons
+                                                                    //       .radio_button_unchecked_outlined,
+                                                                    //   size: 20,
+                                                                    //   color: Color(int.parse(
+                                                                    //       "#00A4A4"
+                                                                    //           .substring(
+                                                                    //           1, 7),
+                                                                    //       radix: 16) +
+                                                                    //       0xFF000000),
+                                                                    // )*/
+                                                                    //             Radio(
+                                                                    //               value:
+                                                                    //                   4,
+                                                                    //               groupValue:
+                                                                    //                   selectedApperanceTile,
+                                                                    //               activeColor:
+                                                                    //                   Color(0xff00A4A4),
+                                                                    //               onChanged:
+                                                                    //                   (val) {
+                                                                    //                 print(
+                                                                    //                     "Radio $val");
+                                                                    //                 setSelectedApperanceTile(
+                                                                    //                     val);
+                                                                    //               },
+                                                                    //             ),
+                                                                    //           ],
+                                                                    //         )),
+                                                                    //       ),
+                                                                    //     ],
+                                                                    //   ),
+                                                                    //unknownperson
+                                                                    //Spacer(),
+                                                                    //SizedBox(width: 7,),
+                                                                    /*Wrap(
+                                                     children: [
+                                                       Container(
+                                                         */ /*width: MediaQuery.of(context)
+                                                             .size
+                                                             .width *
+                                                             .35,*/ /*
+                                                         decoration: BoxDecoration(
+                                                             color:_isDarkMode
+                                                                 ?Color(0xff000000):Color(0xffF5F5F5),
+                                                             border: Border.all(
+                                                               color: Color(int.parse(
+                                                                   "#FFFFFF"
+                                                                       .substring(
+                                                                       1, 7),
+                                                                   radix: 16) +
+                                                                   0xFF000000),
+                                                             ),
+                                                             borderRadius:
+                                                             BorderRadius.all(
+                                                                 Radius.circular(
+                                                                     4)),
+                                                             boxShadow: [
+                                                               BoxShadow(
+                                                                   color: Color(int.parse(
+                                                                       "#FFFFFF"
+                                                                           .substring(
+                                                                           1,
+                                                                           7),
+                                                                       radix: 16) +
+                                                                       0xFF000000),
+                                                                   blurRadius: 1,
+                                                                   spreadRadius: 1)
+                                                             ]),
+                                                         height: 30,
+                                                         child: Center(
+                                                             child: Row(
+                                                               mainAxisAlignment:
+                                                               MainAxisAlignment
+                                                                   .center,
+                                                               children: [
+                                                                 Text(getTranslated("take_away", context),
+                                                                     style: rubikBold.copyWith(
+                                                                         fontSize: Dimensions
+                                                                             .FONT_SIZE_LARGE)),
+                                                                 SizedBox(
+                                                                   width: 2,
+                                                                 ),
+                                                                 */ /*Icon(
+                                                            Icons
+                                                                .radio_button_unchecked_outlined,
+                                                            size: 20,
+                                                            color: Color(int.parse(
+                                                                "#00A4A4"
+                                                                    .substring(
+                                                                    1, 7),
+                                                                radix: 16) +
+                                                                0xFF000000),
+                                                          )*/ /*
+                                                                 Radio(
+                                                                   value: 3,
+                                                                   groupValue: selectedApperanceTile,
+                                                                   activeColor: Color(0xff00A4A4),
+                                                                   onChanged: (val) {
+                                                                     print("Radio $val");
+                                                                     setSelectedApperanceTile(val);
+                                                                   },
+                                                                 ),
+                                                               ],
+                                                             )),
+                                                       )
+                                                     ],
+                                                   )*/
+                                                                  ],
+                                                                )),
+                                                            // SizedBox(
+                                                            //   height: 10,
+                                                            // ),
+                                                            //         Padding(
+                                                            //           padding:
+                                                            //               const EdgeInsets
+                                                            //                   .all(8.0),
+                                                            //           child: Row(
+                                                            //             mainAxisAlignment:
+                                                            //                 MainAxisAlignment
+                                                            //                     .spaceBetween,
+                                                            //             children: [
+                                                            //               Row(
+                                                            //                 children: [
+                                                            //                   Container(
+                                                            //                     width: MediaQuery.of(context).size.width *
+                                                            //                         .15,
+                                                            //                     decoration:
+                                                            //                         BoxDecoration(
+                                                            //                             color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             border: Border.all(
+                                                            //                               color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             ),
+                                                            //                             borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                            //                             boxShadow: [
+                                                            //                           BoxShadow(color: Colors.grey[300], blurRadius: 1, spreadRadius: 1)
+                                                            //                         ]),
+                                                            //                     height:
+                                                            //                         30,
+                                                            //                     child: Center(
+                                                            //                         child:
+                                                            //                             Image.asset("assets/image/mada_card.png")),
+                                                            //                   )
+                                                            //                 ],
+                                                            //               ),
+                                                            //               Row(
+                                                            //                 children: [
+                                                            //                   Container(
+                                                            //                     width: MediaQuery.of(context).size.width *
+                                                            //                         .15,
+                                                            //                     decoration:
+                                                            //                         BoxDecoration(
+                                                            //                             color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             border: Border.all(
+                                                            //                               color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             ),
+                                                            //                             borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                            //                             boxShadow: [
+                                                            //                           BoxShadow(color: Colors.grey[300], blurRadius: 1, spreadRadius: 1)
+                                                            //                         ]),
+                                                            //                     height:
+                                                            //                         30,
+                                                            //                     child: Center(
+                                                            //                         child:
+                                                            //                             Image.asset("assets/image/visa_card.png")),
+                                                            //                   )
+                                                            //                 ],
+                                                            //               ),
+                                                            //               Row(
+                                                            //                 children: [
+                                                            //                   Container(
+                                                            //                     width: MediaQuery.of(context).size.width *
+                                                            //                         .15,
+                                                            //                     decoration:
+                                                            //                         BoxDecoration(
+                                                            //                             color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             border: Border.all(
+                                                            //                               color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+                                                            //                             ),
+                                                            //                             borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                            //                             boxShadow: [
+                                                            //                           BoxShadow(color: Colors.grey[300], blurRadius: 1, spreadRadius: 1)
+                                                            //                         ]),
+                                                            //                     height:
+                                                            //                         30,
+                                                            //                     child: Center(
+                                                            //                         child:
+                                                            //                             Image.asset("assets/image/master_card.png")),
+                                                            //                   )
+                                                            //                 ],
+                                                            //               ),
+                                                            //               /*Row(
+                                                            //   children: [
+                                                            //     Container(
+                                                            //       width:
+                                                            //           MediaQuery.of(context)
+                                                            //                   .size
+                                                            //                   .width *
+                                                            //               .15,
+                                                            //       decoration: BoxDecoration(
+                                                            //           color: Color(
+                                                            //               int.parse(
+                                                            //                       "#FFFFFF"
+                                                            //                           .substring(
+                                                            //                               1,
+                                                            //                               7),
+                                                            //                       radix: 16) +
+                                                            //                   0xFF000000),
+                                                            //           border: Border.all(
+                                                            //             color: Color(int.parse(
+                                                            //                     "#FFFFFF"
+                                                            //                         .substring(
+                                                            //                             1,
+                                                            //                             7),
+                                                            //                     radix: 16) +
+                                                            //                 0xFF000000),
+                                                            //           ),
+                                                            //           borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                            //           boxShadow: [
+                                                            //             BoxShadow(
+                                                            //                 color: Colors
+                                                            //                     .grey[300],
+                                                            //                 blurRadius: 1,
+                                                            //                 spreadRadius: 1)
+                                                            //           ]),
+                                                            //       height: 30,
+                                                            //       child: Center(
+                                                            //           child: Image.asset(
+                                                            //               "assets/image/apple_logo.png")),
+                                                            //     )
+                                                            //   ],
+                                                            // ),*/
+                                                            //             ],
+                                                            //           ),
+                                                            //         ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      //proceed  button...............................................................
+                                                      // SizedBox(
+                                                      //   height: 20,
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                /*onTap: () {
+                                    List<CartModel> cartModelList =
+                                        cart.cartList;
+                                    for (int index = 0;
+                                        index < cartModelList.length;
+                                        index++) {
+                                      CartModel cart = cartModelList[index];
+                                      List<int> _addOnIdList = [];
+                                      List<int> _addOnQtyList = [];
+                                      cart.addOnIds.forEach((addOn) {
+                                        _addOnIdList.add(addOn.id);
+                                        _addOnQtyList.add(addOn.quantity);
+                                      });
+                                      carts.add(Cart(
+                                        cart.product.id.toString(),
+                                        cart.discountedPrice.toString(),
+                                        '',
+                                        cart.variation,
+                                        cart.discountAmount,
+                                        cart.quantity,
+                                        cart.taxAmount,
+                                        _addOnIdList,
+                                        _addOnQtyList,
+                                      ));
+                                    }
+                                    openCheckout(
+                                        totalPrice: _cash?_subTotal:_total,
+                                        description:
+                                            "Tazaz food delivery payment",
+                                        userEmail:
+                                            profileProvider.userInfoModel.email,
+                                        userPhone: profileProvider
+                                            .userInfoModel.phone);
+                                  },*/
+                                              );
+                                            },
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions
+                                                    .PADDING_SIZE_EXTRA_LARGE),
+                                            child: Divider(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.only(
+                                                top: (MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.03)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Estimated Delivery Time",
+                                                      softWrap: true,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color:
+                                                              /*_isDarkMode
+                                                                  ?Color(0xff000000):*/
+                                                              Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                          fontSize: 16),
+                                                    ),
+                                                    // SizedBox(width: 3),
+                                                  ],
+                                                ),
+                                                /*SizedBox(height: 5),
+                                          Consumer<LocationProvider>(
+                                            builder: (context, locationProvider,
+                                                    child) =>
+                                                locationProvider.addressList !=
+                                                            null &&
+                                                        locationProvider
+                                                            .addressList.isNotEmpty
+                                                    ? Text(
+                                                        '${locationProvider.addressList[0].streetAddress ?? ''} ',
+                                                        softWrap: true,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            color: */ /*_isDarkMode
+                                                                ?Color(0xff000000):*/ /*Color(0xffffffff),
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            fontSize: 16),
+                                                      )
+                                                    : SizedBox(),
+                                          ),*/
+                                                SizedBox(height: 5),
+                                                Container(
+                                                    height: 30,
+                                                    child: Text(
+                                                      '30-40 minutes',
+                                                      style: TextStyle(
+                                                          color:
+                                                              /*_isDarkMode
+                                                        ?Color(0xff000000):*/
+                                                              Color(0xff000000),
+                                                          fontSize: 16),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions
+                                                    .PADDING_SIZE_EXTRA_LARGE),
+                                            child: Divider(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Consumer<CouponProvider>(
+                                            builder: (context, coupon, child) {
+                                              return Row(children: [
+                                                Text(
+                                                  'Discount Code',
+                                                  softWrap: true,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      color:
+                                                          /*_isDarkMode
+                                                                ?Color(0xff000000):*/
+                                                          Color(0xff000000),
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      fontSize: 16),
+                                                ),
+                                                Expanded(
+                                                  child: TextField(
+                                                    controller:
+                                                        _couponController,
+                                                    style: rubikRegular,
+                                                    textAlign: TextAlign.center,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Add Promo/Referral Code",
+                                                      hintStyle:
+                                                          rubikRegular.copyWith(
+                                                              color: ColorResources
+                                                                  .getHintColor(
+                                                                      context)),
+                                                      isDense: true,
+                                                      filled: true,
+                                                      enabled:
+                                                          coupon.discount == 0,
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(10)
+                                                            // left: Radius.circular(
+                                                            //     Provider.of<LocalizationProvider>(
+                                                            //                 context,
+                                                            //                 listen: false)
+                                                            //             .isLtr
+                                                            //         ? 10
+                                                            //         : 0),
+                                                            // right: Radius.circular(
+                                                            //     Provider.of<LocalizationProvider>(
+                                                            //                 context,
+                                                            //                 listen: false)
+                                                            //             .isLtr
+                                                            //         ? 0
+                                                            //         : 10),
+                                                            ),
+                                                        borderSide:
+                                                            BorderSide.none,
+                                                      ),
+                                                    ),
+                                                    onSubmitted: (string) {
+                                                      if (_couponController.text
+                                                              .isNotEmpty &&
+                                                          !coupon.isLoading) {
+                                                        if (coupon.discount <
+                                                            1) {
+                                                          coupon
+                                                              .applyCoupon(
+                                                                  _couponController
+                                                                      .text,
+                                                                  _total)
+                                                              .then((discount) {
+                                                            if (discount > 0) {
+                                                              _scaffoldKey
+                                                                  .currentState
+                                                                  .showSnackBar(SnackBar(
+                                                                      content: Text(
+                                                                          'You got ${Provider.of<SplashProvider>(context, listen: false).configModel.currencySymbol}$discount discount'),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green));
+                                                            } else {
+                                                              _scaffoldKey
+                                                                  .currentState
+                                                                  .showSnackBar(
+                                                                      SnackBar(
+                                                                content: Text(
+                                                                    getTranslated(
+                                                                        'invalid_code_or',
+                                                                        context)),
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                              ));
+                                                            }
+                                                          });
+                                                        } else {
+                                                          coupon
+                                                              .removeCouponData(
+                                                                  true);
+                                                        }
+                                                      } else if (_couponController
+                                                          .text.isEmpty) {
+                                                        showCustomSnackBar(
+                                                            getTranslated(
+                                                                'enter_a_Coupon_code',
+                                                                context),
+                                                            context);
+                                                      }
+                                                    },
+                                                  ),
+                                                ),
+                                                // InkWell(
+                                                //   onTap:
+                                                //   child: Container(
+                                                //     height: 50,
+                                                //     width: 100,
+                                                //     alignment: Alignment.center,
+                                                //     decoration: BoxDecoration(
+                                                //       color: Theme.of(context).primaryColor,
+                                                //       borderRadius: BorderRadius.horizontal(
+                                                //         left: Radius.circular(
+                                                //             Provider.of<LocalizationProvider>(
+                                                //                         context,
+                                                //                         listen: false)
+                                                //                     .isLtr
+                                                //                 ? 0
+                                                //                 : 10),
+                                                //         right: Radius.circular(
+                                                //             Provider.of<LocalizationProvider>(
+                                                //                         context,
+                                                //                         listen: false)
+                                                //                     .isLtr
+                                                //                 ? 10
+                                                //                 : 0),
+                                                //       ),
+                                                //     ),
+                                                //     child: coupon.discount <= 0
+                                                //         ? !coupon.isLoading
+                                                //             ? Text(
+                                                //                 getTranslated(
+                                                //                     'apply', context),
+                                                //                 style: rubikMedium.copyWith(
+                                                //                     color: Colors.white),
+                                                //               )
+                                                //             : CircularProgressIndicator(
+                                                //                 valueColor:
+                                                //                     AlwaysStoppedAnimation<
+                                                //                         Color>(Colors.white))
+                                                //         : Icon(Icons.clear,
+                                                //             color: Colors.white),
+                                                //   ),
+                                                // ),
+                                              ]);
+                                            },
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions
+                                                    .PADDING_SIZE_EXTRA_LARGE),
+                                            child: Divider(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
-                                                getTranslated(
-                                                    "billsummary", context),
+                                                "Payment Details",
                                                 style: rubikBold.copyWith(
                                                   fontSize: Dimensions
                                                       .FONT_SIZE_EXTRA_LARGE,
@@ -1207,875 +2061,186 @@ class _CartScreenState extends State<CartScreen> {
                                   SizedBox(
                                       height: Dimensions.PADDING_SIZE_LARGE),
                                   // Coupon
-                                  Padding(
-                                    padding: const EdgeInsets.all(
-                                        Dimensions.PADDING_SIZE_LARGE),
-                                    child: Consumer<CouponProvider>(
-                                      builder: (context, coupon, child) {
-                                        return Row(children: [
-                                          Expanded(
-                                            child: TextField(
-                                              controller: _couponController,
-                                              style: rubikRegular,
-                                              textAlign: TextAlign.center,
-                                              decoration: InputDecoration(
-                                                hintText:
-                                                    "Add Promo/Referral Code",
-                                                hintStyle:
-                                                    rubikRegular.copyWith(
-                                                        color: ColorResources
-                                                            .getHintColor(
-                                                                context)),
-                                                isDense: true,
-                                                filled: true,
-                                                enabled: coupon.discount == 0,
-                                                border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(10)
-                                                      // left: Radius.circular(
-                                                      //     Provider.of<LocalizationProvider>(
-                                                      //                 context,
-                                                      //                 listen: false)
-                                                      //             .isLtr
-                                                      //         ? 10
-                                                      //         : 0),
-                                                      // right: Radius.circular(
-                                                      //     Provider.of<LocalizationProvider>(
-                                                      //                 context,
-                                                      //                 listen: false)
-                                                      //             .isLtr
-                                                      //         ? 0
-                                                      //         : 10),
-                                                      ),
-                                                  borderSide: BorderSide.none,
-                                                ),
-                                              ),
-                                              onSubmitted: (string) {
-                                                if (_couponController
-                                                        .text.isNotEmpty &&
-                                                    !coupon.isLoading) {
-                                                  if (coupon.discount < 1) {
-                                                    coupon
-                                                        .applyCoupon(
-                                                            _couponController
-                                                                .text,
-                                                            _total)
-                                                        .then((discount) {
-                                                      if (discount > 0) {
-                                                        _scaffoldKey
-                                                            .currentState
-                                                            .showSnackBar(SnackBar(
-                                                                content: Text(
-                                                                    'You got ${Provider.of<SplashProvider>(context, listen: false).configModel.currencySymbol}$discount discount'),
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .green));
-                                                      } else {
-                                                        _scaffoldKey
-                                                            .currentState
-                                                            .showSnackBar(
-                                                                SnackBar(
-                                                          content: Text(
-                                                              getTranslated(
-                                                                  'invalid_code_or',
-                                                                  context)),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                        ));
-                                                      }
-                                                    });
-                                                  } else {
-                                                    coupon
-                                                        .removeCouponData(true);
-                                                  }
-                                                } else if (_couponController
-                                                    .text.isEmpty) {
-                                                  showCustomSnackBar(
-                                                      getTranslated(
-                                                          'enter_a_Coupon_code',
-                                                          context),
-                                                      context);
-                                                }
-                                              },
+                                  GestureDetector(
+                                    onTap: () async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      var id = prefs.getInt("branchidshr");
+                                      if (_takeaway) {
+                                        print(_subTotal.toString());
+                                        /*Provider.of<CartProvider>(context, listen: false)
+                                                  .clearCartList();*/
+                                        for (int index = 0;
+                                            index < cart.cartList.length;
+                                            index++) {
+                                          CartModel cartM =
+                                              cart.cartList[index];
+                                          List<int> _addOnIdList = [];
+                                          List<int> _addOnQtyList = [];
+                                          cartM.addOnIds.forEach((addOn) {
+                                            _addOnIdList.add(addOn.id);
+                                            _addOnQtyList.add(addOn.quantity);
+                                          });
+                                          carts.add(Cart(
+                                            cartM.product.id.toString(),
+                                            cartM.discountedPrice.toString(),
+                                            '',
+                                            cartM.variation,
+                                            cartM.discountAmount,
+                                            cartM.quantity,
+                                            0.0,
+                                            _addOnIdList,
+                                            _addOnQtyList,
+                                          ));
+                                        }
+
+                                        Provider.of<OrderProvider>(
+                                                context,
+                                                listen: false)
+                                            .placeOrder(
+                                                PlaceOrderBody(
+                                                    cart: carts,
+                                                    couponDiscountAmount:
+                                                        Provider.of<CouponProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .discount,
+                                                    couponDiscountTitle: '',
+                                                    deliveryAddressId: 0,
+                                                    orderAmount: _subTotal,
+                                                    orderNote: '',
+                                                    orderType: "take a way",
+                                                    paymentMethod: 'take a way',
+                                                    couponCode: Provider.of<CouponProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .coupon !=
+                                                            null
+                                                        ? Provider.of<CouponProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .coupon
+                                                            .code
+                                                        : null,
+                                                    branchId: id),
+                                                null);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                PaymentSuccessfulScreen(
+                                              razorPaymentId: "takeaway",
                                             ),
                                           ),
-                                          // InkWell(
-                                          //   onTap:
-                                          //   child: Container(
-                                          //     height: 50,
-                                          //     width: 100,
-                                          //     alignment: Alignment.center,
-                                          //     decoration: BoxDecoration(
-                                          //       color: Theme.of(context).primaryColor,
-                                          //       borderRadius: BorderRadius.horizontal(
-                                          //         left: Radius.circular(
-                                          //             Provider.of<LocalizationProvider>(
-                                          //                         context,
-                                          //                         listen: false)
-                                          //                     .isLtr
-                                          //                 ? 0
-                                          //                 : 10),
-                                          //         right: Radius.circular(
-                                          //             Provider.of<LocalizationProvider>(
-                                          //                         context,
-                                          //                         listen: false)
-                                          //                     .isLtr
-                                          //                 ? 10
-                                          //                 : 0),
-                                          //       ),
-                                          //     ),
-                                          //     child: coupon.discount <= 0
-                                          //         ? !coupon.isLoading
-                                          //             ? Text(
-                                          //                 getTranslated(
-                                          //                     'apply', context),
-                                          //                 style: rubikMedium.copyWith(
-                                          //                     color: Colors.white),
-                                          //               )
-                                          //             : CircularProgressIndicator(
-                                          //                 valueColor:
-                                          //                     AlwaysStoppedAnimation<
-                                          //                         Color>(Colors.white))
-                                          //         : Icon(Icons.clear,
-                                          //             color: Colors.white),
-                                          //   ),
-                                          // ),
-                                        ]);
-                                      },
-                                    ),
-                                  ),
-                                  Consumer<ProfileProvider>(
-                                    builder: (context, profileProvider, child) {
-                                      return GestureDetector(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(20),
-                                                  ),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          getTranslated(
-                                                              "pay_method",
-                                                              context),
-                                                          style: rubikBold
-                                                              .copyWith(
-                                                            fontSize: Dimensions
-                                                                .FONT_SIZE_EXTRA_LARGE,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(0.0),
-                                                        child: Row(
-                                                          children: [
-                                                            Wrap(
-                                                              children: [
-                                                                Container(
-                                                                  //
-                                                                  // width: MediaQuery.of(context).size.width * .25,
-                                                                  decoration: BoxDecoration(
-                                                                      color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-                                                                      border: Border.all(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                      ),
-                                                                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                            color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
-                                                                                0xFF000000),
-                                                                            blurRadius:
-                                                                                1,
-                                                                            spreadRadius:
-                                                                                1)
-                                                                      ]),
-                                                                  height: 30,
-                                                                  child: Center(
-                                                                      child:
-                                                                          Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                          getTranslated(
-                                                                              "pay",
-                                                                              context),
-                                                                          style:
-                                                                              rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            2,
-                                                                      ),
-                                                                      Radio(
-                                                                        value:
-                                                                            1,
-                                                                        groupValue:
-                                                                            selectedApperanceTile,
-                                                                        activeColor:
-                                                                            Color(0xff00A4A4),
-                                                                        onChanged:
-                                                                            (val) {
-                                                                          print(
-                                                                              "Radio $val");
-                                                                          setSelectedApperanceTile(
-                                                                              val);
-                                                                        },
-                                                                      ),
-                                                                      /*Icon(
-                                                        Icons
-                                                            .radio_button_unchecked_outlined,
-                                                        size: 20,
-                                                        color: Color(int.parse(
-                                                                "#00A4A4"
-                                                                    .substring(
-                                                                        1, 7),
-                                                                radix: 16) +
-                                                            0xFF000000),
-                                                      )*/
-                                                                    ],
-                                                                  )),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            //Spacer(),
-                                                            SizedBox(
-                                                              width: 7,
-                                                            ),
-                                                            Wrap(
-                                                              children: [
-                                                                Container(
-                                                                  //width: MediaQuery.of(context).size.width * .25,
-                                                                  decoration: BoxDecoration(
-                                                                      color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-                                                                      border: Border.all(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                      ),
-                                                                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                            color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
-                                                                                0xFF000000),
-                                                                            blurRadius:
-                                                                                1,
-                                                                            spreadRadius:
-                                                                                1)
-                                                                      ]),
-                                                                  height: 30,
-                                                                  child: Center(
-                                                                      child:
-                                                                          Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                          getTranslated(
-                                                                              "cash",
-                                                                              context),
-                                                                          style:
-                                                                              rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            2,
-                                                                      ),
-                                                                      /*Icon(
-                                                            Icons
-                                                                .radio_button_unchecked_outlined,
-                                                            size: 20,
-                                                            color: Color(int.parse(
-                                                                "#00A4A4"
-                                                                    .substring(
-                                                                    1, 7),
-                                                                radix: 16) +
-                                                                0xFF000000),
-                                                          )*/
-                                                                      Radio(
-                                                                        value:
-                                                                            2,
-                                                                        groupValue:
-                                                                            selectedApperanceTile,
-                                                                        activeColor:
-                                                                            Color(0xff00A4A4),
-                                                                        onChanged:
-                                                                            (val) {
-                                                                          print(
-                                                                              "Radio $val");
-                                                                          setSelectedApperanceTile(
-                                                                              val);
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            // SizedBox(
-                                                            //   width: 7,
-                                                            // ),
-                                                            // Wrap(
-                                                            //     children: [
-                                                            //       Container(
-                                                            //         //width: MediaQuery.of(context).size.width * .25,
-                                                            //         decoration: BoxDecoration(
-                                                            //             color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-                                                            //             border: Border.all(
-                                                            //               color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                            //                       radix: 16) +
-                                                            //                   0xFF000000),
-                                                            //             ),
-                                                            //             borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                            //             boxShadow: [
-                                                            //               BoxShadow(
-                                                            //                   color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
-                                                            //                       0xFF000000),
-                                                            //                   blurRadius:
-                                                            //                       1,
-                                                            //                   spreadRadius:
-                                                            //                       1)
-                                                            //             ]),
-                                                            //         height: 30,
-                                                            //         child: Center(
-                                                            //             child:
-                                                            //                 Row(
-                                                            //           mainAxisAlignment:
-                                                            //               MainAxisAlignment
-                                                            //                   .center,
-                                                            //           children: [
-                                                            //             Text(
-                                                            //                 "test",
-                                                            //                 style:
-                                                            //                     rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                                                            //             SizedBox(
-                                                            //               width:
-                                                            //                   2,
-                                                            //             ),
-                                                            //             /*Icon(
-                                                            //   Icons
-                                                            //       .radio_button_unchecked_outlined,
-                                                            //   size: 20,
-                                                            //   color: Color(int.parse(
-                                                            //       "#00A4A4"
-                                                            //           .substring(
-                                                            //           1, 7),
-                                                            //       radix: 16) +
-                                                            //       0xFF000000),
-                                                            // )*/
-                                                            //             Radio(
-                                                            //               value:
-                                                            //                   4,
-                                                            //               groupValue:
-                                                            //                   selectedApperanceTile,
-                                                            //               activeColor:
-                                                            //                   Color(0xff00A4A4),
-                                                            //               onChanged:
-                                                            //                   (val) {
-                                                            //                 print(
-                                                            //                     "Radio $val");
-                                                            //                 setSelectedApperanceTile(
-                                                            //                     val);
-                                                            //               },
-                                                            //             ),
-                                                            //           ],
-                                                            //         )),
-                                                            //       ),
-                                                            //     ],
-                                                            //   ),
-
-                                                            //unknownperson
-
-                                                            //Spacer(),
-                                                            //SizedBox(width: 7,),
-                                                            /*Wrap(
-                                                     children: [
-                                                       Container(
-                                                         */ /*width: MediaQuery.of(context)
-                                                             .size
-                                                             .width *
-                                                             .35,*/ /*
-                                                         decoration: BoxDecoration(
-                                                             color:_isDarkMode
-                                                                 ?Color(0xff000000):Color(0xffF5F5F5),
-                                                             border: Border.all(
-                                                               color: Color(int.parse(
-                                                                   "#FFFFFF"
-                                                                       .substring(
-                                                                       1, 7),
-                                                                   radix: 16) +
-                                                                   0xFF000000),
-                                                             ),
-                                                             borderRadius:
-                                                             BorderRadius.all(
-                                                                 Radius.circular(
-                                                                     4)),
-                                                             boxShadow: [
-                                                               BoxShadow(
-                                                                   color: Color(int.parse(
-                                                                       "#FFFFFF"
-                                                                           .substring(
-                                                                           1,
-                                                                           7),
-                                                                       radix: 16) +
-                                                                       0xFF000000),
-                                                                   blurRadius: 1,
-                                                                   spreadRadius: 1)
-                                                             ]),
-                                                         height: 30,
-                                                         child: Center(
-                                                             child: Row(
-                                                               mainAxisAlignment:
-                                                               MainAxisAlignment
-                                                                   .center,
-                                                               children: [
-                                                                 Text(getTranslated("take_away", context),
-                                                                     style: rubikBold.copyWith(
-                                                                         fontSize: Dimensions
-                                                                             .FONT_SIZE_LARGE)),
-                                                                 SizedBox(
-                                                                   width: 2,
-                                                                 ),
-                                                                 */ /*Icon(
-                                                            Icons
-                                                                .radio_button_unchecked_outlined,
-                                                            size: 20,
-                                                            color: Color(int.parse(
-                                                                "#00A4A4"
-                                                                    .substring(
-                                                                    1, 7),
-                                                                radix: 16) +
-                                                                0xFF000000),
-                                                          )*/ /*
-                                                                 Radio(
-                                                                   value: 3,
-                                                                   groupValue: selectedApperanceTile,
-                                                                   activeColor: Color(0xff00A4A4),
-                                                                   onChanged: (val) {
-                                                                     print("Radio $val");
-                                                                     setSelectedApperanceTile(val);
-                                                                   },
-                                                                 ),
-                                                               ],
-                                                             )),
-                                                       )
-                                                     ],
-                                                   )*/
-                                                          ],
-                                                        )),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    .15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                        border: Border.all(
-                                                                          color:
-                                                                              Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
-                                                                        ),
-                                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                        boxShadow: [
-                                                                      BoxShadow(
-                                                                          color: Colors.grey[
-                                                                              300],
-                                                                          blurRadius:
-                                                                              1,
-                                                                          spreadRadius:
-                                                                              1)
-                                                                    ]),
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Image
-                                                                        .asset(
-                                                                            "assets/image/mada_card.png")),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    .15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                        border: Border.all(
-                                                                          color:
-                                                                              Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
-                                                                        ),
-                                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                        boxShadow: [
-                                                                      BoxShadow(
-                                                                          color: Colors.grey[
-                                                                              300],
-                                                                          blurRadius:
-                                                                              1,
-                                                                          spreadRadius:
-                                                                              1)
-                                                                    ]),
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Image
-                                                                        .asset(
-                                                                            "assets/image/visa_card.png")),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    .15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: Color(int.parse("#FFFFFF".substring(1, 7),
-                                                                                radix: 16) +
-                                                                            0xFF000000),
-                                                                        border: Border.all(
-                                                                          color:
-                                                                              Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
-                                                                        ),
-                                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                                        boxShadow: [
-                                                                      BoxShadow(
-                                                                          color: Colors.grey[
-                                                                              300],
-                                                                          blurRadius:
-                                                                              1,
-                                                                          spreadRadius:
-                                                                              1)
-                                                                    ]),
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Image
-                                                                        .asset(
-                                                                            "assets/image/master_card.png")),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          /*Row(
-                                                      children: [
-                                                        Container(
-                                                          width:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
-                                                                  .15,
-                                                          decoration: BoxDecoration(
-                                                              color: Color(
-                                                                  int.parse(
-                                                                          "#FFFFFF"
-                                                                              .substring(
-                                                                                  1,
-                                                                                  7),
-                                                                          radix: 16) +
-                                                                      0xFF000000),
-                                                              border: Border.all(
-                                                                color: Color(int.parse(
-                                                                        "#FFFFFF"
-                                                                            .substring(
-                                                                                1,
-                                                                                7),
-                                                                        radix: 16) +
-                                                                    0xFF000000),
-                                                              ),
-                                                              borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: Colors
-                                                                        .grey[300],
-                                                                    blurRadius: 1,
-                                                                    spreadRadius: 1)
-                                                              ]),
-                                                          height: 30,
-                                                          child: Center(
-                                                              child: Image.asset(
-                                                                  "assets/image/apple_logo.png")),
-                                                        )
-                                                      ],
-                                                    ),*/
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              //proceed  button...............................................................
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  SharedPreferences prefs =
-                                                      await SharedPreferences
-                                                          .getInstance();
-                                                  var id = prefs
-                                                      .getInt("branchidshr");
-                                                  if (_takeaway) {
-                                                    print(_subTotal.toString());
-                                                    /*Provider.of<CartProvider>(context, listen: false)
+                                        ).then((value) {
+                                          widget.setPageInTabs(0);
+                                          BlocProvider.of<NavigationBloc>(
+                                                  context)
+                                              .add(NavigationEvents
+                                                  .HomePageClickedEvent);
+                                        });
+                                      } else if (_cash) {
+                                        /* Provider.of<CartProvider>(context, listen: false)
                                                   .clearCartList();*/
-                                                    for (int index = 0;
-                                                        index <
-                                                            cart.cartList
-                                                                .length;
-                                                        index++) {
-                                                      CartModel cartM =
-                                                          cart.cartList[index];
-                                                      List<int> _addOnIdList =
-                                                          [];
-                                                      List<int> _addOnQtyList =
-                                                          [];
-                                                      cartM.addOnIds
-                                                          .forEach((addOn) {
-                                                        _addOnIdList
-                                                            .add(addOn.id);
-                                                        _addOnQtyList.add(
-                                                            addOn.quantity);
-                                                      });
-                                                      carts.add(Cart(
-                                                        cartM.product.id
-                                                            .toString(),
-                                                        cartM.discountedPrice
-                                                            .toString(),
-                                                        '',
-                                                        cartM.variation,
-                                                        cartM.discountAmount,
-                                                        cartM.quantity,
-                                                        0.0,
-                                                        _addOnIdList,
-                                                        _addOnQtyList,
-                                                      ));
-                                                    }
-
-                                                    Provider.of<OrderProvider>(context, listen: false).placeOrder(
-                                                        PlaceOrderBody(
-                                                            cart: carts,
-                                                            couponDiscountAmount:
-                                                                Provider.of<CouponProvider>(
-                                                                        context,
-                                                                        listen:
-                                                                            false)
-                                                                    .discount,
-                                                            couponDiscountTitle:
-                                                                '',
-                                                            deliveryAddressId:
-                                                                0,
-                                                            orderAmount:
-                                                                _subTotal,
-                                                            orderNote: '',
-                                                            orderType:
-                                                                "take a way",
-                                                            paymentMethod:
-                                                                'take a way',
-                                                            couponCode: Provider.of<CouponProvider>(
-                                                                            context,
-                                                                            listen:
-                                                                                false)
-                                                                        .coupon !=
-                                                                    null
-                                                                ? Provider.of<
-                                                                            CouponProvider>(
-                                                                        context,
-                                                                        listen:
-                                                                            false)
-                                                                    .coupon
-                                                                    .code
-                                                                : null,
-                                                            branchId: id),
-                                                        null);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            PaymentSuccessfulScreen(
-                                                          razorPaymentId:
-                                                              "takeaway",
-                                                        ),
-                                                      ),
-                                                    ).then((value) {
-                                                      widget.setPageInTabs(0);
-                                                      BlocProvider.of<
-                                                                  NavigationBloc>(
-                                                              context)
-                                                          .add(NavigationEvents
-                                                              .HomePageClickedEvent);
-                                                    });
-                                                  } else if (_cash) {
-                                                    /* Provider.of<CartProvider>(context, listen: false)
-                                                  .clearCartList();*/
-                                                    for (int index = 0;
-                                                        index <
-                                                            cart.cartList
-                                                                .length;
-                                                        index++) {
-                                                      CartModel cartM =
-                                                          cart.cartList[index];
-                                                      List<int> _addOnIdList =
-                                                          [];
-                                                      List<int> _addOnQtyList =
-                                                          [];
-                                                      cartM.addOnIds
-                                                          .forEach((addOn) {
-                                                        _addOnIdList
-                                                            .add(addOn.id);
-                                                        _addOnQtyList.add(
-                                                            addOn.quantity);
-                                                      });
-                                                      carts.add(Cart(
-                                                        cartM.product.id
-                                                            .toString(),
-                                                        cartM.discountedPrice
-                                                            .toString(),
-                                                        '',
-                                                        cartM.variation,
-                                                        cartM.discountAmount,
-                                                        cartM.quantity,
-                                                        0.0,
-                                                        _addOnIdList,
-                                                        _addOnQtyList,
-                                                      ));
-                                                    }
-                                                    Provider.of<OrderProvider>(context, listen: false).placeOrder(
-                                                        PlaceOrderBody(
-                                                            cart: carts,
-                                                            couponDiscountAmount:
-                                                                Provider.of<CouponProvider>(
-                                                                        context,
-                                                                        listen:
-                                                                            false)
-                                                                    .discount,
-                                                            couponDiscountTitle:
-                                                                '',
-                                                            deliveryAddressId:
-                                                                0,
-                                                            orderAmount: _total,
-                                                            orderNote: '',
-                                                            orderType: "Cash",
-                                                            paymentMethod:
-                                                                'Cash',
-                                                            couponCode: Provider.of<CouponProvider>(
-                                                                            context,
-                                                                            listen:
-                                                                                false)
-                                                                        .coupon !=
-                                                                    null
-                                                                ? Provider.of<
-                                                                            CouponProvider>(
-                                                                        context,
-                                                                        listen:
-                                                                            false)
-                                                                    .coupon
-                                                                    .code
-                                                                : null,
-                                                            branchId: id),
-                                                        null);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            PaymentSuccessfulScreen(
-                                                          razorPaymentId:
-                                                              "Cash",
-                                                        ),
-                                                      ),
-                                                    ).then((value) {
-                                                      widget.setPageInTabs(0);
-                                                      BlocProvider.of<
-                                                                  NavigationBloc>(
-                                                              context)
-                                                          .add(NavigationEvents
-                                                              .HomePageClickedEvent);
-                                                    });
-                                                  } else {
-                                                    List<CartModel>
-                                                        cartModelList =
-                                                        cart.cartList;
-                                                    for (int index = 0;
-                                                        index <
-                                                            cartModelList
-                                                                .length;
-                                                        index++) {
-                                                      CartModel cart =
-                                                          cartModelList[index];
-                                                      List<int> _addOnIdList =
-                                                          [];
-                                                      List<int> _addOnQtyList =
-                                                          [];
-                                                      cart.addOnIds
-                                                          .forEach((addOn) {
-                                                        _addOnIdList
-                                                            .add(addOn.id);
-                                                        _addOnQtyList.add(
-                                                            addOn.quantity);
-                                                      });
-                                                      carts.add(Cart(
-                                                        cart.product.id
-                                                            .toString(),
-                                                        cart.discountedPrice
-                                                            .toString(),
-                                                        '',
-                                                        cart.variation,
-                                                        cart.discountAmount,
-                                                        cart.quantity,
-                                                        cart.taxAmount,
-                                                        _addOnIdList,
-                                                        _addOnQtyList,
-                                                      ));
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                              context) {
-                                                            url =
-                                                                Uri.dataFromString('''<html>
+                                        for (int index = 0;
+                                            index < cart.cartList.length;
+                                            index++) {
+                                          CartModel cartM =
+                                              cart.cartList[index];
+                                          List<int> _addOnIdList = [];
+                                          List<int> _addOnQtyList = [];
+                                          cartM.addOnIds.forEach((addOn) {
+                                            _addOnIdList.add(addOn.id);
+                                            _addOnQtyList.add(addOn.quantity);
+                                          });
+                                          carts.add(Cart(
+                                            cartM.product.id.toString(),
+                                            cartM.discountedPrice.toString(),
+                                            '',
+                                            cartM.variation,
+                                            cartM.discountAmount,
+                                            cartM.quantity,
+                                            0.0,
+                                            _addOnIdList,
+                                            _addOnQtyList,
+                                          ));
+                                        }
+                                        Provider.of<OrderProvider>(
+                                                context,
+                                                listen: false)
+                                            .placeOrder(
+                                                PlaceOrderBody(
+                                                    cart: carts,
+                                                    couponDiscountAmount:
+                                                        Provider.of<CouponProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .discount,
+                                                    couponDiscountTitle: '',
+                                                    deliveryAddressId: 0,
+                                                    orderAmount: _total,
+                                                    orderNote: '',
+                                                    orderType: "Cash",
+                                                    paymentMethod: 'Cash',
+                                                    couponCode: Provider.of<CouponProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .coupon !=
+                                                            null
+                                                        ? Provider.of<CouponProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .coupon
+                                                            .code
+                                                        : null,
+                                                    branchId: id),
+                                                null);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                PaymentSuccessfulScreen(
+                                              razorPaymentId: "Cash",
+                                            ),
+                                          ),
+                                        ).then((value) {
+                                          widget.setPageInTabs(0);
+                                          BlocProvider.of<NavigationBloc>(
+                                                  context)
+                                              .add(NavigationEvents
+                                                  .HomePageClickedEvent);
+                                        });
+                                      } else {
+                                        List<CartModel> cartModelList =
+                                            cart.cartList;
+                                        for (int index = 0;
+                                            index < cartModelList.length;
+                                            index++) {
+                                          CartModel cart = cartModelList[index];
+                                          List<int> _addOnIdList = [];
+                                          List<int> _addOnQtyList = [];
+                                          cart.addOnIds.forEach((addOn) {
+                                            _addOnIdList.add(addOn.id);
+                                            _addOnQtyList.add(addOn.quantity);
+                                          });
+                                          carts.add(Cart(
+                                            cart.product.id.toString(),
+                                            cart.discountedPrice.toString(),
+                                            '',
+                                            cart.variation,
+                                            cart.discountAmount,
+                                            cart.quantity,
+                                            cart.taxAmount,
+                                            _addOnIdList,
+                                            _addOnQtyList,
+                                          ));
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                url =
+                                                    Uri.dataFromString('''<html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://alahligatway.gateway.mastercard.com/checkout/version/52/checkout.js"
@@ -2135,224 +2300,1207 @@ class _CartScreenState extends State<CartScreen> {
 </html>
 ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
 
-                                                            return WillPopScope(
-                                                                // ignore: missing_return
-                                                                onWillPop: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  ScaffoldMessenger.of(
-                                                                          context)
-                                                                      .showSnackBar(SnackBar(
-                                                                          backgroundColor: Colors.red,
-                                                                          content: Text(
-                                                                            "Payment Failed",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white),
-                                                                          )));
-                                                                },
-                                                                child: WebView(
-                                                                  onWebViewCreated:
-                                                                      (controller) {
-                                                                    _controllerss =
-                                                                        controller;
-                                                                    controller
-                                                                        .loadUrl(
-                                                                            url);
-                                                                  },
-                                                                  javascriptMode:
-                                                                      JavascriptMode
-                                                                          .unrestricted,
-                                                                  onPageFinished:
-                                                                      (urlss) {
-                                                                    print(
-                                                                        urlss);
-                                                                    if (urlss
-                                                                        .contains(
-                                                                            "185.206.133.154")) {
-                                                                      if (urlss
-                                                                          .contains(
-                                                                              successIndicator)) {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        Provider.of<OrderProvider>(context, listen: false).placeOrder(
-                                                                            PlaceOrderBody(
-                                                                                cart: carts,
-                                                                                couponDiscountAmount: Provider.of<CouponProvider>(context, listen: false).discount,
-                                                                                couponDiscountTitle: '',
-                                                                                deliveryAddressId: 0,
-                                                                                orderAmount: _total,
-                                                                                orderNote: '',
-                                                                                orderType: "delivery",
-                                                                                paymentMethod: 'online',
-                                                                                couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
-                                                                                branchId: id),
-                                                                            null);
-                                                                        Navigator
-                                                                            .push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (_) =>
-                                                                                PaymentSuccessfulScreen(
-                                                                              razorPaymentId: "pay_online",
-                                                                            ),
-                                                                          ),
-                                                                        ).then(
-                                                                            (value) {
-                                                                          widget
-                                                                              .setPageInTabs(0);
-                                                                          BlocProvider.of<NavigationBloc>(context)
-                                                                              .add(NavigationEvents.HomePageClickedEvent);
-                                                                        });
-                                                                        print(
-                                                                            "object");
-                                                                      } else {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                                            backgroundColor: Colors.red,
-                                                                            content: Text(
-                                                                              "Payment Failed",
-                                                                              style: TextStyle(color: Colors.white),
-                                                                            )));
-                                                                      }
-                                                                    }
-                                                                    // http://185.206.133.154/returnedURL.html?resultIndicator=cc651a38b4b24ccd&sessionVersion=0696edd508
-                                                                    print(_controllerss
-                                                                        .currentUrl());
-                                                                  },
-                                                                  userAgent:
-                                                                      'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36',
-                                                                ));
-                                                          });
+                                                return WillPopScope(
+                                                    // ignore: missing_return
+                                                    onWillPop: () {
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .red,
+                                                                  content: Text(
+                                                                    "Payment Failed",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  )));
+                                                    },
+                                                    child: WebView(
+                                                      onWebViewCreated:
+                                                          (controller) {
+                                                        _controllerss =
+                                                            controller;
+                                                        controller.loadUrl(url);
+                                                      },
+                                                      javascriptMode:
+                                                          JavascriptMode
+                                                              .unrestricted,
+                                                      onPageFinished: (urlss) {
+                                                        print(urlss);
+                                                        if (urlss.contains(
+                                                            "185.206.133.154")) {
+                                                          if (urlss.contains(
+                                                              successIndicator)) {
+                                                            Navigator.pop(
+                                                                context);
+                                                            Provider.of<OrderProvider>(context, listen: false).placeOrder(
+                                                                PlaceOrderBody(
+                                                                    cart: carts,
+                                                                    couponDiscountAmount: Provider.of<CouponProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .discount,
+                                                                    couponDiscountTitle:
+                                                                        '',
+                                                                    deliveryAddressId:
+                                                                        0,
+                                                                    orderAmount:
+                                                                        _total,
+                                                                    orderNote:
+                                                                        '',
+                                                                    orderType:
+                                                                        "delivery",
+                                                                    paymentMethod:
+                                                                        'online',
+                                                                    couponCode: Provider.of<CouponProvider>(context, listen: false).coupon !=
+                                                                            null
+                                                                        ? Provider.of<CouponProvider>(context, listen: false)
+                                                                            .coupon
+                                                                            .code
+                                                                        : null,
+                                                                    branchId:
+                                                                        id),
+                                                                null);
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    PaymentSuccessfulScreen(
+                                                                  razorPaymentId:
+                                                                      "pay_online",
+                                                                ),
+                                                              ),
+                                                            ).then((value) {
+                                                              widget
+                                                                  .setPageInTabs(
+                                                                      0);
+                                                              BlocProvider.of<
+                                                                          NavigationBloc>(
+                                                                      context)
+                                                                  .add(NavigationEvents
+                                                                      .HomePageClickedEvent);
+                                                            });
+                                                            print("object");
+                                                          } else {
+                                                            Navigator.pop(
+                                                                context);
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    SnackBar(
+                                                                        backgroundColor:
+                                                                            Colors
+                                                                                .red,
+                                                                        content:
+                                                                            Text(
+                                                                          "Payment Failed",
+                                                                          style:
+                                                                              TextStyle(color: Colors.white),
+                                                                        )));
+                                                          }
+                                                        }
+                                                        // http://185.206.133.154/returnedURL.html?resultIndicator=cc651a38b4b24ccd&sessionVersion=0696edd508
+                                                        print(_controllerss
+                                                            .currentUrl());
+                                                      },
+                                                      userAgent:
+                                                          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36',
+                                                    ));
+                                              });
 
-                                                      // await openCheckoutbank(
-                                                      //     totalPrice: _total,
-                                                      //     description:
-                                                      //         "Tazaz food delivery payment",
-                                                      //     userEmail:
-                                                      //         profileProvider
-                                                      //             .userInfoModel
-                                                      //             .email,
-                                                      //     userPhone:
-                                                      //         profileProvider
-                                                      //             .userInfoModel
-                                                      //             .phone);
+                                          // await openCheckoutbank(
+                                          //     totalPrice: _total,
+                                          //     description:
+                                          //         "Tazaz food delivery payment",
+                                          //     userEmail:
+                                          //         profileProvider
+                                          //             .userInfoModel
+                                          //             .email,
+                                          //     userPhone:
+                                          //         profileProvider
+                                          //             .userInfoModel
+                                          //             .phone);
 
-                                                    }
-                                                  }
-                                                  // else {
-                                                  //   List<CartModel>
-                                                  //       cartModelList =
-                                                  //       cart.cartList;
-                                                  //   for (int index = 0;
-                                                  //       index <
-                                                  //           cartModelList
-                                                  //               .length;
-                                                  //       index++) {
-                                                  //     CartModel cart =
-                                                  //         cartModelList[index];
-                                                  //     List<int> _addOnIdList =
-                                                  //         [];
-                                                  //     List<int> _addOnQtyList =
-                                                  //         [];
-                                                  //     cart.addOnIds
-                                                  //         .forEach((addOn) {
-                                                  //       _addOnIdList
-                                                  //           .add(addOn.id);
-                                                  //       _addOnQtyList.add(
-                                                  //           addOn.quantity);
-                                                  //     });
-                                                  //     carts.add(Cart(
-                                                  //       cart.product.id
-                                                  //           .toString(),
-                                                  //       cart.discountedPrice
-                                                  //           .toString(),
-                                                  //       '',
-                                                  //       cart.variation,
-                                                  //       cart.discountAmount,
-                                                  //       cart.quantity,
-                                                  //       cart.taxAmount,
-                                                  //       _addOnIdList,
-                                                  //       _addOnQtyList,
-                                                  //     ));
-                                                  //   }
-                                                  //   openCheckout(
-                                                  //       totalPrice: _total,
-                                                  //       description:
-                                                  //           "Tazaz food delivery payment",
-                                                  //       userEmail:
-                                                  //           profileProvider
-                                                  //               .userInfoModel
-                                                  //               .email,
-                                                  //       userPhone:
-                                                  //           profileProvider
-                                                  //               .userInfoModel
-                                                  //               .phone);
-                                                  // }
-                                                },
-                                                child: Container(
-                                                  height: 45,
-                                                  width: size.width - 70,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: Color(0xff00A4A4)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      getTranslated(
-                                                          "proceed", context),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Rubik',
-                                                          fontSize: Dimensions
-                                                              .FONT_SIZE_DEFAULT,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        /*onTap: () {
-                                    List<CartModel> cartModelList =
-                                        cart.cartList;
-                                    for (int index = 0;
-                                        index < cartModelList.length;
-                                        index++) {
-                                      CartModel cart = cartModelList[index];
-                                      List<int> _addOnIdList = [];
-                                      List<int> _addOnQtyList = [];
-                                      cart.addOnIds.forEach((addOn) {
-                                        _addOnIdList.add(addOn.id);
-                                        _addOnQtyList.add(addOn.quantity);
-                                      });
-                                      carts.add(Cart(
-                                        cart.product.id.toString(),
-                                        cart.discountedPrice.toString(),
-                                        '',
-                                        cart.variation,
-                                        cart.discountAmount,
-                                        cart.quantity,
-                                        cart.taxAmount,
-                                        _addOnIdList,
-                                        _addOnQtyList,
-                                      ));
-                                    }
-                                    openCheckout(
-                                        totalPrice: _cash?_subTotal:_total,
-                                        description:
-                                            "Tazaz food delivery payment",
-                                        userEmail:
-                                            profileProvider.userInfoModel.email,
-                                        userPhone: profileProvider
-                                            .userInfoModel.phone);
-                                  },*/
-                                      );
+                                        }
+                                      }
+                                      // else {
+                                      //   List<CartModel>
+                                      //       cartModelList =
+                                      //       cart.cartList;
+                                      //   for (int index = 0;
+                                      //       index <
+                                      //           cartModelList
+                                      //               .length;
+                                      //       index++) {
+                                      //     CartModel cart =
+                                      //         cartModelList[index];
+                                      //     List<int> _addOnIdList =
+                                      //         [];
+                                      //     List<int> _addOnQtyList =
+                                      //         [];
+                                      //     cart.addOnIds
+                                      //         .forEach((addOn) {
+                                      //       _addOnIdList
+                                      //           .add(addOn.id);
+                                      //       _addOnQtyList.add(
+                                      //           addOn.quantity);
+                                      //     });
+                                      //     carts.add(Cart(
+                                      //       cart.product.id
+                                      //           .toString(),
+                                      //       cart.discountedPrice
+                                      //           .toString(),
+                                      //       '',
+                                      //       cart.variation,
+                                      //       cart.discountAmount,
+                                      //       cart.quantity,
+                                      //       cart.taxAmount,
+                                      //       _addOnIdList,
+                                      //       _addOnQtyList,
+                                      //     ));
+                                      //   }
+                                      //   openCheckout(
+                                      //       totalPrice: _total,
+                                      //       description:
+                                      //           "Tazaz food delivery payment",
+                                      //       userEmail:
+                                      //           profileProvider
+                                      //               .userInfoModel
+                                      //               .email,
+                                      //       userPhone:
+                                      //           profileProvider
+                                      //               .userInfoModel
+                                      //               .phone);
+                                      // }
                                     },
-                                  ),
+                                    child: Container(
+                                      height: 45,
+                                      width: size.width - 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xff00A4A4)),
+                                      child: Center(
+                                        child: Text(
+                                          getTranslated("proceed", context),
+                                          style: TextStyle(
+                                              fontFamily: 'Rubik',
+                                              fontSize:
+                                                  Dimensions.FONT_SIZE_DEFAULT,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+
+//                                   Consumer<ProfileProvider>(
+//                                     builder: (context, profileProvider, child) {
+//                                       return GestureDetector(
+//                                         child: Padding(
+//                                           padding: const EdgeInsets.all(8),
+//                                           child: Column(
+//                                             children: [
+//                                               Container(
+//                                                 decoration: BoxDecoration(
+//                                                   border: Border.all(
+//                                                       color: Colors.white),
+//                                                   borderRadius:
+//                                                       BorderRadius.all(
+//                                                     Radius.circular(20),
+//                                                   ),
+//                                                 ),
+//                                                 child: Column(
+//                                                   children: [
+//                                                     SizedBox(
+//                                                       height: 10,
+//                                                     ),
+//                                                     Row(
+//                                                       mainAxisAlignment:
+//                                                           MainAxisAlignment
+//                                                               .center,
+//                                                       children: [
+//                                                         Text(
+//                                                           getTranslated(
+//                                                               "pay_method",
+//                                                               context),
+//                                                           style: rubikBold
+//                                                               .copyWith(
+//                                                             fontSize: Dimensions
+//                                                                 .FONT_SIZE_EXTRA_LARGE,
+//                                                           ),
+//                                                         )
+//                                                       ],
+//                                                     ),
+//                                                     Padding(
+//                                                         padding:
+//                                                             const EdgeInsets
+//                                                                 .all(0.0),
+//                                                         child: Row(
+//                                                           children: [
+//                                                             Wrap(
+//                                                               children: [
+//                                                                 Container(
+//                                                                   //
+//                                                                   // width: MediaQuery.of(context).size.width * .25,
+//                                                                   decoration: BoxDecoration(
+//                                                                       color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+//                                                                       border: Border.all(
+//                                                                         color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                                                 radix: 16) +
+//                                                                             0xFF000000),
+//                                                                       ),
+//                                                                       borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                                       boxShadow: [
+//                                                                         BoxShadow(
+//                                                                             color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+//                                                                                 0xFF000000),
+//                                                                             blurRadius:
+//                                                                                 1,
+//                                                                             spreadRadius:
+//                                                                                 1)
+//                                                                       ]),
+//                                                                   height: 30,
+//                                                                   child: Center(
+//                                                                       child:
+//                                                                           Row(
+//                                                                     mainAxisAlignment:
+//                                                                         MainAxisAlignment
+//                                                                             .center,
+//                                                                     children: [
+//                                                                       Text(
+//                                                                           getTranslated(
+//                                                                               "pay",
+//                                                                               context),
+//                                                                           style:
+//                                                                               rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+//                                                                       SizedBox(
+//                                                                         width:
+//                                                                             2,
+//                                                                       ),
+//                                                                       Radio(
+//                                                                         value:
+//                                                                             1,
+//                                                                         groupValue:
+//                                                                             selectedApperanceTile,
+//                                                                         activeColor:
+//                                                                             Color(0xff00A4A4),
+//                                                                         onChanged:
+//                                                                             (val) {
+//                                                                           print(
+//                                                                               "Radio $val");
+//                                                                           setSelectedApperanceTile(
+//                                                                               val);
+//                                                                         },
+//                                                                       ),
+//                                                                       /*Icon(
+//                                                         Icons
+//                                                             .radio_button_unchecked_outlined,
+//                                                         size: 20,
+//                                                         color: Color(int.parse(
+//                                                                 "#00A4A4"
+//                                                                     .substring(
+//                                                                         1, 7),
+//                                                                 radix: 16) +
+//                                                             0xFF000000),
+//                                                       )*/
+//                                                                     ],
+//                                                                   )),
+//                                                                 ),
+//                                                               ],
+//                                                             ),
+//                                                             //Spacer(),
+//                                                             SizedBox(
+//                                                               width: 7,
+//                                                             ),
+//                                                             Wrap(
+//                                                               children: [
+//                                                                 Container(
+//                                                                   //width: MediaQuery.of(context).size.width * .25,
+//                                                                   decoration: BoxDecoration(
+//                                                                       color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+//                                                                       border: Border.all(
+//                                                                         color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                                                 radix: 16) +
+//                                                                             0xFF000000),
+//                                                                       ),
+//                                                                       borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                                       boxShadow: [
+//                                                                         BoxShadow(
+//                                                                             color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+//                                                                                 0xFF000000),
+//                                                                             blurRadius:
+//                                                                                 1,
+//                                                                             spreadRadius:
+//                                                                                 1)
+//                                                                       ]),
+//                                                                   height: 30,
+//                                                                   child: Center(
+//                                                                       child:
+//                                                                           Row(
+//                                                                     mainAxisAlignment:
+//                                                                         MainAxisAlignment
+//                                                                             .center,
+//                                                                     children: [
+//                                                                       Text(
+//                                                                           getTranslated(
+//                                                                               "cash",
+//                                                                               context),
+//                                                                           style:
+//                                                                               rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+//                                                                       SizedBox(
+//                                                                         width:
+//                                                                             2,
+//                                                                       ),
+//                                                                       /*Icon(
+//                                                             Icons
+//                                                                 .radio_button_unchecked_outlined,
+//                                                             size: 20,
+//                                                             color: Color(int.parse(
+//                                                                 "#00A4A4"
+//                                                                     .substring(
+//                                                                     1, 7),
+//                                                                 radix: 16) +
+//                                                                 0xFF000000),
+//                                                           )*/
+//                                                                       Radio(
+//                                                                         value:
+//                                                                             2,
+//                                                                         groupValue:
+//                                                                             selectedApperanceTile,
+//                                                                         activeColor:
+//                                                                             Color(0xff00A4A4),
+//                                                                         onChanged:
+//                                                                             (val) {
+//                                                                           print(
+//                                                                               "Radio $val");
+//                                                                           setSelectedApperanceTile(
+//                                                                               val);
+//                                                                         },
+//                                                                       ),
+//                                                                     ],
+//                                                                   )),
+//                                                                 ),
+//                                                               ],
+//                                                             ),
+//                                                             // SizedBox(
+//                                                             //   width: 7,
+//                                                             // ),
+//                                                             // Wrap(
+//                                                             //     children: [
+//                                                             //       Container(
+//                                                             //         //width: MediaQuery.of(context).size.width * .25,
+//                                                             //         decoration: BoxDecoration(
+//                                                             //             color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+//                                                             //             border: Border.all(
+//                                                             //               color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                             //                       radix: 16) +
+//                                                             //                   0xFF000000),
+//                                                             //             ),
+//                                                             //             borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                             //             boxShadow: [
+//                                                             //               BoxShadow(
+//                                                             //                   color: Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) +
+//                                                             //                       0xFF000000),
+//                                                             //                   blurRadius:
+//                                                             //                       1,
+//                                                             //                   spreadRadius:
+//                                                             //                       1)
+//                                                             //             ]),
+//                                                             //         height: 30,
+//                                                             //         child: Center(
+//                                                             //             child:
+//                                                             //                 Row(
+//                                                             //           mainAxisAlignment:
+//                                                             //               MainAxisAlignment
+//                                                             //                   .center,
+//                                                             //           children: [
+//                                                             //             Text(
+//                                                             //                 "test",
+//                                                             //                 style:
+//                                                             //                     rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+//                                                             //             SizedBox(
+//                                                             //               width:
+//                                                             //                   2,
+//                                                             //             ),
+//                                                             //             /*Icon(
+//                                                             //   Icons
+//                                                             //       .radio_button_unchecked_outlined,
+//                                                             //   size: 20,
+//                                                             //   color: Color(int.parse(
+//                                                             //       "#00A4A4"
+//                                                             //           .substring(
+//                                                             //           1, 7),
+//                                                             //       radix: 16) +
+//                                                             //       0xFF000000),
+//                                                             // )*/
+//                                                             //             Radio(
+//                                                             //               value:
+//                                                             //                   4,
+//                                                             //               groupValue:
+//                                                             //                   selectedApperanceTile,
+//                                                             //               activeColor:
+//                                                             //                   Color(0xff00A4A4),
+//                                                             //               onChanged:
+//                                                             //                   (val) {
+//                                                             //                 print(
+//                                                             //                     "Radio $val");
+//                                                             //                 setSelectedApperanceTile(
+//                                                             //                     val);
+//                                                             //               },
+//                                                             //             ),
+//                                                             //           ],
+//                                                             //         )),
+//                                                             //       ),
+//                                                             //     ],
+//                                                             //   ),
+//                                                             //unknownperson
+//                                                             //Spacer(),
+//                                                             //SizedBox(width: 7,),
+//                                                             /*Wrap(
+//                                                      children: [
+//                                                        Container(
+//                                                          */ /*width: MediaQuery.of(context)
+//                                                              .size
+//                                                              .width *
+//                                                              .35,*/ /*
+//                                                          decoration: BoxDecoration(
+//                                                              color:_isDarkMode
+//                                                                  ?Color(0xff000000):Color(0xffF5F5F5),
+//                                                              border: Border.all(
+//                                                                color: Color(int.parse(
+//                                                                    "#FFFFFF"
+//                                                                        .substring(
+//                                                                        1, 7),
+//                                                                    radix: 16) +
+//                                                                    0xFF000000),
+//                                                              ),
+//                                                              borderRadius:
+//                                                              BorderRadius.all(
+//                                                                  Radius.circular(
+//                                                                      4)),
+//                                                              boxShadow: [
+//                                                                BoxShadow(
+//                                                                    color: Color(int.parse(
+//                                                                        "#FFFFFF"
+//                                                                            .substring(
+//                                                                            1,
+//                                                                            7),
+//                                                                        radix: 16) +
+//                                                                        0xFF000000),
+//                                                                    blurRadius: 1,
+//                                                                    spreadRadius: 1)
+//                                                              ]),
+//                                                          height: 30,
+//                                                          child: Center(
+//                                                              child: Row(
+//                                                                mainAxisAlignment:
+//                                                                MainAxisAlignment
+//                                                                    .center,
+//                                                                children: [
+//                                                                  Text(getTranslated("take_away", context),
+//                                                                      style: rubikBold.copyWith(
+//                                                                          fontSize: Dimensions
+//                                                                              .FONT_SIZE_LARGE)),
+//                                                                  SizedBox(
+//                                                                    width: 2,
+//                                                                  ),
+//                                                                  */ /*Icon(
+//                                                             Icons
+//                                                                 .radio_button_unchecked_outlined,
+//                                                             size: 20,
+//                                                             color: Color(int.parse(
+//                                                                 "#00A4A4"
+//                                                                     .substring(
+//                                                                     1, 7),
+//                                                                 radix: 16) +
+//                                                                 0xFF000000),
+//                                                           )*/ /*
+//                                                                  Radio(
+//                                                                    value: 3,
+//                                                                    groupValue: selectedApperanceTile,
+//                                                                    activeColor: Color(0xff00A4A4),
+//                                                                    onChanged: (val) {
+//                                                                      print("Radio $val");
+//                                                                      setSelectedApperanceTile(val);
+//                                                                    },
+//                                                                  ),
+//                                                                ],
+//                                                              )),
+//                                                        )
+//                                                      ],
+//                                                    )*/
+//                                                           ],
+//                                                         )),
+//                                                     SizedBox(
+//                                                       height: 10,
+//                                                     ),
+//                                                     Padding(
+//                                                       padding:
+//                                                           const EdgeInsets.all(
+//                                                               8.0),
+//                                                       child: Row(
+//                                                         mainAxisAlignment:
+//                                                             MainAxisAlignment
+//                                                                 .spaceBetween,
+//                                                         children: [
+//                                                           Row(
+//                                                             children: [
+//                                                               Container(
+//                                                                 width: MediaQuery.of(
+//                                                                             context)
+//                                                                         .size
+//                                                                         .width *
+//                                                                     .15,
+//                                                                 decoration:
+//                                                                     BoxDecoration(
+//                                                                         color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                                                 radix: 16) +
+//                                                                             0xFF000000),
+//                                                                         border: Border.all(
+//                                                                           color:
+//                                                                               Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+//                                                                         ),
+//                                                                         borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                                         boxShadow: [
+//                                                                       BoxShadow(
+//                                                                           color: Colors.grey[
+//                                                                               300],
+//                                                                           blurRadius:
+//                                                                               1,
+//                                                                           spreadRadius:
+//                                                                               1)
+//                                                                     ]),
+//                                                                 height: 30,
+//                                                                 child: Center(
+//                                                                     child: Image
+//                                                                         .asset(
+//                                                                             "assets/image/mada_card.png")),
+//                                                               )
+//                                                             ],
+//                                                           ),
+//                                                           Row(
+//                                                             children: [
+//                                                               Container(
+//                                                                 width: MediaQuery.of(
+//                                                                             context)
+//                                                                         .size
+//                                                                         .width *
+//                                                                     .15,
+//                                                                 decoration:
+//                                                                     BoxDecoration(
+//                                                                         color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                                                 radix: 16) +
+//                                                                             0xFF000000),
+//                                                                         border: Border.all(
+//                                                                           color:
+//                                                                               Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+//                                                                         ),
+//                                                                         borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                                         boxShadow: [
+//                                                                       BoxShadow(
+//                                                                           color: Colors.grey[
+//                                                                               300],
+//                                                                           blurRadius:
+//                                                                               1,
+//                                                                           spreadRadius:
+//                                                                               1)
+//                                                                     ]),
+//                                                                 height: 30,
+//                                                                 child: Center(
+//                                                                     child: Image
+//                                                                         .asset(
+//                                                                             "assets/image/visa_card.png")),
+//                                                               )
+//                                                             ],
+//                                                           ),
+//                                                           Row(
+//                                                             children: [
+//                                                               Container(
+//                                                                 width: MediaQuery.of(
+//                                                                             context)
+//                                                                         .size
+//                                                                         .width *
+//                                                                     .15,
+//                                                                 decoration:
+//                                                                     BoxDecoration(
+//                                                                         color: Color(int.parse("#FFFFFF".substring(1, 7),
+//                                                                                 radix: 16) +
+//                                                                             0xFF000000),
+//                                                                         border: Border.all(
+//                                                                           color:
+//                                                                               Color(int.parse("#FFFFFF".substring(1, 7), radix: 16) + 0xFF000000),
+//                                                                         ),
+//                                                                         borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                                         boxShadow: [
+//                                                                       BoxShadow(
+//                                                                           color: Colors.grey[
+//                                                                               300],
+//                                                                           blurRadius:
+//                                                                               1,
+//                                                                           spreadRadius:
+//                                                                               1)
+//                                                                     ]),
+//                                                                 height: 30,
+//                                                                 child: Center(
+//                                                                     child: Image
+//                                                                         .asset(
+//                                                                             "assets/image/master_card.png")),
+//                                                               )
+//                                                             ],
+//                                                           ),
+//                                                           /*Row(
+//                                                       children: [
+//                                                         Container(
+//                                                           width:
+//                                                               MediaQuery.of(context)
+//                                                                       .size
+//                                                                       .width *
+//                                                                   .15,
+//                                                           decoration: BoxDecoration(
+//                                                               color: Color(
+//                                                                   int.parse(
+//                                                                           "#FFFFFF"
+//                                                                               .substring(
+//                                                                                   1,
+//                                                                                   7),
+//                                                                           radix: 16) +
+//                                                                       0xFF000000),
+//                                                               border: Border.all(
+//                                                                 color: Color(int.parse(
+//                                                                         "#FFFFFF"
+//                                                                             .substring(
+//                                                                                 1,
+//                                                                                 7),
+//                                                                         radix: 16) +
+//                                                                     0xFF000000),
+//                                                               ),
+//                                                               borderRadius: BorderRadius.all(Radius.circular(4)),
+//                                                               boxShadow: [
+//                                                                 BoxShadow(
+//                                                                     color: Colors
+//                                                                         .grey[300],
+//                                                                     blurRadius: 1,
+//                                                                     spreadRadius: 1)
+//                                                               ]),
+//                                                           height: 30,
+//                                                           child: Center(
+//                                                               child: Image.asset(
+//                                                                   "assets/image/apple_logo.png")),
+//                                                         )
+//                                                       ],
+//                                                     ),*/
+//                                                         ],
+//                                                       ),
+//                                                     ),
+//                                                   ],
+//                                                 ),
+//                                               ),
+//                                               //proceed  button...............................................................
+//                                               SizedBox(
+//                                                 height: 20,
+//                                               ),
+//                                               GestureDetector(
+//                                                 onTap: () async {
+//                                                   SharedPreferences prefs =
+//                                                       await SharedPreferences
+//                                                           .getInstance();
+//                                                   var id = prefs
+//                                                       .getInt("branchidshr");
+//                                                   if (_takeaway) {
+//                                                     print(_subTotal.toString());
+//                                                     /*Provider.of<CartProvider>(context, listen: false)
+//                                                   .clearCartList();*/
+//                                                     for (int index = 0;
+//                                                         index <
+//                                                             cart.cartList
+//                                                                 .length;
+//                                                         index++) {
+//                                                       CartModel cartM =
+//                                                           cart.cartList[index];
+//                                                       List<int> _addOnIdList =
+//                                                           [];
+//                                                       List<int> _addOnQtyList =
+//                                                           [];
+//                                                       cartM.addOnIds
+//                                                           .forEach((addOn) {
+//                                                         _addOnIdList
+//                                                             .add(addOn.id);
+//                                                         _addOnQtyList.add(
+//                                                             addOn.quantity);
+//                                                       });
+//                                                       carts.add(Cart(
+//                                                         cartM.product.id
+//                                                             .toString(),
+//                                                         cartM.discountedPrice
+//                                                             .toString(),
+//                                                         '',
+//                                                         cartM.variation,
+//                                                         cartM.discountAmount,
+//                                                         cartM.quantity,
+//                                                         0.0,
+//                                                         _addOnIdList,
+//                                                         _addOnQtyList,
+//                                                       ));
+//                                                     }
+//                                                     Provider.of<OrderProvider>(context, listen: false).placeOrder(
+//                                                         PlaceOrderBody(
+//                                                             cart: carts,
+//                                                             couponDiscountAmount:
+//                                                                 Provider.of<CouponProvider>(
+//                                                                         context,
+//                                                                         listen:
+//                                                                             false)
+//                                                                     .discount,
+//                                                             couponDiscountTitle:
+//                                                                 '',
+//                                                             deliveryAddressId:
+//                                                                 0,
+//                                                             orderAmount:
+//                                                                 _subTotal,
+//                                                             orderNote: '',
+//                                                             orderType:
+//                                                                 "take a way",
+//                                                             paymentMethod:
+//                                                                 'take a way',
+//                                                             couponCode: Provider.of<CouponProvider>(
+//                                                                             context,
+//                                                                             listen:
+//                                                                                 false)
+//                                                                         .coupon !=
+//                                                                     null
+//                                                                 ? Provider.of<
+//                                                                             CouponProvider>(
+//                                                                         context,
+//                                                                         listen:
+//                                                                             false)
+//                                                                     .coupon
+//                                                                     .code
+//                                                                 : null,
+//                                                             branchId: id),
+//                                                         null);
+//                                                     Navigator.push(
+//                                                       context,
+//                                                       MaterialPageRoute(
+//                                                         builder: (_) =>
+//                                                             PaymentSuccessfulScreen(
+//                                                           razorPaymentId:
+//                                                               "takeaway",
+//                                                         ),
+//                                                       ),
+//                                                     ).then((value) {
+//                                                       widget.setPageInTabs(0);
+//                                                       BlocProvider.of<
+//                                                                   NavigationBloc>(
+//                                                               context)
+//                                                           .add(NavigationEvents
+//                                                               .HomePageClickedEvent);
+//                                                     });
+//                                                   } else if (_cash) {
+//                                                     /* Provider.of<CartProvider>(context, listen: false)
+//                                                   .clearCartList();*/
+//                                                     for (int index = 0;
+//                                                         index <
+//                                                             cart.cartList
+//                                                                 .length;
+//                                                         index++) {
+//                                                       CartModel cartM =
+//                                                           cart.cartList[index];
+//                                                       List<int> _addOnIdList =
+//                                                           [];
+//                                                       List<int> _addOnQtyList =
+//                                                           [];
+//                                                       cartM.addOnIds
+//                                                           .forEach((addOn) {
+//                                                         _addOnIdList
+//                                                             .add(addOn.id);
+//                                                         _addOnQtyList.add(
+//                                                             addOn.quantity);
+//                                                       });
+//                                                       carts.add(Cart(
+//                                                         cartM.product.id
+//                                                             .toString(),
+//                                                         cartM.discountedPrice
+//                                                             .toString(),
+//                                                         '',
+//                                                         cartM.variation,
+//                                                         cartM.discountAmount,
+//                                                         cartM.quantity,
+//                                                         0.0,
+//                                                         _addOnIdList,
+//                                                         _addOnQtyList,
+//                                                       ));
+//                                                     }
+//                                                     Provider.of<OrderProvider>(context, listen: false).placeOrder(
+//                                                         PlaceOrderBody(
+//                                                             cart: carts,
+//                                                             couponDiscountAmount:
+//                                                                 Provider.of<CouponProvider>(
+//                                                                         context,
+//                                                                         listen:
+//                                                                             false)
+//                                                                     .discount,
+//                                                             couponDiscountTitle:
+//                                                                 '',
+//                                                             deliveryAddressId:
+//                                                                 0,
+//                                                             orderAmount: _total,
+//                                                             orderNote: '',
+//                                                             orderType: "Cash",
+//                                                             paymentMethod:
+//                                                                 'Cash',
+//                                                             couponCode: Provider.of<CouponProvider>(
+//                                                                             context,
+//                                                                             listen:
+//                                                                                 false)
+//                                                                         .coupon !=
+//                                                                     null
+//                                                                 ? Provider.of<
+//                                                                             CouponProvider>(
+//                                                                         context,
+//                                                                         listen:
+//                                                                             false)
+//                                                                     .coupon
+//                                                                     .code
+//                                                                 : null,
+//                                                             branchId: id),
+//                                                         null);
+//                                                     Navigator.push(
+//                                                       context,
+//                                                       MaterialPageRoute(
+//                                                         builder: (_) =>
+//                                                             PaymentSuccessfulScreen(
+//                                                           razorPaymentId:
+//                                                               "Cash",
+//                                                         ),
+//                                                       ),
+//                                                     ).then((value) {
+//                                                       widget.setPageInTabs(0);
+//                                                       BlocProvider.of<
+//                                                                   NavigationBloc>(
+//                                                               context)
+//                                                           .add(NavigationEvents
+//                                                               .HomePageClickedEvent);
+//                                                     });
+//                                                   } else {
+//                                                     List<CartModel>
+//                                                         cartModelList =
+//                                                         cart.cartList;
+//                                                     for (int index = 0;
+//                                                         index <
+//                                                             cartModelList
+//                                                                 .length;
+//                                                         index++) {
+//                                                       CartModel cart =
+//                                                           cartModelList[index];
+//                                                       List<int> _addOnIdList =
+//                                                           [];
+//                                                       List<int> _addOnQtyList =
+//                                                           [];
+//                                                       cart.addOnIds
+//                                                           .forEach((addOn) {
+//                                                         _addOnIdList
+//                                                             .add(addOn.id);
+//                                                         _addOnQtyList.add(
+//                                                             addOn.quantity);
+//                                                       });
+//                                                       carts.add(Cart(
+//                                                         cart.product.id
+//                                                             .toString(),
+//                                                         cart.discountedPrice
+//                                                             .toString(),
+//                                                         '',
+//                                                         cart.variation,
+//                                                         cart.discountAmount,
+//                                                         cart.quantity,
+//                                                         cart.taxAmount,
+//                                                         _addOnIdList,
+//                                                         _addOnQtyList,
+//                                                       ));
+//                                                       showDialog(
+//                                                           context: context,
+//                                                           builder: (BuildContext
+//                                                               context) {
+//                                                             url =
+//                                                                 Uri.dataFromString('''<html>
+//     <head>
+//         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+//         <script src="https://alahligatway.gateway.mastercard.com/checkout/version/52/checkout.js"
+//                 data-error="errorCallback"
+//                 data-cancel="cancelCallback">
+//         </script>
+//         <script type="text/javascript">
+//             function errorCallback(error) {
+//                   console.log(JSON.stringify(error));
+//             }
+//             function cancelCallback() {
+//                   console.log('Payment cancelled');
+//             }
+//             Checkout.configure({
+//                 merchant: 'test602030001',
+//                 order: {
+//                     amount: function() {
+//                         //Dynamic calculation of amount
+//                         return $_total;
+//                                          },
+//                     currency: 'SAR',
+//                     description: 'Ordered goods',
+//                    id: 'Food123457'
+//                 },
+//              session: {
+//             id: '$sessionID'
+//        },
+//                 interaction: {
+//                     merchant: {
+//                         name: 'taza',
+//                         address: {
+//                             line1: '200 Sample St',
+//                             line2: '1234 Example Town'
+//                         }
+//                     }
+//                                                                 }
+//             });
+//         </script>
+//             <style>
+//                 html, body {
+//                     height:100%;
+//                 }
+//                 body {
+//                     display:flex;
+//                     align-items:center;
+//                 }
+//             </style>
+//     </head>
+//     <body>
+//         <div class="container">
+//             <div class="row justify-content-center">
+//                 <input class="btn btn-primary" type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
+//                 <input class="btn btn-primary ml-2" type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
+//             </div>
+//         </div>
+//     </body>
+// </html>
+// ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString();
+//                                                             return WillPopScope(
+//                                                                 // ignore: missing_return
+//                                                                 onWillPop: () {
+//                                                                   Navigator.pop(
+//                                                                       context);
+//                                                                   ScaffoldMessenger.of(
+//                                                                           context)
+//                                                                       .showSnackBar(SnackBar(
+//                                                                           backgroundColor: Colors.red,
+//                                                                           content: Text(
+//                                                                             "Payment Failed",
+//                                                                             style:
+//                                                                                 TextStyle(color: Colors.white),
+//                                                                           )));
+//                                                                 },
+//                                                                 child: WebView(
+//                                                                   onWebViewCreated:
+//                                                                       (controller) {
+//                                                                     _controllerss =
+//                                                                         controller;
+//                                                                     controller
+//                                                                         .loadUrl(
+//                                                                             url);
+//                                                                   },
+//                                                                   javascriptMode:
+//                                                                       JavascriptMode
+//                                                                           .unrestricted,
+//                                                                   onPageFinished:
+//                                                                       (urlss) {
+//                                                                     print(
+//                                                                         urlss);
+//                                                                     if (urlss
+//                                                                         .contains(
+//                                                                             "185.206.133.154")) {
+//                                                                       if (urlss
+//                                                                           .contains(
+//                                                                               successIndicator)) {
+//                                                                         Navigator.pop(
+//                                                                             context);
+//                                                                         Provider.of<OrderProvider>(context, listen: false).placeOrder(
+//                                                                             PlaceOrderBody(
+//                                                                                 cart: carts,
+//                                                                                 couponDiscountAmount: Provider.of<CouponProvider>(context, listen: false).discount,
+//                                                                                 couponDiscountTitle: '',
+//                                                                                 deliveryAddressId: 0,
+//                                                                                 orderAmount: _total,
+//                                                                                 orderNote: '',
+//                                                                                 orderType: "delivery",
+//                                                                                 paymentMethod: 'online',
+//                                                                                 couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
+//                                                                                 branchId: id),
+//                                                                             null);
+//                                                                         Navigator
+//                                                                             .push(
+//                                                                           context,
+//                                                                           MaterialPageRoute(
+//                                                                             builder: (_) =>
+//                                                                                 PaymentSuccessfulScreen(
+//                                                                               razorPaymentId: "pay_online",
+//                                                                             ),
+//                                                                           ),
+//                                                                         ).then(
+//                                                                             (value) {
+//                                                                           widget
+//                                                                               .setPageInTabs(0);
+//                                                                           BlocProvider.of<NavigationBloc>(context)
+//                                                                               .add(NavigationEvents.HomePageClickedEvent);
+//                                                                         });
+//                                                                         print(
+//                                                                             "object");
+//                                                                       } else {
+//                                                                         Navigator.pop(
+//                                                                             context);
+//                                                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                                                                             backgroundColor: Colors.red,
+//                                                                             content: Text(
+//                                                                               "Payment Failed",
+//                                                                               style: TextStyle(color: Colors.white),
+//                                                                             )));
+//                                                                       }
+//                                                                     }
+//                                                                     // http://185.206.133.154/returnedURL.html?resultIndicator=cc651a38b4b24ccd&sessionVersion=0696edd508
+//                                                                     print(_controllerss
+//                                                                         .currentUrl());
+//                                                                   },
+//                                                                   userAgent:
+//                                                                       'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36',
+//                                                                 ));
+//                                                           });
+//                                                       // await openCheckoutbank(
+//                                                       //     totalPrice: _total,
+//                                                       //     description:
+//                                                       //         "Tazaz food delivery payment",
+//                                                       //     userEmail:
+//                                                       //         profileProvider
+//                                                       //             .userInfoModel
+//                                                       //             .email,
+//                                                       //     userPhone:
+//                                                       //         profileProvider
+//                                                       //             .userInfoModel
+//                                                       //             .phone);
+//                                                     }
+//                                                   }
+//                                                   // else {
+//                                                   //   List<CartModel>
+//                                                   //       cartModelList =
+//                                                   //       cart.cartList;
+//                                                   //   for (int index = 0;
+//                                                   //       index <
+//                                                   //           cartModelList
+//                                                   //               .length;
+//                                                   //       index++) {
+//                                                   //     CartModel cart =
+//                                                   //         cartModelList[index];
+//                                                   //     List<int> _addOnIdList =
+//                                                   //         [];
+//                                                   //     List<int> _addOnQtyList =
+//                                                   //         [];
+//                                                   //     cart.addOnIds
+//                                                   //         .forEach((addOn) {
+//                                                   //       _addOnIdList
+//                                                   //           .add(addOn.id);
+//                                                   //       _addOnQtyList.add(
+//                                                   //           addOn.quantity);
+//                                                   //     });
+//                                                   //     carts.add(Cart(
+//                                                   //       cart.product.id
+//                                                   //           .toString(),
+//                                                   //       cart.discountedPrice
+//                                                   //           .toString(),
+//                                                   //       '',
+//                                                   //       cart.variation,
+//                                                   //       cart.discountAmount,
+//                                                   //       cart.quantity,
+//                                                   //       cart.taxAmount,
+//                                                   //       _addOnIdList,
+//                                                   //       _addOnQtyList,
+//                                                   //     ));
+//                                                   //   }
+//                                                   //   openCheckout(
+//                                                   //       totalPrice: _total,
+//                                                   //       description:
+//                                                   //           "Tazaz food delivery payment",
+//                                                   //       userEmail:
+//                                                   //           profileProvider
+//                                                   //               .userInfoModel
+//                                                   //               .email,
+//                                                   //       userPhone:
+//                                                   //           profileProvider
+//                                                   //               .userInfoModel
+//                                                   //               .phone);
+//                                                   // }
+//                                                 },
+//                                                 child: Container(
+//                                                   height: 45,
+//                                                   width: size.width - 70,
+//                                                   decoration: BoxDecoration(
+//                                                       borderRadius:
+//                                                           BorderRadius.circular(
+//                                                               10),
+//                                                       color: Color(0xff00A4A4)),
+//                                                   child: Center(
+//                                                     child: Text(
+//                                                       getTranslated(
+//                                                           "proceed", context),
+//                                                       style: TextStyle(
+//                                                           fontFamily: 'Rubik',
+//                                                           fontSize: Dimensions
+//                                                               .FONT_SIZE_DEFAULT,
+//                                                           fontWeight:
+//                                                               FontWeight.w700,
+//                                                           color: Colors.white),
+//                                                     ),
+//                                                   ),
+//                                                 ),
+//                                               )
+//                                             ],
+//                                           ),
+//                                         ),
+//                                         /*onTap: () {
+//                                     List<CartModel> cartModelList =
+//                                         cart.cartList;
+//                                     for (int index = 0;
+//                                         index < cartModelList.length;
+//                                         index++) {
+//                                       CartModel cart = cartModelList[index];
+//                                       List<int> _addOnIdList = [];
+//                                       List<int> _addOnQtyList = [];
+//                                       cart.addOnIds.forEach((addOn) {
+//                                         _addOnIdList.add(addOn.id);
+//                                         _addOnQtyList.add(addOn.quantity);
+//                                       });
+//                                       carts.add(Cart(
+//                                         cart.product.id.toString(),
+//                                         cart.discountedPrice.toString(),
+//                                         '',
+//                                         cart.variation,
+//                                         cart.discountAmount,
+//                                         cart.quantity,
+//                                         cart.taxAmount,
+//                                         _addOnIdList,
+//                                         _addOnQtyList,
+//                                       ));
+//                                     }
+//                                     openCheckout(
+//                                         totalPrice: _cash?_subTotal:_total,
+//                                         description:
+//                                             "Tazaz food delivery payment",
+//                                         userEmail:
+//                                             profileProvider.userInfoModel.email,
+//                                         userPhone: profileProvider
+//                                             .userInfoModel.phone);
+//                                   },*/
+//                                       );
+//                                     },
+//                                   ),
                                 ])
                               : NoDataScreen(isCart: true);
                         },

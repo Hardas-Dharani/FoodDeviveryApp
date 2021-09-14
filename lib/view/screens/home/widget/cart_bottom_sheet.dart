@@ -107,12 +107,12 @@ class _CartBottomSheetState extends State<CartBottomSheet>
             stretch: true,
             elevation: 0,
             pinned: false,
-            title: Text(
-              "${widget.product.name}",
-              style: TextStyle(
-                  color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-                  fontSize: 17),
-            ),
+            // title: Text(
+            //   "${widget.product.name}",
+            //   style: TextStyle(
+            //       color: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+            //       fontSize: 17),
+            // ),
             centerTitle: true,
             stretchTriggerOffset: 150.0,
             titleSpacing: 0,
@@ -183,6 +183,16 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                       ],
                     ),
                     Container(
+                      // height: 20,
+                      alignment: Alignment.topCenter,
+                      child: Image.asset(
+                        Images.tazaj_english,
+                        height: MediaQuery.of(context).size.height / 8.5,
+                        fit: BoxFit.scaleDown,
+                        matchTextDirection: true,
+                      ),
+                    ),
+                    Container(
                       alignment: Alignment.topRight,
                       height: MediaQuery.of(context).size.height * 50,
                       margin: EdgeInsets.only(
@@ -245,6 +255,17 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${widget.product.name}",
+                          style: TextStyle(
+                              color: _isDarkMode
+                                  ? Color(0xffF5F5F5)
+                                  : Color(0xff000000),
+                              fontSize: 17),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

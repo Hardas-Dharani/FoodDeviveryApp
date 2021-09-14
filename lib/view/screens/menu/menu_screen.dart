@@ -1,10 +1,15 @@
-
+import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
+import 'package:custom_radio_grouped_button/CustomButtons/CustomCheckBoxGroup.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/response/language_model.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
+import 'package:flutter_restaurant/provider/language_provider.dart';
 import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
+import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -50,13 +55,10 @@ class _MenuScreenState extends State<MenuScreen> {
         Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
 
     return Scaffold(
-      backgroundColor:_isDarkMode
-          ?Color(0xff323232):Color(0xff00A4A4),
+      backgroundColor: _isDarkMode ? Color(0xff323232) : Colors.white,
       /*backgroundColor:
           Color(int.parse("#00A4A4".substring(1, 7), radix: 16) + 0xFF000000),*/
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Consumer<ProfileProvider>(
           builder: (context, profileProvider, child) => Padding(
             padding: const EdgeInsets.all(16.0),
@@ -96,7 +98,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           getTranslated("welcome_to_tazaj", context),
                           style: rubikRegular.copyWith(
                               fontSize: Dimensions.FONT_SIZE_LARGE,
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontWeight: FontWeight.bold),
                         ),
                         _isLoggedIn
@@ -105,15 +107,17 @@ class _MenuScreenState extends State<MenuScreen> {
                                     '${profileProvider.userInfoModel.fName ?? ''}',
                                     style: rubikRegular.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                        color: ColorResources.COLOR_WHITE),
+                                        color: Color(0xff00A4A4)),
                                   )
                                 : Container(
-                                    height: 15, width: 100, color: Colors.white)
+                                    height: 15,
+                                    width: 100,
+                                    color: Color(0xff00A4A4))
                             : Text(
                                 'Abdul Aziz',
                                 style: TextStyle(
                                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                    color: Colors.white),
+                                    color: Color(0xff00A4A4)),
                               ),
                       ]),
                 )
@@ -263,7 +267,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           child: Text(
                             getTranslated("track_order", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 0
                                   ? FontWeight.bold
@@ -282,7 +286,28 @@ class _MenuScreenState extends State<MenuScreen> {
                           child: Text(
                             getTranslated("order_his", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
+                              fontSize: Dimensions.FONT_SIZE_LARGE,
+                              fontWeight: widget.selectedIndex == 0
+                                  ? FontWeight.bold
+                                  : FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          ChooseLanguageScreen(fromMenu: true)))
+                              .then((value) {
+                            setState(() {});
+                          }),
+                          child: Text(
+                            getTranslated("menu_language", context),
+                            style: TextStyle(
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 0
                                   ? FontWeight.bold
@@ -295,31 +320,11 @@ class _MenuScreenState extends State<MenuScreen> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) =>
-                                      ChooseLanguageScreen(fromMenu: true))).then((value) {
-                                   setState(() {
-
-                                   });
-                          }),
-                          child: Text(
-                            getTranslated("menu_language", context),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                              fontWeight: widget.selectedIndex == 0
-                                  ? FontWeight.bold
-                                  : FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        GestureDetector(
-                          onTap: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => AddressScreen())),
+                                  builder: (_) => AddressScreen())),
                           child: Text(
                             getTranslated("address", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 0
                                   ? FontWeight.bold
@@ -336,7 +341,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           child: Text(
                             getTranslated("notification", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 0
                                   ? FontWeight.bold
@@ -350,7 +355,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           thickness: 1,
                           // indent: 20,
                           endIndent: 250,
-                          color: Colors.white,
+                          color: Color(0xff00A4A4),
                         ),
                         SizedBox(height: 12),
                         GestureDetector(
@@ -358,13 +363,12 @@ class _MenuScreenState extends State<MenuScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => FeedBackScreen()
-                                ));
+                                    builder: (_) => FeedBackScreen()));
                           },
                           child: Text(
                             getTranslated("feedback", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 1
                                   ? FontWeight.bold
@@ -379,14 +383,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => StaticPages(
-                                          pageName: getTranslated("faq",context),
+                                          pageName:
+                                              getTranslated("faq", context),
                                           pageType: 2,
                                         )));
                           },
                           child: Text(
                             getTranslated("faq", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 2
                                   ? FontWeight.bold
@@ -400,13 +405,13 @@ class _MenuScreenState extends State<MenuScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => StaticPages(
-                                        pageName: getTranslated("t&c",context),
+                                        pageName: getTranslated("t&c", context),
                                         pageType: 0,
                                       ))),
                           child: Text(
                             getTranslated("t&c", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 1
                                   ? FontWeight.bold
@@ -421,14 +426,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => StaticPages(
-                                          pageName: getTranslated("nut",context),
+                                          pageName:
+                                              getTranslated("nut", context),
                                           pageType: 1,
                                         )));
                           },
                           child: Text(
                             getTranslated("nut", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 2
                                   ? FontWeight.bold
@@ -443,14 +449,15 @@ class _MenuScreenState extends State<MenuScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => StaticPages(
-                                          pageName: getTranslated("about_us",context),
+                                          pageName: getTranslated(
+                                              "about_us", context),
                                           pageType: 3,
                                         )));
                           },
                           child: Text(
                             getTranslated("about_us", context),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 2
                                   ? FontWeight.bold
@@ -464,16 +471,18 @@ class _MenuScreenState extends State<MenuScreen> {
                           thickness: 1,
                           // indent: 20,
                           endIndent: 250,
-                          color: Colors.white,
+                          color: Color(0xff00A4A4),
                         ),
                         SizedBox(height: 12),
                         GestureDetector(
-                          onTap: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => SupportScreen())),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SupportScreen())),
                           child: Text(
-                            getTranslated("call_support", context),
+                            "Call Us",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff00A4A4),
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                               fontWeight: widget.selectedIndex == 2
                                   ? FontWeight.bold
@@ -489,15 +498,21 @@ class _MenuScreenState extends State<MenuScreen> {
                                 builder: (context) =>
                                     SignOutConfirmationDialog());
                           },
-                          child: Text(
-                            getTranslated("log_out", context),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                              fontWeight: widget.selectedIndex == 2
-                                  ? FontWeight.bold
-                                  : FontWeight.bold,
-                            ),
+                          child: Row(
+                            children: [
+                              // Icon(Icons.logout, color: Color(0xff00A4A4)),
+                              // SizedBox(width: 12),
+                              Text(
+                                getTranslated("log_out", context),
+                                style: TextStyle(
+                                  color: Color(0xff00A4A4),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: widget.selectedIndex == 2
+                                      ? FontWeight.bold
+                                      : FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 12),
@@ -517,7 +532,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                       getTranslated("dark_mode", context),
                                       style: TextStyle(
                                           fontSize: 15,
-                                          color: Colors.white,
+                                          color: Color(0xff00A4A4),
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -526,8 +541,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Switch.adaptive(
-                                        value: Provider.of<ThemeProvider>(context)
-                                            .darkTheme,
+                                        value:
+                                            Provider.of<ThemeProvider>(context)
+                                                .darkTheme,
                                         onChanged: (bool isActive) =>
                                             Provider.of<ThemeProvider>(context,
                                                     listen: false)
@@ -537,7 +553,145 @@ class _MenuScreenState extends State<MenuScreen> {
                               ],
                             ),
                           ),
-                        )
+                        ),
+                        Container(
+                          child: CustomRadioButton(
+                            elevation: 0,
+                            absoluteZeroSpacing: true,
+                            unSelectedColor: Colors.grey,
+                            buttonLables: [
+                              'English',
+                              'Arabic',
+                            ],
+                            buttonValues: [
+                              0,
+                              1,
+                            ],
+                            buttonTextStyle: ButtonTextStyle(
+                                selectedColor: Colors.white,
+                                unSelectedColor: Colors.white,
+                                textStyle: TextStyle(fontSize: 16)),
+                            radioButtonValue: (value) {
+                              if (value == 0) {
+                                AppConstants.selectedLanguage = "English";
+                              } else {
+                                AppConstants.selectedLanguage = "Arabic";
+                              }
+                              print(value);
+                            },
+                            defaultSelected: 0,
+                            selectedColor: Color(0xFFEF8D30),
+                          ),
+                        ),
+                        // Container(
+                        //   width: 80,
+                        //   child: Consumer<LanguageProvider>(
+                        //       builder: (context, languageProvider, child) =>
+                        //           ListView.builder(
+                        //               itemCount:
+                        //                   languageProvider.languages.length,
+                        //               // physics: BouncingScrollPhysics(),
+                        //               shrinkWrap: true,
+                        //               scrollDirection: Axis.horizontal,
+                        //               itemBuilder: (context, index) {
+                        //                 return InkWell(
+                        //                   onTap: () {
+                        //                     languageProvider
+                        //                         .setSelectIndex(index);
+                        //                     if (index == 0) {
+                        //                       AppConstants.selectedLanguage =
+                        //                           "English";
+                        //                     } else {
+                        //                       AppConstants.selectedLanguage =
+                        //                           "Arabic";
+                        //                     }
+                        //                   },
+                        //                   child: Container(
+                        //                     // padding: EdgeInsets.symmetric(
+                        //                     //     horizontal: 20),
+                        //                     decoration: BoxDecoration(
+                        //                       color: languageProvider
+                        //                                   .selectIndex ==
+                        //                               index
+                        //                           ? ColorResources.COLOR_WHITE
+                        //                               .withOpacity(.15)
+                        //                           : null,
+                        //                       border: Border(
+                        //                           top: BorderSide(
+                        //                               width: 1.0,
+                        //                               color: languageProvider
+                        //                                           .selectIndex ==
+                        //                                       index
+                        //                                   ? ColorResources
+                        //                                       .COLOR_WHITE
+                        //                                   : Colors.transparent),
+                        //                           bottom: BorderSide(
+                        //                               width: 1.0,
+                        //                               color: languageProvider
+                        //                                           .selectIndex ==
+                        //                                       index
+                        //                                   ? ColorResources
+                        //                                       .COLOR_WHITE
+                        //                                   : Colors
+                        //                                       .transparent)),
+                        //                     ),
+                        //                     child: Container(
+                        //                       padding: EdgeInsets.symmetric(
+                        //                           vertical: 15),
+                        //                       decoration: BoxDecoration(
+                        //                         border: Border(
+                        //                             bottom: BorderSide(
+                        //                                 width: 1.0,
+                        //                                 color: languageProvider
+                        //                                             .selectIndex ==
+                        //                                         index
+                        //                                     ? Colors.transparent
+                        //                                     : ColorResources
+                        //                                         .COLOR_GREY_CHATEAU
+                        //                                         .withOpacity(
+                        //                                             .3))),
+                        //                       ),
+                        //                       child: Row(
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment
+                        //                                 .spaceBetween,
+                        //                         children: [
+                        //                           Row(
+                        //                             children: [
+                        //                               // Image.asset(languageModel.imageUrl, width: 34, height: 34),
+                        //                               // SizedBox(width: 30),
+                        //                               Text(
+                        //                                 languageProvider
+                        //                                     .languages[index]
+                        //                                     .languageName,
+                        //                                 style: Theme.of(context)
+                        //                                     .textTheme
+                        //                                     .headline2
+                        //                                     .copyWith(
+                        //                                         color: Theme.of(
+                        //                                                 context)
+                        //                                             .textTheme
+                        //                                             .bodyText1
+                        //                                             .color),
+                        //                               ),
+                        //                             ],
+                        //                           ),
+                        //                           languageProvider
+                        //                                       .selectIndex ==
+                        //                                   index
+                        //                               ? Image.asset(
+                        //                                   Images.done,
+                        //                                   width: 17,
+                        //                                   height: 17,
+                        //                                 )
+                        //                               : SizedBox.shrink()
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 );
+                        //               })),
+                        // ),
                       ],
                     ),
                   ),
@@ -547,6 +701,76 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ),
       ]),
+    );
+  }
+
+  Widget _languageWidget(
+      {BuildContext context,
+      LanguageModel languageModel,
+      LanguageProvider languageProvider,
+      int index}) {
+    return InkWell(
+      onTap: () {
+        languageProvider.setSelectIndex(index);
+        if (index == 0) {
+          AppConstants.selectedLanguage = "English";
+        } else {
+          AppConstants.selectedLanguage = "Arabic";
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: languageProvider.selectIndex == index
+              ? ColorResources.COLOR_WHITE.withOpacity(.15)
+              : null,
+          border: Border(
+              top: BorderSide(
+                  width: 1.0,
+                  color: languageProvider.selectIndex == index
+                      ? ColorResources.COLOR_WHITE
+                      : Colors.transparent),
+              bottom: BorderSide(
+                  width: 1.0,
+                  color: languageProvider.selectIndex == index
+                      ? ColorResources.COLOR_WHITE
+                      : Colors.transparent)),
+        ),
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    width: 1.0,
+                    color: languageProvider.selectIndex == index
+                        ? Colors.transparent
+                        : ColorResources.COLOR_GREY_CHATEAU.withOpacity(.3))),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  // Image.asset(languageModel.imageUrl, width: 34, height: 34),
+                  // SizedBox(width: 30),
+                  Text(
+                    languageModel.languageName,
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1.color),
+                  ),
+                ],
+              ),
+              languageProvider.selectIndex == index
+                  ? Image.asset(
+                      Images.done,
+                      width: 17,
+                      height: 17,
+                    )
+                  : SizedBox.shrink()
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

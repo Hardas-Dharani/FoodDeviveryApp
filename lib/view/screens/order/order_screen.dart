@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/order_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
+import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
@@ -41,9 +42,21 @@ class _OrderScreenState extends State<OrderScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
-      appBar: CustomAppBar(
-        title: getTranslated('my_order', context),
-        isBackButtonExist: false,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Padding(
+          padding: const EdgeInsets.only(right: 80),
+          child: Container(
+            // height: 20,
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              Images.tazaj_english,
+              height: MediaQuery.of(context).size.height / 8.5,
+              fit: BoxFit.scaleDown,
+              matchTextDirection: true,
+            ),
+          ),
+        ),
       ),
       body: _isLoggedIn
           ? Consumer<OrderProvider>(

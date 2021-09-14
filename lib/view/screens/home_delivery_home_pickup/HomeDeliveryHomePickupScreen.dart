@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -129,7 +130,7 @@ class _HomeDeliveyAndHomePickupScreenState
 
   int branchid = 0;
   String status = "";
-
+  String branchname = '';
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -153,6 +154,7 @@ class _HomeDeliveyAndHomePickupScreenState
             onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setInt("branchidshr", branchid);
+              prefs.setString("branchname", branchname);
               print(branchid);
 
               if (selectedIndex != -1 && status != "Closed") {
@@ -191,71 +193,77 @@ class _HomeDeliveyAndHomePickupScreenState
               // title: Text(getTranslated(widget.label?.toString(), context)),
               // title: Text(widget.label),
               title: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 2.0),
                 child: Row(
                   children: [
                     Expanded(
-                      child: CustomTextField(
-                        hintText: getTranslated('search_items_here', context),
-                        isShowBorder: true,
-                        isShowSuffixIcon: true,
-                        suffixIconUrl: Images.search,
-                        onSuffixTap: () {
-                          // if (_searchController.text.length > 0) {
-                          //   searchProvider.saveSearchAddress(_searchController.text);
-                          //   searchProvider.searchProduct(_searchController.text, context);
-                          //   setState(() {
-                          //     _searchResult = true;
-                          //   });
-                          //   //Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchResultScreen(searchString: _searchController.text)));
-                          // }
-                        },
-                        controller: _searchController,
-                        inputAction: TextInputAction.search,
-                        isIcon: true,
-                        onChanged: (text) {
-                          setState(() {
-                            print("object${text}");
-
-                            if (text != null) {
-                              isSearchInitiated = true;
-                              searchPickupList = [];
-                              homePickupList.forEach((element) {
-                                print("lat is =" +
-                                    element.latitude.toString() +
-                                    "    " +
-                                    "long is =" +
-                                    element.longitude.toString() +
-                                    "\n");
-                                if (element.name.toLowerCase().contains(text) ||
-                                    element.address
-                                        .toLowerCase()
-                                        .contains(text)) {
-                                  searchPickupList.add(element);
-                                }
-                              });
-                            } else {
-                              isSearchInitiated = false;
-                            }
-                          });
-                        },
-                        onSubmit: (text) {
-                          setState(() {
-                            isSearchInitiated = false;
-                          });
-                          // if (_searchController.text.length > 0) {
-                          //   searchProvider.saveSearchAddress(_searchController.text);
-                          //   searchProvider.searchProduct(_searchController.text, context);
-                          //   setState(() {
-                          //     _searchResult = true;
-                          //   });
-                          //   //Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchResultScreen(searchString: _searchController.text)));
-                          // }
-                        },
+                      child: Image.asset(
+                        Images.tazaj_english,
+                        height: MediaQuery.of(context).size.height / 7.5,
+                        fit: BoxFit.scaleDown,
+                        matchTextDirection: true,
                       ),
+                      //  CustomTextField(
+                      //   hintText: getTranslated('search_items_here', context),
+                      //   isShowBorder: true,
+                      //   isShowSuffixIcon: true,
+                      //   suffixIconUrl: Images.search,
+                      //   onSuffixTap: () {
+                      //     // if (_searchController.text.length > 0) {
+                      //     //   searchProvider.saveSearchAddress(_searchController.text);
+                      //     //   searchProvider.searchProduct(_searchController.text, context);
+                      //     //   setState(() {
+                      //     //     _searchResult = true;
+                      //     //   });
+                      //     //   //Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchResultScreen(searchString: _searchController.text)));
+                      //     // }
+                      //   },
+                      //   controller: _searchController,
+                      //   inputAction: TextInputAction.search,
+                      //   isIcon: true,
+                      //   onChanged: (text) {
+                      //     setState(() {
+                      //       print("object${text}");
+
+                      //       if (text != null) {
+                      //         isSearchInitiated = true;
+                      //         searchPickupList = [];
+                      //         homePickupList.forEach((element) {
+                      //           print("lat is =" +
+                      //               element.latitude.toString() +
+                      //               "    " +
+                      //               "long is =" +
+                      //               element.longitude.toString() +
+                      //               "\n");
+                      //           if (element.name.toLowerCase().contains(text) ||
+                      //               element.address
+                      //                   .toLowerCase()
+                      //                   .contains(text)) {
+                      //             searchPickupList.add(element);
+                      //           }
+                      //         });
+                      //       } else {
+                      //         isSearchInitiated = false;
+                      //       }
+                      //     });
+                      //   },
+                      //   onSubmit: (text) {
+                      //     setState(() {
+                      //       isSearchInitiated = false;
+                      //     });
+                      //     // if (_searchController.text.length > 0) {
+                      //     //   searchProvider.saveSearchAddress(_searchController.text);
+                      //     //   searchProvider.searchProduct(_searchController.text, context);
+                      //     //   setState(() {
+                      //     //     _searchResult = true;
+                      //     //   });
+                      //     //   //Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchResultScreen(searchString: _searchController.text)));
+                      //     // }
+                      //   },
+                      // ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 60,
                     )
                     /*TextButton(
                             onPressed: () {
@@ -326,27 +334,46 @@ class _HomeDeliveyAndHomePickupScreenState
                               Container(
                                 height: 250,
                                 margin: EdgeInsets.only(top: 20),
-                                child: GoogleMap(
-                                  mapType: MapType.normal,
-                                  myLocationEnabled: true,
-                                  //initialCameraPosition: initialLocation,
-                                  initialCameraPosition: CameraPosition(
-                                      zoom: 6,
-                                      bearing: 30,
-                                      target: LatLng(
-                                          double.parse(homePickupList[0]
-                                              .latitude
-                                              .toString()),
-                                          double.parse(homePickupList[0]
-                                              .longitude
-                                              .toString()))),
-                                  onMapCreated:
-                                      (GoogleMapController controller) {
-                                    print(
-                                        "--------- locationList markers  ${list.length}");
-                                    _controller.complete(controller);
-                                  },
-                                  markers: Set.from(markers),
+                                child: Stack(
+                                  children: [
+                                    GoogleMap(
+                                      mapType: MapType.normal,
+                                      myLocationEnabled: true,
+                                      //initialCameraPosition: initialLocation,
+                                      initialCameraPosition: CameraPosition(
+                                          zoom: 6,
+                                          bearing: 30,
+                                          target: LatLng(
+                                              double.parse(homePickupList[0]
+                                                  .latitude
+                                                  .toString()),
+                                              double.parse(homePickupList[0]
+                                                  .longitude
+                                                  .toString()))),
+                                      onMapCreated:
+                                          (GoogleMapController controller) {
+                                        print(
+                                            "--------- locationList markers  ${list.length}");
+                                        _controller.complete(controller);
+                                      },
+                                      markers: Set.from(markers),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: commonButton("Pick up", () {},
+                                          color: Color(0xff00A4A4)),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child: commonButton("Delivery", () {},
+                                          color: Colors.grey),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: commonButton("All Branch", () {},
+                                          color: Color(0xff00A4A4)),
+                                    ),
+                                  ],
                                 ),
                               ),
                               _listView(isSearchInitiated
@@ -374,6 +401,28 @@ class _HomeDeliveyAndHomePickupScreenState
         ),
       ),
     );
+  }
+
+  Widget commonButton(String label, VoidCallback voidCallback, {Color color}) {
+    return MaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        onPressed: voidCallback,
+        color: color != null
+            ? color
+            : !_isDarkMode
+                ? ColorResources.COLOR_PRIMARY
+                : Color(0xff000000),
+        // :
+        //  ColorResources.COLOR_PRIMARY,
+        splashColor: Colors.grey.withOpacity(0.5),
+        child: Text(
+          label,
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+        ));
   }
 
   TimeOfDay time;
@@ -429,38 +478,38 @@ class _HomeDeliveyAndHomePickupScreenState
           return ListTile(
             tileColor: selectedIndex == index
                 ? Color(0xFF00A4A4).withOpacity(0.5)
-                : Colors.white,
+                : Color(0xFFE5791E),
             onTap: () {
               branchid = homePickupList[index].id;
               status = homePickupList[index].openCloseStatus;
+              branchname = homePickupList[index].name;
               selectedIndex = index;
               setState(() {});
             },
             title: Text("${homePickupList[index].name}",
                 style: Theme.of(context).textTheme.headline2.copyWith(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w600)),
             subtitle: Text("${homePickupList[index].address}",
                 style: Theme.of(context).textTheme.headline2.copyWith(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w400)),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    "${(Geolocator.distanceBetween(currentLat, currentLng, double.parse(homePickupList[index].latitude.toString()), double.parse(homePickupList[index].longitude.toString())) / 1000).round()}km",
+                Text("${distance}km",
                     style: Theme.of(context).textTheme.headline2.copyWith(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.w600)),
                 Text(homePickupList[index].openCloseStatus,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                         color: homePickupList[index].openCloseStatus == "Open"
-                            ? Colors.green
-                            : Colors.red,
+                            ? Colors.white
+                            : Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.w600)),
               ],

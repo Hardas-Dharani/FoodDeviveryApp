@@ -32,6 +32,8 @@ import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart'
 import 'package:flutter_restaurant/view/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
+import 'view/screens/NewScreen/numberLogin.dart';
+import 'view/screens/NewScreen/option.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -106,9 +108,12 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: _locals,
-      home: orderId == null
-          ? SplashScreen()
-          : OrderDetailsScreen(orderModel: null, orderId: orderId),
+      home:
+          //  ChooseOptionScreen()
+          // NumberScreen()
+          orderId == null
+              ? SplashScreen()
+              : OrderDetailsScreen(orderModel: null, orderId: orderId),
     );
   }
 }

@@ -40,7 +40,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _screens = [
       HomeScreen(
         isMenuTapped: widget.isMenuTapped,
-
       ),
       CartScreen(
         isMenuTapped: widget.isMenuTapped,
@@ -50,9 +49,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       WishListScreen(
         isMenuTapped: widget.isMenuTapped,
       ),
-      SearchScreen(
-          isMenuTapped: widget.isMenuTapped
-      ),
+      SearchScreen(isMenuTapped: widget.isMenuTapped),
 
       // MenuScreen(onTap: (int pageIndex) {
       //   _setPage(pageIndex);

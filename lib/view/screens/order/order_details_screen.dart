@@ -23,6 +23,7 @@ import 'package:flutter_restaurant/view/screens/order/widget/order_cancel_dialog
 import 'package:flutter_restaurant/view/screens/rare_review/rate_review_screen.dart';
 import 'package:flutter_restaurant/view/screens/track/order_tracking_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final OrderModel orderModel;
@@ -30,7 +31,7 @@ class OrderDetailsScreen extends StatelessWidget {
   OrderDetailsScreen({@required this.orderModel, @required this.orderId});
 
   final GlobalKey<ScaffoldMessengerState> _scaffold = GlobalKey();
-
+  String branchname = '';
   void _loadData(BuildContext context) async {
     await Provider.of<OrderProvider>(context, listen: false)
         .trackOrder(orderId.toString(), orderModel, context, false);
@@ -42,6 +43,8 @@ class OrderDetailsScreen extends StatelessWidget {
         .initAddressList(context);
     Provider.of<OrderProvider>(context, listen: false)
         .getOrderDetails(orderId.toString(), context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    branchname = prefs.getString("branchname");
   }
 
   @override
@@ -50,7 +53,23 @@ class OrderDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       key: _scaffold,
-      appBar: CustomAppBar(title: getTranslated('order_details', context)),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Padding(
+          padding: const EdgeInsets.only(right: 80),
+          child: Container(
+            // height: 20,
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              Images.tazaj_english,
+              height: MediaQuery.of(context).size.height / 8.5,
+              fit: BoxFit.scaleDown,
+              matchTextDirection: true,
+            ),
+          ),
+        ),
+      ),
+      // CustomAppBar(title: getTranslated('order_details', context)),
       body: Consumer<OrderProvider>(
         builder: (context, order, child) {
           double deliveryCharge = 0;
@@ -137,13 +156,20 @@ class OrderDetailsScreen extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                         children: [
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                          Text(getTranslated('order_details', context),
+                              style: TextStyle(
+                                fontFamily: 'Rubik',
+                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFFEF8D30),
+                              )),
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                           Row(children: [
                             Text('${getTranslated('order_id', context)}:',
                                 style: rubikRegular),
                             SizedBox(
                                 width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                            Text(order.trackModel.id.toString(),
-                                style: rubikMedium),
                             SizedBox(
                                 width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             Expanded(child: SizedBox()),
@@ -155,8 +181,39 @@ class OrderDetailsScreen extends StatelessWidget {
                                     order.trackModel.createdAt),
                                 style: rubikRegular),
                           ]),
+                          SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                          Row(
+                            children: [
+                              Text(order.trackModel.id.toString(),
+                                  style: TextStyle(
+                                    fontFamily: 'Rubik',
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFFEF8D30),
+                                  )),
+                              SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
+                              Icon(Icons.copy,
+                                  color: Color(0xFFEF8D30), size: 17),
+                              SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
+                              Icon(Icons.info,
+                                  color: Color(0xFFEF8D30), size: 17),
+                            ],
+                          ),
                           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
+                          Row(children: [
+                            Text('Branch:', style: rubikRegular),
+                          ]),
+                          Text(branchname.toString(),
+                              style: rubikMedium.copyWith(
+                                  color: Color(0xFF00A4A4))),
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                          Row(children: [
+                            Text('Order type:', style: rubikRegular),
+                          ]),
+                          Text(order.orderType.toString(),
+                              style: rubikMedium.copyWith(
+                                  color: Color(0xFFEF8D30))),
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                           Row(children: [
                             Text('${getTranslated('item', context)}:',
                                 style: rubikRegular),
@@ -166,7 +223,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 style: rubikMedium.copyWith(
                                     color: Theme.of(context).primaryColor)),
                             Expanded(child: SizedBox()),
-                            order.trackModel.orderType == 'delivery'
+                            order.orderType == 'delivery'
                                 ? TextButton.icon(
                                     onPressed: () {
                                       AddressModel _address;
@@ -174,7 +231,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                           in Provider.of<LocationProvider>(
                                                   context,
                                                   listen: false)
-                                              .addressList) {
+                                              .addressList) { 
                                         if (address.id ==
                                             order
                                                 .trackModel.deliveryAddressId) {
