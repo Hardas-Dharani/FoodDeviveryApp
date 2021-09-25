@@ -66,6 +66,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
           ),
         ));
       }
+
       _firstTime = false;
     });
 
@@ -77,6 +78,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
+      popup(context);
     }
   }
 
@@ -95,6 +97,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
         Provider.of<AuthProvider>(context, listen: false).updateToken();
         await Provider.of<WishListProvider>(context, listen: false)
             .initWishList(context);
+
         setState(() {
           loading = true;
         });
@@ -114,11 +117,91 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
     });
   }
 
+  void popup(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: AlertDialog(
+                content: Stack(clipBehavior: Clip.none, children: <Widget>[
+              Container(
+                height: 200,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 150,
+                      child: Center(
+                        child: Text("data"),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      // padding: EdgeInsets.all(0),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(6)),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 12),
+                                  onPressed: () {},
+                                  color: ColorResources.COLOR_PRIMARY,
+
+                                  // :
+                                  //  ColorResources.COLOR_PRIMARY,
+                                  splashColor: Colors.grey.withOpacity(0.5),
+                                  child: Text(
+                                    "Sample",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                              MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(6)),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 12),
+                                  onPressed: () {},
+                                  color: Color(0xFF00A4A4),
+
+                                  // :
+                                  //  ColorResources.COLOR_PRIMARY,
+                                  splashColor: Colors.grey.withOpacity(0.5),
+                                  child: Text(
+                                    "Text",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ])),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     Provider.of<LanguageProvider>(context, listen: false)
         .initializeAllLanguages(context);
+    // popup();
 
     return Scaffold(
       backgroundColor: _isDarkMode ? Color(0xff000000) : Colors.white,
@@ -175,6 +258,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                 SizedBox(
                   height: 200,
                 ),
+
                 commonButton(
                   "Pickup",
                   () {

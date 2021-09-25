@@ -20,6 +20,8 @@ import 'dart:convert' as JSON;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'brANCHPICKUPPickupScreen copy.dart';
+
 class HomeDeliveyAndHomePickupScreen extends StatefulWidget {
   var label;
   double latfrommap;
@@ -360,8 +362,15 @@ class _HomeDeliveyAndHomePickupScreenState
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: commonButton("Pick up", () {},
-                                          color: Color(0xff00A4A4)),
+                                      child: commonButton("Pick up", () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    BranchpickupScreen(
+                                                      label: "Branch Pickup",
+                                                    )));
+                                      }, color: Color(0xff00A4A4)),
                                     ),
                                     Align(
                                       alignment: Alignment.topCenter,

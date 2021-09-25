@@ -91,10 +91,90 @@ class _HomeScreenState extends State<HomeScreen> {
     NetworkInfo.checkConnectivity(_scaffoldKey);
   }
 
+  void _showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+              height: 400,
+              width: 800,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: <Widget>[
+                  Positioned(
+                    right: -40.0,
+                    top: -40.0,
+                    child: InkResponse(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: CircleAvatar(
+                        child: Icon(Icons.close),
+                        backgroundColor: Colors.red,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        child: Image.network(
+                          'https://freepngdownload.com/image/thumb/fried-chicken-free-png-image-download-18.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Would you Like to try our our",
+                          style: TextStyle(color: ColorResources.COLOR_PRIMARY),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "NEW OFFER?",
+                            style: TextStyle(color: Color(0xFF00A4A4)),
+                          )),
+                      Align(
+                        alignment: Alignment.center,
+                        child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 12),
+                            onPressed: () {},
+                            color: ColorResources.COLOR_PRIMARY,
+
+                            // :
+                            //  ColorResources.COLOR_PRIMARY,
+                            splashColor: Colors.grey.withOpacity(0.5),
+                            child: Text(
+                              "View Item",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            )),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   Future<void> _loadDatatwo(BuildContext context, bool reload) async {
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
+      _showAlert(context);
     }
     await Provider.of<CategoryProvider>(context, listen: false)
         .getCategoryList(context, reload)
@@ -131,12 +211,13 @@ class _HomeScreenState extends State<HomeScreen> {
     _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     _loadData(context, false);
     //_loadDatatwo(context, false);
+    // _showAlert(context);
     Provider.of<LocationProvider>(context, listen: false)
         .initializeAllAddressType(context: context);
     Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0);
     return Scaffold(
       backgroundColor: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
-      /*Color(int.parse("#F5F5F5".substring(1, 7), radix: 16) + 0xFF000000),*/
+      /*Color(int.parse("#F5F5F5".substring(1, 7), rad ix: 16) + 0xFF000000),*/
       // body: Stack(
       //   children: [
       //     MenuScreen(),

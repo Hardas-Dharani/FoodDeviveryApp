@@ -64,6 +64,869 @@ class _CartBottomSheetState extends State<CartBottomSheet>
     bool fromCart = widget.cart != null;
 
     Variation _variation = Variation();
+    int _grouptypeValue = -1;
+    int _groupsizeValue = -1;
+    int _groupdrinlValue = -1;
+
+    var padding2 = Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+      child:
+          Consumer<ProductProvider>(builder: (context, productProvider, child) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "${widget.product.name}",
+                  style: TextStyle(
+                      color:
+                          _isDarkMode ? Color(0xffF5F5F5) : Color(0xff000000),
+                      fontSize: 17),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                    visible: widget.product.addOns.length > 0,
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          drink = true;
+                          upSize = false;
+                          addOn = false;
+                        });
+                      },
+                      child: Text(
+                        getTranslated("opt1", context),
+                        style: TextStyle(
+                            color: drink ? Color(0xff00A4A4) : null,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Dimensions.FONT_SIZE_LARGE),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.product.addOns2 != null,
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          drink = false;
+                          upSize = true;
+                          addOn = false;
+                        });
+                      },
+                      child: Text(getTranslated("upSize", context),
+                          style: TextStyle(
+                              color: upSize ? Color(0xff00A4A4) : null,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.product.addOns1 != null,
+                    child: TextButton(
+                      child: Text(getTranslated("add_On", context),
+                          style: TextStyle(
+                            color: addOn ? Color(0xff00A4A4) : null,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      onPressed: () {
+                        setState(() {
+                          drink = false;
+                          upSize = false;
+                          addOn = true;
+                        });
+                      },
+                    ),
+                  ),
+                  /*Container(
+                                          decoration: BoxDecoration(
+                                              color: Color(int.parse(
+                                                  "#00A4A4"
+                                                      .substring(
+                                                      1,
+                                                      7),
+                                                  radix: 16) +
+                                                  0xFF000000),
+                                              borderRadius:
+                                              BorderRadius
+                                                  .circular(
+                                                  5)),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.push(context,MaterialPageRoute(builder: (context)=>CheckoutScreen()));
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                  Dimensions
+                                                      .PADDING_SIZE_SMALL,
+                                                  vertical: Dimensions
+                                                      .PADDING_SIZE_EXTRA_SMALL),
+                                              child: Icon(
+                                                  Icons.shopping_cart,
+                                                  size: 20),
+                                            ),
+                                          ),
+                                        ),*/
+                ],
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              widget.product.addOns != null && widget.product.addOns.length > 0
+                  ? Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Visibility(
+                              visible: drink,
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: _isDarkMode
+                                            ? Color(0xff000000)
+                                            : Color(0xffFFFFFF),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                widget
+                                                    .product.addOns[index].name,
+                                                style: TextStyle(
+                                                  fontSize: Dimensions
+                                                      .FONT_SIZE_LARGE,
+                                                )),
+                                            Spacer(),
+                                            /*Text(
+                                                  widget.product
+                                                      .addOns[index].price.toString(),),*/
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  //color: ColorResources.getBackgroundColor(context),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Row(children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: ColorResources
+                                                          .getBackgroundColor(
+                                                              context),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      if (productProvider
+                                                                  .addOnQtyList[
+                                                              index] >
+                                                          0) {
+                                                        productProvider
+                                                            .setAddOnQuantity(
+                                                                false, index);
+                                                        if (productProvider
+                                                                    .addOnQtyList[
+                                                                index] >
+                                                            1) {
+                                                          productProvider
+                                                              .setAddOnQuantity(
+                                                                  false, index);
+                                                        } else {
+                                                          productProvider
+                                                              .addAddOn(
+                                                                  false, index);
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(Icons.remove,
+                                                          size: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Text(
+                                                    productProvider
+                                                        .addOnQtyList[index]
+                                                        .toString(),
+                                                    style: rubikMedium.copyWith(
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_EXTRA_LARGE)),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(int.parse(
+                                                              "#00A4A4"
+                                                                  .substring(
+                                                                      1, 7),
+                                                              radix: 16) +
+                                                          0xFF000000),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      {
+                                                        var sum = productProvider
+                                                            .addOnQtyList
+                                                            .reduce((value,
+                                                                    element) =>
+                                                                value +
+                                                                element);
+                                                        if (sum <
+                                                            productProvider
+                                                                .quantity) {
+                                                          print("Adddddddd");
+                                                          productProvider
+                                                              .setAddOnQuantity(
+                                                                  true, index);
+                                                          if (!productProvider
+                                                                  .addOnActiveList[
+                                                              index]) {
+                                                            productProvider.addAddOn(
+                                                                true,
+                                                                widget.product
+                                                                    .addOns
+                                                                    .indexOf(widget
+                                                                        .product
+                                                                        .addOns[index]));
+                                                          } else if (productProvider
+                                                                      .addOnQtyList[
+                                                                  index] ==
+                                                              1) {
+                                                            productProvider
+                                                                .addAddOn(false,
+                                                                    index);
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //Spacer(),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ]),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                height: 2,
+              ),
+              widget.product.addOns2 != null &&
+                      widget.product.addOns2.length > 0
+                  ? Visibility(
+                      visible: upSize,
+                      child: Container(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
+                                Text(
+                                  getTranslated("add_On", context),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE),
+                                ),
+                                Text(
+                                    " (Select up to ${productProvider.quantity})",
+                                    style: TextStyle(
+                                      fontSize: Dimensions.FONT_SIZE_SMALL,
+                                    )),
+                              ]),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns2.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: _isDarkMode
+                                            ? Color(0xff000000)
+                                            : Color(0xffFFFFFF),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                widget.product.addOns2[index]
+                                                    .name,
+                                                style: TextStyle(
+                                                  fontSize: Dimensions
+                                                      .FONT_SIZE_LARGE,
+                                                )),
+                                            Spacer(),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  //color: ColorResources.getBackgroundColor(context),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Row(children: [
+                                                Text(
+                                                    widget.product
+                                                        .addOns2[index].price
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontSize: Dimensions
+                                                          .FONT_SIZE_LARGE,
+                                                    )),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: ColorResources
+                                                          .getBackgroundColor(
+                                                              context),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      if (productProvider
+                                                                  .addOn2QtyList2[
+                                                              index] >
+                                                          0) {
+                                                        productProvider
+                                                            .setAddOn2Quantity(
+                                                                false, index);
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(Icons.remove,
+                                                          size: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Text(
+                                                    productProvider
+                                                        .addOn2QtyList2[index]
+                                                        .toString(),
+                                                    style: rubikMedium.copyWith(
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_EXTRA_LARGE)),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(int.parse(
+                                                              "#00A4A4"
+                                                                  .substring(
+                                                                      1, 7),
+                                                              radix: 16) +
+                                                          0xFF000000),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      {
+                                                        //if (productProvider.addOn2QtyList2[index] < productProvider.quantity) {
+                                                        var sum = productProvider
+                                                            .addOn2QtyList2
+                                                            .reduce((value,
+                                                                    element) =>
+                                                                value +
+                                                                element);
+                                                        if (sum <
+                                                            productProvider
+                                                                .quantity) {
+                                                          productProvider
+                                                              .setAddOn2Quantity(
+                                                                  true, index);
+                                                          productProvider.addAddOn2(
+                                                              true, index
+                                                              // .indexOf(widget
+                                                              //     .product
+                                                              //     .addOns2[index])
+                                                              );
+                                                        }
+
+                                                        /*if(!productProvider.addOnActiveList[index]) {
+                                                                  productProvider.addAddOn(true, widget.product
+                                                                      .addOns2.indexOf(widget.product
+                                                                      .addOns2[index]));
+                                                                }else if(productProvider.addOnQtyList[index] == 1) {
+                                                                  productProvider.addAddOn(false, index);
+                                                                }
+                                                                }*/
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //Spacer(),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ]),
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                height: 2,
+              ),
+              widget.product.addOns1 != null &&
+                      widget.product.addOns1.length > 0
+                  ? Visibility(
+                      visible: addOn,
+                      child: Container(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
+                                Text(
+                                  getTranslated("add_On", context),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE),
+                                ),
+                                Text(
+                                    " (Select up to ${productProvider.quantity})",
+                                    style: TextStyle(
+                                      fontSize: Dimensions.FONT_SIZE_SMALL,
+                                    )),
+                              ]),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns1.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: _isDarkMode
+                                            ? Color(0xff000000)
+                                            : Color(0xffFFFFFF),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                widget.product.addOns1[index]
+                                                    .name,
+                                                style: TextStyle(
+                                                  fontSize: Dimensions
+                                                      .FONT_SIZE_LARGE,
+                                                )),
+                                            Spacer(),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  //color: ColorResources.getBackgroundColor(context),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Row(children: [
+                                                Text(
+                                                    widget.product
+                                                        .addOns1[index].price
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontSize: Dimensions
+                                                          .FONT_SIZE_LARGE,
+                                                    )),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: ColorResources
+                                                          .getBackgroundColor(
+                                                              context),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      if (productProvider
+                                                                  .addOn1QtyList1[
+                                                              index] >
+                                                          0) {
+                                                        productProvider
+                                                            .setAddOn1Quantity1(
+                                                                false, index);
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(Icons.remove,
+                                                          size: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Text(
+                                                    productProvider
+                                                        .addOn1QtyList1[index]
+                                                        .toString(),
+                                                    style: rubikMedium.copyWith(
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_EXTRA_LARGE)),
+                                                SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(int.parse(
+                                                              "#00A4A4"
+                                                                  .substring(
+                                                                      1, 7),
+                                                              radix: 16) +
+                                                          0xFF000000),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      {
+                                                        //if (productProvider.addOn2QtyList2[index] < productProvider.quantity) {
+                                                        productProvider
+                                                            .setAddOn1Quantity1(
+                                                                true, index);
+                                                        if (!productProvider
+                                                                .addOnActiveList1[
+                                                            index]) {
+                                                          productProvider
+                                                              .addAddOn1(
+                                                                  true, index);
+                                                        }
+                                                        /*else if(productProvider.addOnQtyList[index] == 1) {
+                                                                  productProvider.addAddOn(false, index);
+                                                                }
+                                                                }*/
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL,
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //Spacer(),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ]),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        );
+      }),
+    );
+    Widget _myRadiotypeButton({String title, int value, Function onChanged}) {
+      return RadioListTile(
+        value: value,
+        groupValue: _grouptypeValue,
+        onChanged: onChanged,
+        activeColor: ColorResources.COLOR_PRIMARY,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                "Calories",
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            Text(
+              "SR 0",
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _myRadiosizeButton({String title, int value, Function onChanged}) {
+      return RadioListTile(
+        value: value,
+        groupValue: _grouptypeValue,
+        onChanged: onChanged,
+        title: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+      );
+    }
+
+    Widget _myRadiodrinlButton({String title, int value, Function onChanged}) {
+      return RadioListTile(
+        value: value,
+        groupValue: _grouptypeValue,
+        onChanged: onChanged,
+        title: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+      );
+    }
+
+    var padding1 =
+        Consumer<ProductProvider>(builder: (context, productProvider, child) {
+      return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: ColorResources.COLOR_PRIMARY,
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    "${widget.product.name}",
+                    style: TextStyle(
+                        color:
+                            _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
+                        fontSize: 15),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Type",
+                        style: TextStyle(
+                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
+                      ),
+                      Container(
+                          height: 70,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: _isDarkMode
+                                  ? Color(0xff000000)
+                                  : Color(0xffFFFFFF),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Regular",
+                                    value: 0,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Spicy",
+                                    value: 1,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      SizedBox(height: 10),
+                      Text(
+                        "Size",
+                        style: TextStyle(
+                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
+                      ),
+                      Container(
+                          height: 70,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: _isDarkMode
+                                  ? Color(0xff000000)
+                                  : Color(0xffFFFFFF),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Regular",
+                                    value: 0,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Large",
+                                    value: 1,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      SizedBox(height: 10),
+                      Text(
+                        "Drink",
+                        style: TextStyle(
+                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
+                      ),
+                      Container(
+                          height: 80,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: _isDarkMode
+                                  ? Color(0xff000000)
+                                  : Color(0xffFFFFFF),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Pepsi",
+                                    value: 0,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "7up",
+                                    value: 1,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                  child: _myRadiotypeButton(
+                                    title: "Mirinda",
+                                    value: 1,
+                                    onChanged: (newValue) => setState(
+                                        () => _grouptypeValue = newValue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
 
     return Scaffold(
       backgroundColor: _isDarkMode ? Color(0xff000000) : Color(0xffF5F5F5),
@@ -102,7 +965,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                 }),
               )
             ],
-            expandedHeight: MediaQuery.of(context).size.height * .45,
+            expandedHeight: MediaQuery.of(context).size.height * .4,
             floating: false,
             stretch: true,
             elevation: 0,
@@ -219,7 +1082,7 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                                         right: Dimensions.PADDING_SIZE_SMALL),
                                     decoration: BoxDecoration(
                                       color: ColorResources.COLOR_WHITE,
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(30),
@@ -245,723 +1108,9 @@ class _CartBottomSheetState extends State<CartBottomSheet>
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
-              child: Consumer<ProductProvider>(
-                  builder: (context, productProvider, child) {
-                return Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${widget.product.name}",
-                          style: TextStyle(
-                              color: _isDarkMode
-                                  ? Color(0xffF5F5F5)
-                                  : Color(0xff000000),
-                              fontSize: 17),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Visibility(
-                            visible: widget.product.addOns.length > 0,
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  drink = true;
-                                  upSize = false;
-                                  addOn = false;
-                                });
-                              },
-                              child: Text(
-                                getTranslated("opt1", context),
-                                style: TextStyle(
-                                    color: drink ? Color(0xff00A4A4) : null,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Dimensions.FONT_SIZE_LARGE),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: widget.product.addOns2 != null,
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  drink = false;
-                                  upSize = true;
-                                  addOn = false;
-                                });
-                              },
-                              child: Text(getTranslated("upSize", context),
-                                  style: TextStyle(
-                                      color: upSize ? Color(0xff00A4A4) : null,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.FONT_SIZE_LARGE)),
-                            ),
-                          ),
-                          Visibility(
-                            visible: widget.product.addOns1 != null,
-                            child: TextButton(
-                              child: Text(getTranslated("add_On", context),
-                                  style: TextStyle(
-                                    color: addOn ? Color(0xff00A4A4) : null,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              onPressed: () {
-                                setState(() {
-                                  drink = false;
-                                  upSize = false;
-                                  addOn = true;
-                                });
-                              },
-                            ),
-                          ),
-                          /*Container(
-                                          decoration: BoxDecoration(
-                                              color: Color(int.parse(
-                                                  "#00A4A4"
-                                                      .substring(
-                                                      1,
-                                                      7),
-                                                  radix: 16) +
-                                                  0xFF000000),
-                                              borderRadius:
-                                              BorderRadius
-                                                  .circular(
-                                                  5)),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(context,MaterialPageRoute(builder: (context)=>CheckoutScreen()));
-                                            },
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                  Dimensions
-                                                      .PADDING_SIZE_SMALL,
-                                                  vertical: Dimensions
-                                                      .PADDING_SIZE_EXTRA_SMALL),
-                                              child: Icon(
-                                                  Icons.shopping_cart,
-                                                  size: 20),
-                                            ),
-                                          ),
-                                        ),*/
-                        ],
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      widget.product.addOns != null &&
-                              widget.product.addOns.length > 0
-                          ? Container(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Visibility(
-                                      visible: drink,
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              widget.product.addOns.length,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: _isDarkMode
-                                                    ? Color(0xff000000)
-                                                    : Color(0xffFFFFFF),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        widget.product
-                                                            .addOns[index].name,
-                                                        style: TextStyle(
-                                                          fontSize: Dimensions
-                                                              .FONT_SIZE_LARGE,
-                                                        )),
-                                                    Spacer(),
-                                                    /*Text(
-                                                  widget.product
-                                                      .addOns[index].price.toString(),),*/
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          //color: ColorResources.getBackgroundColor(context),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: Row(children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: ColorResources
-                                                                  .getBackgroundColor(
-                                                                      context),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              if (productProvider
-                                                                          .addOnQtyList[
-                                                                      index] >
-                                                                  0) {
-                                                                productProvider
-                                                                    .setAddOnQuantity(
-                                                                        false,
-                                                                        index);
-                                                                if (productProvider
-                                                                            .addOnQtyList[
-                                                                        index] >
-                                                                    1) {
-                                                                  productProvider
-                                                                      .setAddOnQuantity(
-                                                                          false,
-                                                                          index);
-                                                                } else {
-                                                                  productProvider
-                                                                      .addAddOn(
-                                                                          false,
-                                                                          index);
-                                                                }
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                  Icons.remove,
-                                                                  size: 20),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Text(
-                                                            productProvider
-                                                                .addOnQtyList[
-                                                                    index]
-                                                                .toString(),
-                                                            style: rubikMedium
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        Dimensions
-                                                                            .FONT_SIZE_EXTRA_LARGE)),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: Color(int.parse(
-                                                                      "#00A4A4"
-                                                                          .substring(
-                                                                              1,
-                                                                              7),
-                                                                      radix:
-                                                                          16) +
-                                                                  0xFF000000),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              {
-                                                                var sum = productProvider
-                                                                    .addOnQtyList
-                                                                    .reduce((value,
-                                                                            element) =>
-                                                                        value +
-                                                                        element);
-                                                                if (sum <
-                                                                    productProvider
-                                                                        .quantity) {
-                                                                  print(
-                                                                      "Adddddddd");
-                                                                  productProvider
-                                                                      .setAddOnQuantity(
-                                                                          true,
-                                                                          index);
-                                                                  if (!productProvider
-                                                                          .addOnActiveList[
-                                                                      index]) {
-                                                                    productProvider.addAddOn(
-                                                                        true,
-                                                                        widget
-                                                                            .product
-                                                                            .addOns
-                                                                            .indexOf(widget.product.addOns[index]));
-                                                                  } else if (productProvider
-                                                                              .addOnQtyList[
-                                                                          index] ==
-                                                                      1) {
-                                                                    productProvider
-                                                                        .addAddOn(
-                                                                            false,
-                                                                            index);
-                                                                  }
-                                                                }
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                size: 20,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        //Spacer(),
-                                                      ]),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                  ]),
-                            )
-                          : SizedBox(),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      widget.product.addOns2 != null &&
-                              widget.product.addOns2.length > 0
-                          ? Visibility(
-                              visible: upSize,
-                              child: Container(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        Text(
-                                          getTranslated("add_On", context),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize:
-                                                  Dimensions.FONT_SIZE_LARGE),
-                                        ),
-                                        Text(
-                                            " (Select up to ${productProvider.quantity})",
-                                            style: TextStyle(
-                                              fontSize:
-                                                  Dimensions.FONT_SIZE_SMALL,
-                                            )),
-                                      ]),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              widget.product.addOns2.length,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: _isDarkMode
-                                                    ? Color(0xff000000)
-                                                    : Color(0xffFFFFFF),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        widget
-                                                            .product
-                                                            .addOns2[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                          fontSize: Dimensions
-                                                              .FONT_SIZE_LARGE,
-                                                        )),
-                                                    Spacer(),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          //color: ColorResources.getBackgroundColor(context),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: Row(children: [
-                                                        Text(
-                                                            widget
-                                                                .product
-                                                                .addOns2[index]
-                                                                .price
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontSize: Dimensions
-                                                                  .FONT_SIZE_LARGE,
-                                                            )),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: ColorResources
-                                                                  .getBackgroundColor(
-                                                                      context),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              if (productProvider
-                                                                          .addOn2QtyList2[
-                                                                      index] >
-                                                                  0) {
-                                                                productProvider
-                                                                    .setAddOn2Quantity(
-                                                                        false,
-                                                                        index);
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                  Icons.remove,
-                                                                  size: 20),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Text(
-                                                            productProvider
-                                                                .addOn2QtyList2[
-                                                                    index]
-                                                                .toString(),
-                                                            style: rubikMedium
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        Dimensions
-                                                                            .FONT_SIZE_EXTRA_LARGE)),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: Color(int.parse(
-                                                                      "#00A4A4"
-                                                                          .substring(
-                                                                              1,
-                                                                              7),
-                                                                      radix:
-                                                                          16) +
-                                                                  0xFF000000),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              {
-                                                                //if (productProvider.addOn2QtyList2[index] < productProvider.quantity) {
-                                                                var sum = productProvider
-                                                                    .addOn2QtyList2
-                                                                    .reduce((value,
-                                                                            element) =>
-                                                                        value +
-                                                                        element);
-                                                                if (sum <
-                                                                    productProvider
-                                                                        .quantity) {
-                                                                  productProvider
-                                                                      .setAddOn2Quantity(
-                                                                          true,
-                                                                          index);
-                                                                  productProvider.addAddOn2(
-                                                                      true,
-                                                                      index
-                                                                      // .indexOf(widget
-                                                                      //     .product
-                                                                      //     .addOns2[index])
-                                                                      );
-                                                                }
-
-                                                                /*if(!productProvider.addOnActiveList[index]) {
-                                                                  productProvider.addAddOn(true, widget.product
-                                                                      .addOns2.indexOf(widget.product
-                                                                      .addOns2[index]));
-                                                                }else if(productProvider.addOnQtyList[index] == 1) {
-                                                                  productProvider.addAddOn(false, index);
-                                                                }
-                                                                }*/
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                size: 20,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        //Spacer(),
-                                                      ]),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ]),
-                              ),
-                            )
-                          : SizedBox(),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      widget.product.addOns1 != null &&
-                              widget.product.addOns1.length > 0
-                          ? Visibility(
-                              visible: addOn,
-                              child: Container(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        Text(
-                                          getTranslated("add_On", context),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize:
-                                                  Dimensions.FONT_SIZE_LARGE),
-                                        ),
-                                        Text(
-                                            " (Select up to ${productProvider.quantity})",
-                                            style: TextStyle(
-                                              fontSize:
-                                                  Dimensions.FONT_SIZE_SMALL,
-                                            )),
-                                      ]),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              widget.product.addOns1.length,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: _isDarkMode
-                                                    ? Color(0xff000000)
-                                                    : Color(0xffFFFFFF),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        widget
-                                                            .product
-                                                            .addOns1[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                          fontSize: Dimensions
-                                                              .FONT_SIZE_LARGE,
-                                                        )),
-                                                    Spacer(),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          //color: ColorResources.getBackgroundColor(context),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: Row(children: [
-                                                        Text(
-                                                            widget
-                                                                .product
-                                                                .addOns1[index]
-                                                                .price
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontSize: Dimensions
-                                                                  .FONT_SIZE_LARGE,
-                                                            )),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: ColorResources
-                                                                  .getBackgroundColor(
-                                                                      context),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              if (productProvider
-                                                                          .addOn1QtyList1[
-                                                                      index] >
-                                                                  0) {
-                                                                productProvider
-                                                                    .setAddOn1Quantity1(
-                                                                        false,
-                                                                        index);
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                  Icons.remove,
-                                                                  size: 20),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Text(
-                                                            productProvider
-                                                                .addOn1QtyList1[
-                                                                    index]
-                                                                .toString(),
-                                                            style: rubikMedium
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        Dimensions
-                                                                            .FONT_SIZE_EXTRA_LARGE)),
-                                                        SizedBox(
-                                                          width: 16.0,
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                              color: Color(int.parse(
-                                                                      "#00A4A4"
-                                                                          .substring(
-                                                                              1,
-                                                                              7),
-                                                                      radix:
-                                                                          16) +
-                                                                  0xFF000000),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              {
-                                                                //if (productProvider.addOn2QtyList2[index] < productProvider.quantity) {
-                                                                productProvider
-                                                                    .setAddOn1Quantity1(
-                                                                        true,
-                                                                        index);
-                                                                if (!productProvider
-                                                                        .addOnActiveList1[
-                                                                    index]) {
-                                                                  productProvider
-                                                                      .addAddOn1(
-                                                                          true,
-                                                                          index);
-                                                                }
-                                                                /*else if(productProvider.addOnQtyList[index] == 1) {
-                                                                  productProvider.addAddOn(false, index);
-                                                                }
-                                                                }*/
-                                                              }
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.symmetric(
-                                                                  horizontal:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_SMALL,
-                                                                  vertical:
-                                                                      Dimensions
-                                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                size: 20,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        //Spacer(),
-                                                      ]),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ]),
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          )
+          SliverToBoxAdapter(child: padding1
+              // padding2,
+              )
           // Container(
           //   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           //   decoration: BoxDecoration(
