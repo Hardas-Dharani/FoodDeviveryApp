@@ -49,6 +49,11 @@ class _CartBottomSheetState extends State<CartBottomSheet>
   bool drink = true;
   bool upSize = false;
   bool addOn = false;
+  int _grouptypeValue = -1;
+  int _groupsizeValue = -1;
+  int _groupupsizeValue = -1;
+  int _groupadonValue = -1;
+  int _groupdrinlValue = -1;
   @override
   void initState() {
     Provider.of<ProductProvider>(context, listen: false)
@@ -64,9 +69,6 @@ class _CartBottomSheetState extends State<CartBottomSheet>
     bool fromCart = widget.cart != null;
 
     Variation _variation = Variation();
-    int _grouptypeValue = -1;
-    int _groupsizeValue = -1;
-    int _groupdrinlValue = -1;
 
     var padding2 = Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
@@ -287,38 +289,36 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                                                               5)),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      {
-                                                        var sum = productProvider
-                                                            .addOnQtyList
-                                                            .reduce((value,
-                                                                    element) =>
-                                                                value +
-                                                                element);
-                                                        if (sum <
-                                                            productProvider
-                                                                .quantity) {
-                                                          print("Adddddddd");
+                                                      var sum = productProvider
+                                                          .addOnQtyList
+                                                          .reduce((value,
+                                                                  element) =>
+                                                              value + element);
+                                                      if (sum <
                                                           productProvider
-                                                              .setAddOnQuantity(
-                                                                  true, index);
-                                                          if (!productProvider
-                                                                  .addOnActiveList[
-                                                              index]) {
-                                                            productProvider.addAddOn(
-                                                                true,
-                                                                widget.product
-                                                                    .addOns
-                                                                    .indexOf(widget
-                                                                        .product
-                                                                        .addOns[index]));
-                                                          } else if (productProvider
-                                                                      .addOnQtyList[
-                                                                  index] ==
-                                                              1) {
-                                                            productProvider
-                                                                .addAddOn(false,
-                                                                    index);
-                                                          }
+                                                              .quantity) {
+                                                        print("Adddddddd");
+                                                        productProvider
+                                                            .setAddOnQuantity(
+                                                                true, index);
+                                                        if (!productProvider
+                                                                .addOnActiveList[
+                                                            index]) {
+                                                          productProvider.addAddOn(
+                                                              true,
+                                                              widget.product
+                                                                  .addOns
+                                                                  .indexOf(widget
+                                                                          .product
+                                                                          .addOns[
+                                                                      index]));
+                                                        } else if (productProvider
+                                                                    .addOnQtyList[
+                                                                index] ==
+                                                            1) {
+                                                          productProvider
+                                                              .addAddOn(
+                                                                  false, index);
                                                         }
                                                       }
                                                     },
@@ -701,10 +701,15 @@ class _CartBottomSheetState extends State<CartBottomSheet>
         );
       }),
     );
-    Widget _myRadiotypeButton({String title, int value, Function onChanged}) {
+    Widget _myRadiotypeButton(
+        {String title,
+        int value,
+        Function onChanged,
+        String price,
+        int valuegroup}) {
       return RadioListTile(
         value: value,
-        groupValue: _grouptypeValue,
+        groupValue: valuegroup,
         onChanged: onChanged,
         activeColor: ColorResources.COLOR_PRIMARY,
         title: Row(
@@ -729,39 +734,13 @@ class _CartBottomSheetState extends State<CartBottomSheet>
               ),
             ),
             Text(
-              "SR 0",
+              "SR ${price}",
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: 18,
                   fontWeight: FontWeight.w500),
             ),
           ],
-        ),
-      );
-    }
-
-    Widget _myRadiosizeButton({String title, int value, Function onChanged}) {
-      return RadioListTile(
-        value: value,
-        groupValue: _grouptypeValue,
-        onChanged: onChanged,
-        title: Text(
-          title,
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-      );
-    }
-
-    Widget _myRadiodrinlButton({String title, int value, Function onChanged}) {
-      return RadioListTile(
-        value: value,
-        groupValue: _grouptypeValue,
-        onChanged: onChanged,
-        title: Text(
-          title,
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       );
     }
@@ -796,81 +775,73 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Type",
-                        style: TextStyle(
-                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
-                      ),
-                      Container(
-                          height: 70,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: _isDarkMode
-                                  ? Color(0xff000000)
-                                  : Color(0xffFFFFFF),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
+                      widget.product.choiceOptions.length != 0
+                          ? Text(
+                              "Type",
+                              style: TextStyle(
+                                  color: ColorResources.COLOR_PRIMARY,
+                                  fontSize: 18),
+                            )
+                          : Container(),
+                      widget.product.choiceOptions.length != 0
+                          ? Container(
+                              // height: 70,
+                              child: Container(
+                              decoration: BoxDecoration(
+                                color: _isDarkMode
+                                    ? Color(0xff000000)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                children: [
+                                  _myRadiotypeButton(
                                     title: "Regular",
                                     value: 0,
                                     onChanged: (newValue) => setState(
                                         () => _grouptypeValue = newValue),
                                   ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
+                                  _myRadiotypeButton(
                                     title: "Spicy",
                                     value: 1,
                                     onChanged: (newValue) => setState(
                                         () => _grouptypeValue = newValue),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )),
+                                ],
+                              ),
+                            ))
+                          : Container(),
                       SizedBox(height: 10),
-                      Text(
-                        "Size",
-                        style: TextStyle(
-                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
-                      ),
+                      widget.product.choiceOptions.length != 0
+                          ? Text(
+                              "Size",
+                              style: TextStyle(
+                                  color: ColorResources.COLOR_PRIMARY,
+                                  fontSize: 18),
+                            )
+                          : Container(),
                       Container(
-                          height: 70,
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: _isDarkMode
-                                  ? Color(0xff000000)
-                                  : Color(0xffFFFFFF),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
-                                    title: "Regular",
-                                    value: 0,
-                                    onChanged: (newValue) => setState(
-                                        () => _grouptypeValue = newValue),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
-                                    title: "Large",
-                                    value: 1,
-                                    onChanged: (newValue) => setState(
-                                        () => _grouptypeValue = newValue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
+                              decoration: BoxDecoration(
+                                color: _isDarkMode
+                                    ? Color(0xff000000)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      widget.product.choiceOptions.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return _myRadiotypeButton(
+                                      title: widget
+                                          .product.choiceOptions[index].name,
+                                      value: index,
+                                      onChanged: (newValue) => setState(
+                                          () => _groupsizeValue = newValue),
+                                    );
+                                  }))),
                       SizedBox(height: 10),
                       Text(
                         "Drink",
@@ -878,46 +849,98 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             color: ColorResources.COLOR_PRIMARY, fontSize: 18),
                       ),
                       Container(
-                          height: 80,
+                          // height: 80,
                           child: Container(
-                            decoration: BoxDecoration(
-                              color: _isDarkMode
-                                  ? Color(0xff000000)
-                                  : Color(0xffFFFFFF),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
-                                    title: "Pepsi",
-                                    value: 0,
-                                    onChanged: (newValue) => setState(
-                                        () => _grouptypeValue = newValue),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
-                                    title: "7up",
-                                    value: 1,
-                                    onChanged: (newValue) => setState(
-                                        () => _grouptypeValue = newValue),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: _myRadiotypeButton(
-                                    title: "Mirinda",
-                                    value: 1,
-                                    onChanged: (newValue) => setState(
-                                        () => _grouptypeValue = newValue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
+                              decoration: BoxDecoration(
+                                color: _isDarkMode
+                                    ? Color(0xff000000)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return _myRadiotypeButton(
+                                        title:
+                                            widget.product.addOns[index].name,
+                                        valuegroup: _groupdrinlValue,
+                                        price: widget
+                                            .product.addOns[index].price
+                                            .toString(),
+                                        value: index,
+                                        onChanged: (newValue) {
+                                          setState(() =>
+                                              _groupdrinlValue = newValue);
+                                        });
+                                  }))),
+                      SizedBox(height: 10),
+                      Text(
+                        "Add on",
+                        style: TextStyle(
+                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
+                      ),
+                      Container(
+                          // height: 80,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: _isDarkMode
+                                    ? Color(0xff000000)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns1.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return _myRadiotypeButton(
+                                      valuegroup: _groupadonValue,
+                                      title: widget.product.addOns1[index].name,
+                                      price: widget.product.addOns1[index].price
+                                          .toString(),
+                                      value: index,
+                                      onChanged: (newValue) {
+                                        setState(
+                                            () => _groupadonValue = newValue);
+                                        productProvider.addAddOn1(false, index);
+                                      },
+                                    );
+                                  }))),
+                      SizedBox(height: 10),
+                      Text(
+                        "Up Size",
+                        style: TextStyle(
+                            color: ColorResources.COLOR_PRIMARY, fontSize: 18),
+                      ),
+                      Container(
+                          // height: 80,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: _isDarkMode
+                                    ? Color(0xff000000)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.product.addOns2.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return _myRadiotypeButton(
+                                      title: widget.product.addOns2[index].name,
+                                      price: widget.product.addOns2[index].price
+                                          .toString(),
+                                      valuegroup: _groupupsizeValue,
+                                      value: index,
+                                      onChanged: (newValue) {
+                                        setState(
+                                            () => _groupupsizeValue = newValue);
+                                        productProvider.addAddOn2(false, index);
+                                      },
+                                    );
+                                  }))),
                     ],
                   ),
                 ),
@@ -1804,43 +1827,43 @@ class _CartBottomSheetState extends State<CartBottomSheet>
         //     }
         //   }
         // }
-        for (var i = 0; i < widget.product.addOns1.length; i++) {
-          if (productProvider.addOnActiveList1[i]) {
-            addonsCost = addonsCost +
-                (widget.product.addOns1[i].price *
-                    productProvider.addOn1QtyList1[i]);
-            _addOnIdList.add(AddOn(
-                id: widget.product.addOns1[i].id,
-                quantity: productProvider.addOn1QtyList1[i]));
-            // addon1id = i;
-            // addon2 = false;
-          }
-        }
-        for (var i = 0; i < widget.product.addOns.length; i++) {
-          if (productProvider.addOnActiveList[i]) {
-            addonsCost = addonsCost +
-                (widget.product.addOns[i].price *
-                    productProvider.addOnQtyList[i]);
-            _addOnIdList.add(AddOn(
-                id: widget.product.addOns[i].id,
-                quantity: productProvider.addOnQtyList[i]));
-            // addon1id = i;
-            // addon2 = false;
-          }
-        }
-        for (var i = 0; i < widget.product.addOns2.length; i++) {
-          if (productProvider.addOnActiveList2[i]) {
-            addonsCost = addonsCost +
-                (widget.product.addOns2[i].price *
-                    productProvider.addOn2QtyList2[i]);
-            _addOnIdList.add(AddOn(
-                id: widget.product.addOns2[i].id,
-                quantity: productProvider.addOn2QtyList2[i]));
-            // addon2id = i;
-            // addon1 = false;
+        // for (var i = 0; i < widget.product.addOns1.length; i++) {
+        //   if (productProvider.addOnActiveList1[i]) {
+        //     addonsCost = addonsCost +
+        //         (widget.product.addOns1[i].price *
+        //             productProvider.addOn1QtyList1[i]);
+        //     _addOnIdList.add(AddOn(
+        //         id: widget.product.addOns1[i].id,
+        //         quantity: productProvider.addOn1QtyList1[i]));
+        //     // addon1id = i;
+        //     // addon2 = false;
+        //   }
+        // }
+        // for (var i = 0; i < widget.product.addOns.length; i++) {
+        //   if (productProvider.addOnActiveList[i]) {
+        //     addonsCost = addonsCost +
+        //         (widget.product.addOns[i].price *
+        //             productProvider.addOnQtyList[i]);
+        //     _addOnIdList.add(AddOn(
+        //         id: widget.product.addOns[i].id,
+        //         quantity: productProvider.addOnQtyList[i]));
+        //     // addon1id = i;
+        //     // addon2 = false;
+        //   }
+        // }
+        // for (var i = 0; i < widget.product.addOns2.length; i++) {
+        //   if (productProvider.addOnActiveList2[i]) {
+        //     addonsCost = addonsCost +
+        //         (widget.product.addOns2[i].price *
+        //             productProvider.addOn2QtyList2[i]);
+        //     _addOnIdList.add(AddOn(
+        //         id: widget.product.addOns2[i].id,
+        //         quantity: productProvider.addOn2QtyList2[i]));
+        //     // addon2id = i;
+        //     // addon1 = false;
 
-          }
-        }
+        //   }
+        // }
 
         // if (containaddon) {
 
@@ -2034,7 +2057,90 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                             // Navigator.pop(context);
                             var sum = productProvider.addOnQtyList
                                 .reduce((value, element) => value + element);
-                            if (sum == productProvider.quantity) {
+                            if (sum <= productProvider.quantity) {
+                              print("Adddddddd");
+                              if (sum != 1) {
+                                productProvider.setAddOnQuantity(
+                                    true, _groupdrinlValue);
+                              }
+                              if (_groupupsizeValue >= 0) {
+                                productProvider.setAddOn1Quantity1(
+                                    true, _groupupsizeValue);
+                                if (!productProvider
+                                    .addOnActiveList1[_groupupsizeValue]) {
+                                  productProvider.addAddOn1(
+                                      true,
+                                      widget.product.addOns1.indexOf(widget
+                                          .product.addOns1[_groupupsizeValue]));
+                                }
+                              }
+                              if (_groupadonValue >= 0) {
+                                productProvider.setAddOn2Quantity(
+                                    true, _groupadonValue);
+                                if (!productProvider
+                                    .addOnActiveList2[_groupadonValue]) {
+                                  productProvider.addAddOn2(
+                                      true,
+                                      widget.product.addOns2.indexOf(widget
+                                          .product.addOns2[_groupadonValue]));
+                                }
+                              }
+                              if (_groupdrinlValue >= 0) {
+                                if (!productProvider
+                                    .addOnActiveList[_groupdrinlValue]) {
+                                  productProvider.addAddOn(
+                                      true,
+                                      widget.product.addOns.indexOf(widget
+                                          .product.addOns[_groupdrinlValue]));
+                                }
+                              }
+                            }
+                            for (var i = 0;
+                                i < widget.product.addOns1.length;
+                                i++) {
+                              if (productProvider.addOnActiveList1[i]) {
+                                addonsCost = addonsCost +
+                                    (widget.product.addOns1[i].price *
+                                        productProvider.addOn1QtyList1[i]);
+                                _addOnIdList.add(AddOn(
+                                    id: widget.product.addOns1[i].id,
+                                    quantity:
+                                        productProvider.addOn1QtyList1[i]));
+                                // addon1id = i;
+                                // addon2 = false;
+                              }
+                            }
+                            for (var i = 0;
+                                i < widget.product.addOns.length;
+                                i++) {
+                              if (productProvider.addOnActiveList[i]) {
+                                addonsCost = addonsCost +
+                                    (widget.product.addOns[i].price *
+                                        productProvider.addOnQtyList[i]);
+                                _addOnIdList.add(AddOn(
+                                    id: widget.product.addOns[i].id,
+                                    quantity: productProvider.addOnQtyList[i]));
+                                // addon1id = i;
+                                // addon2 = false;
+                              }
+                            }
+                            for (var i = 0;
+                                i < widget.product.addOns2.length;
+                                i++) {
+                              if (productProvider.addOnActiveList2[i]) {
+                                addonsCost = addonsCost +
+                                    (widget.product.addOns2[i].price *
+                                        productProvider.addOn2QtyList2[i]);
+                                _addOnIdList.add(AddOn(
+                                    id: widget.product.addOns2[i].id,
+                                    quantity:
+                                        productProvider.addOn2QtyList2[i]));
+                                // addon2id = i;
+                                // addon1 = false;
+
+                              }
+                            }
+                            if (productProvider. quantity != null) {
                               Provider.of<CartProvider>(context, listen: false)
                                   .addToCart(_cartModel, widget.cartIndex);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -2044,15 +2150,26 @@ class _CartBottomSheetState extends State<CartBottomSheet>
                                       backgroundColor: Colors.green));
                               // widget.callback();
                               setState(() {});
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      content: Text(
-                                        'Please Make ColdDrink Equal To quntity',
-                                      ),
-                                      backgroundColor: Colors.green));
-                              setState(() {});
                             }
+                            // if (sum == productProvider.quantity) {
+                            //   Provider.of<CartProvider>(context, listen: false)
+                            //       .addToCart(_cartModel, widget.cartIndex);
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(
+                            //           content: Text(getTranslated(
+                            //               'added_to_cart', context)),
+                            //           backgroundColor: Colors.green));
+                            //   // widget.callback();
+                            //   setState(() {});
+                            // } else {
+                            //   ScaffoldMessenger.of(context)
+                            //       .showSnackBar(SnackBar(
+                            //           content: Text(
+                            //             'Please Make ColdDrink Equal To quntity',
+                            //           ),
+                            //           backgroundColor: Colors.green));
+                            //   setState(() {});
+                            // }
                           }
                         },
                         child: Container(
@@ -2262,4 +2379,64 @@ class _CartBottomSheetState extends State<CartBottomSheet>
 //     ],
 //   );
 // }
+}
+
+class RadioListBuilder extends StatefulWidget {
+  final int num;
+  final String title;
+
+  const RadioListBuilder({Key key, this.num, this.title}) : super(key: key);
+
+  @override
+  RadioListBuilderState createState() {
+    return RadioListBuilderState();
+  }
+}
+
+class RadioListBuilderState extends State<RadioListBuilder> {
+  int value;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return RadioListTile(
+          value: index,
+          groupValue: value,
+          onChanged: (ind) => setState(() => value = ind),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  "Calories",
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              Text(
+                "SR 0",
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        );
+      },
+      itemCount: widget.num,
+    );
+  }
 }

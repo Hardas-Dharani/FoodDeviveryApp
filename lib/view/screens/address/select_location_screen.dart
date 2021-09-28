@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/response/address_model.dart';
+import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/location_provider.dart';
+import 'package:flutter_restaurant/provider/order_provider.dart';
+import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -292,7 +296,49 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                       child: TextButton(
                         onPressed: locationProvider.loading
                             ? null
-                            : () {
+                            : () async {
+                                print("error");
+                                UserInfoModel _userInfoModel =
+                                    Provider.of<ProfileProvider>(context,
+                                            listen: false)
+                                        .userInfoModel;
+                                AddressModel addressModel = AddressModel(
+                                  addressType: _groupValue == 2
+                                      ? "Home"
+                                      : _groupValue == 1
+                                          ? "Workplace"
+                                          : '',
+                                  // locationProvider.getAllAddressType[
+                                  //     locationProvider.selectAddressIndex],
+                                  contactPersonName:
+                                      _userInfoModel.fName != null
+                                          ? _userInfoModel.fName
+                                          : '',
+                                  contactPersonNumber:
+                                      _userInfoModel.phone != null
+                                          ? _userInfoModel.phone
+                                          : '',
+                                  address: _locationController.text ?? '',
+                                  latitude: locationProvider.position.latitude
+                                      .toString(),
+                                  longitude: locationProvider.position.longitude
+                                          .toString() ??
+                                      '',
+                                );
+                                await locationProvider
+                                    .addAddress(addressModel)
+                                    .then((value) {
+                                  if (value.isSuccess) {
+                                    Provider.of<LocationProvider>(context,
+                                            listen: false)
+                                        .initAddressList(context);
+                                    Provider.of<OrderProvider>(context,
+                                            listen: false)
+                                        .setAddressIndex(-1);
+                                    Navigator.pop(context);
+                                  }
+                                });
+
                                 widget.screenname == "Home"
                                     ? Navigator.push(
                                         context,
